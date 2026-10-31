@@ -2,7 +2,7 @@
 
 Arsip personal inaugurasi Google Student Ambassador 2026 Batch 2, dari Steven Erlinto dan Galih Kusuma Wijaya. Berisi 28 kenangan: 19 foto dan 9 video, dengan lima chapter perjalanan dan bonus candidate journey.
 
-Desain mengikuti [website GSA Indonesia](https://googlestudentambassador.id/): hero biru ke hitam, Google Sans Flex, navbar pil, dan panel gelap. Galeri menggunakan polaroid gantung di atas grid yang memudar, dengan ayunan terkait scroll. Klik polaroid untuk membuka media dan deskripsi yang tersedia.
+Desain mengikuti [website GSA Indonesia](https://googlestudentambassador.id/): hero biru ke hitam, Google Sans Flex, navbar pil, dan panel gelap. Galeri menggunakan polaroid gantung di atas grid yang memudar, dengan ayunan fisik dan momentum. Klik polaroid untuk membuka media dan deskripsi yang tersedia.
 
 ## Preview lokal
 
@@ -18,7 +18,7 @@ Buka [localhost:8000](http://localhost:8000). Tidak perlu install dependency ata
 
 - Search berdasarkan judul, lokasi, deskripsi, chapter, dan tag; prompt cepat menggunakan data lokal, tanpa API AI.
 - Filter kategori, termasuk video dan perjalanan kandidat; jumlah media dihitung dari data.
-- Galeri polaroid dengan CSS scroll-driven animation, fallback IntersectionObserver, dan dukungan reduced motion.
+- Galeri polaroid dengan physics pegas: scroll cepat memberi impulse lebih kuat, inertia berlanjut setelah scroll berhenti, damping mengembalikan posisi, dan reduced motion tetap didukung.
 - Viewer native dialog: foto utuh, video dengan kontrol, deskripsi opsional, panah keyboard, Escape, dan pengembalian fokus.
 - Navigasi mobile, chapter cerita, rewind, dan FAQ.
 - Suara ambien opt-in melalui Web Audio dan confetti manual.
@@ -48,3 +48,11 @@ node --check assets/js/data.js
 Uji browser dilakukan pada search, filter, viewer, menu, motion, serta beberapa ukuran viewport; catatan hasil aktual ada di `PLAN.md`. Website tetap statis dan dapat dilayani dari GitHub Pages atau konfigurasi Vercel yang sudah ada.
 
 Kredit: made by memories, from Steven and Galih · GSAID26B20013 & GSAID26B20004.
+
+Tes interaksi dan physics (memerlukan Playwright CLI untuk pengembangan):
+
+```sh
+playwright-cli -s=gsa-check open http://localhost:8000
+playwright-cli -s=gsa-check run-code --filename=tests/browser-smoke.js
+playwright-cli -s=gsa-check run-code --filename=tests/polaroid-physics.js
+```

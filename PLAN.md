@@ -238,19 +238,20 @@ Bagian ini adalah arahan eksplisit pengguna dan menjadi komponen pembeda utama h
 - Judul lengkap tetap menjadi accessible name untuk kontrol pembuka, meskipun caption visual dipersingkat.
 - Hover/focus boleh menaikkan foto sedikit dan membuat bingkai lebih tegas; tidak membalik kartu untuk menampilkan deskripsi.
 
-### 7.4 Goyangan saat scroll
+### 7.4 Physics polaroid dengan momentum
 
-- Titik putar berada di **atas-tengah gantungan**, sehingga foto berayun seperti benda yang ditahan tali, bukan berputar dari pusat gambar.
-- Pisahkan wrapper: `polaroid-anchor` untuk layout, `polaroid-swing` untuk ayunan, `polaroid-paper` untuk hover/focus. Transform tidak saling menimpa.
-- Rencana utama memakai **CSS scroll-driven animation** yang menghubungkan progress scroll/view dengan rotasi kecil. Amplitudo tambahan sekitar **1–2.5°**, offset vertikal maksimal beberapa piksel.
-- Fase ayunan antaritem sedikit berbeda. Tidak ada gerakan ekstrem, parallax besar, atau loop terus-menerus saat pengguna diam.
-- Saat scroll berhenti, progress animasi berhenti. Ayunan berbasis progress ini bukan simulasi fisika kecepatan scroll; tidak menambah physics engine hanya untuk efek tersebut.
-- Periksa `@supports (animation-timeline: view())`. Bila tidak tersedia, gunakan `IntersectionObserver` untuk ayunan pendek saat item masuk viewport, lalu kembali ke kemiringan dasar.
-- Fallback masuk-viewport sekitar **500–800 ms**, mereda secara halus. Observer dibersihkan saat daftar galeri dirender ulang.
-- `prefers-reduced-motion: reduce`: hapus goyangan, transisi perpindahan, dan auto-motion; tetap tampilkan komposisi polaroid statis yang dapat diklik.
-- Motion hanya memengaruhi `transform`/`opacity`, tidak menghitung ulang ukuran grid pada setiap frame.
+Arahan terbaru pengguna: goyangan harus bergantung pada kecepatan scroll dan tetap berlanjut setelah scroll berhenti. Ini menggantikan rencana awal animasi CSS berbasis progress scroll.
 
-CSS scroll-driven animation merupakan peningkatan bertahap, sebab dukungannya belum merata di seluruh browser menurut [dokumentasi MDN animation-timeline](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/animation-timeline). Konsep timeline mengikuti [CSS Scroll-driven Animations](https://drafts.csswg.org/scroll-animations-1/), yang masih merupakan spesifikasi dalam pengembangan.
+- Implementasi memakai simulasi pegas sudut dengan velocity, inertia, dan damping. Scroll cepat menghasilkan impulse lebih besar; energi kemudian mereda hingga kembali ke kemiringan dasar.
+- Titik putar tetap di atas-tengah penjepit; foto berayun sebagai benda tergantung.
+- Satu loop requestAnimationFrame bersama, hanya untuk foto yang terlihat. Loop berhenti ketika semua foto sudah diam.
+- Listener scroll pasif hanya mengukur perpindahan/waktu dan menambah impulse. Tidak ada pembacaan layout atau pembuatan DOM per frame.
+- IntersectionObserver mengaktifkan kartu di sekitar viewport; listener/observer/frame dibersihkan setiap galeri dirender ulang.
+- Setiap foto memiliki respons dan arah sedikit berbeda. Hover mouse memberi sentuhan kecil tambahan.
+- Sudut dinamis dibatasi 9 derajat di luar kemiringan dasar dan kecepatan sudut dibatasi agar tidak berputar liar.
+- Gerakan tidak bergantung pada CSS animation-timeline dan tidak membutuhkan dependency physics tambahan.
+- Reduced motion membatalkan frame dan menghapus sudut dinamis, menyisakan polaroid statis.
+- Uji browser: scroll 20 px menghasilkan puncak sekitar 0.81 derajat, scroll cepat 220 px sekitar 3.17 derajat; ayunan terus berubah saat scroll sudah diam dan kembali ke 0 setelah mereda. Angka hasil uji dapat sedikit berbeda antar-run/perangkat.
 
 ### 7.5 Perilaku ketika polaroid diklik
 
@@ -334,7 +335,7 @@ Prioritaskan foto, poster, dan video yang sudah ada. Gantungan, grid, bingkai ke
 - Definisikan komponen: navbar, hero, chapter, story-panel, search/filter, polaroid, fading-grid, viewer, accordion, footer.
 - Pisahkan transform swing dari transform hover.
 - Tambah responsive sesuai breakpoint referensi dengan penyesuaian layar kecil.
-- Tambah `prefers-reduced-motion`, `focus-visible`, fallback mask/timeline, dan aturan touch.
+- Tambah `prefers-reduced-motion`, `focus-visible`, fallback mask dan simulasi pegas, dan aturan touch.
 - Letakkan dekorasi di section galeri, bukan overlay fixed seluruh situs.
 
 ### `assets/js/app.js`
@@ -345,7 +346,7 @@ Prioritaskan foto, poster, dan video yang sudah ada. Gantungan, grid, bingkai ke
 - `openLightbox()`: tampilkan media dan metadata; deskripsi kondisional; perbarui state kosong saat pindah item.
 - `closeLightbox()`: hentikan video, pulihkan scroll/fokus, bersihkan state yang perlu dibersihkan.
 - `prevMedia()` / `nextMedia()`: tetap memakai `currentFilteredList`.
-- Tambah inisialisasi ayunan fallback yang kecil dan dapat dibersihkan setelah rerender galeri.
+- Tambah simulasi ayunan pegas dengan momentum dan cleanup saat rerender galeri.
 - Hitung statistik dari data; pertahankan audio/confetti dan perbaiki class tema yang masih disuntikkan JS.
 - Semua teks dari input/data ditempatkan sebagai text node bila tidak membutuhkan HTML, agar template UI tidak mencampur input pengguna dengan markup.
 
@@ -455,7 +456,7 @@ Hasil: perubahan siap ditinjau dengan bukti desktop/mobile dan catatan keterbata
 - [ ] Hero dan menu mobile memperbaiki masalah yang ditemukan pada referensi.
 - [ ] Polaroid tidak bertabrakan saat berayun, hover, focus, dan rerender filter.
 - [ ] Reduced motion menghasilkan galeri statis yang tetap rapi dan dapat dioperasikan.
-- [ ] Browser tanpa animation-timeline tetap memiliki galeri berfungsi melalui fallback.
+- [ ] Physics memakai JavaScript native dan tidak bergantung pada dukungan animation-timeline.
 - [ ] Grid dekoratif tidak memudarkan foto dan tidak menghalangi klik.
 - [ ] Tidak ada console error/media path rusak yang diperkenalkan perubahan.
 - [ ] Gambar mempunyai ruang/aspect ratio yang dipesan; media bawah halaman lazy-loaded; video tidak seluruhnya dimuat pada awal kunjungan.
@@ -503,3 +504,14 @@ Validasi memakai browser dan pengecekan kecil yang relevan. Tidak menambahkan fr
 - [x] Perbarui kredit metadata dan README. Media bonus kandidat tetap dapat ditemukan di galeri.
 - [x] Rapikan jarak headline desktop, posisi ornamen, dan skala judul mobile setelah inspeksi screenshot pertama.
 - Verifikasi fungsional penuh masih berlangsung; seluruh perubahan tetap lokal tanpa push.
+
+### 31 Oktober 2026: physics dan verifikasi browser
+
+- [x] Ganti ayunan CSS dengan pegas sudut, kecepatan, momentum, dan damping sesuai review pengguna.
+- [x] Simulasi hanya memproses polaroid sekitar viewport, berhenti ketika diam, dan dibersihkan setelah filter/search berubah.
+- [x] Tes khusus physics membuktikan scroll cepat memberi ayunan lebih kuat, inertia berlanjut setelah scroll diam, ayunan mereda, serta reduced motion menghentikannya.
+- [x] 65 pemeriksaan browser lulus setelah perubahan physics, termasuk seluruh kategori/search, modal, video, deskripsi opsional, keyboard, menu, footer, audio, dan confetti.
+- [x] Tidak ada overflow halaman pada 320, 390, 768, 810, 1024, 1366, dan 1440 px; overflow intrinsic grid pada panel cerita telah diperbaiki.
+- [x] Kedua font lokal berhasil dimuat; pemeriksaan screenshot desktop/mobile dan media tidak menemukan gambar gagal pada state normal.
+- [x] Tambah `tests/browser-smoke.js` dan `tests/polaroid-physics.js`, dijalankan lewat Playwright CLI tanpa dependency runtime website.
+- Audit Lighthouse: percobaan awal gagal saat mengunduh dependency npm (`ECONNRESET`); satu percobaan ulang sedang dilakukan. Belum ada klaim skor performa.

@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let viewerItems = filteredItems;
   let activeIndex = 0;
   let returnFocus = null;
-  let swingObserver = null;
+  let stopPhysics = () => {};
   const modal = $("lightboxModal");
   const search = $("geminiSearchInput");
   const filters = [...document.querySelectorAll(".filter-btn")];
@@ -156,27 +156,109 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   showChapter(1);
 
-  function initSwingFallback() {
-    swingObserver?.disconnect();
-    swingObserver = null;
-    if (CSS.supports("animation-timeline", "view()") || reducedMotion.matches)
-      return;
-    swingObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) =>
-          entry.target.classList.toggle("is-visible", entry.isIntersecting),
-        );
-      },
-      { threshold: 0.15 },
+  // A damped angular spring: scroll velocity adds an impulse, momentum settles at rest.
+  // Only visible cards participate, with one shared frame loop and one passive listener.
+  function initPolaroidPhysics() {
+    stopPhysics();
+    if (reducedMotion.matches) return;
+    const states = [...document.querySelectorAll(".polaroid-anchor")].map(
+      (anchor, i) => ({
+        anchor,
+        swing: anchor.querySelector(".polaroid-swing"),
+        angle: 0,
+        velocity: 0,
+        visible: false,
+        response: 0.8 + (i % 5) * 0.1,
+        direction: i % 2 ? -1 : 1,
+      }),
     );
-    document
-      .querySelectorAll(".polaroid-anchor")
-      .forEach((e) => swingObserver.observe(e));
+    const byAnchor = new Map(states.map((state) => [state.anchor, state]));
+    let frameId = 0;
+    let previousFrame = 0;
+    let lastScrollY = window.scrollY;
+    let lastScrollTime = performance.now();
+    const clamp = (value, limit) => Math.max(-limit, Math.min(limit, value));
+    function animate(now) {
+      const dt = Math.min((now - previousFrame) / 1000 || 1 / 60, 0.032);
+      previousFrame = now;
+      let moving = false;
+      for (const state of states) {
+        if (!state.visible) continue;
+        state.velocity += (-28 * state.angle - 2.8 * state.velocity) * dt;
+        state.angle += state.velocity * dt;
+        if (Math.abs(state.angle) > 9) {
+          state.angle = clamp(state.angle, 9);
+          state.velocity *= -0.25;
+        }
+        if (Math.abs(state.angle) < 0.012 && Math.abs(state.velocity) < 0.04) {
+          state.angle = 0;
+          state.velocity = 0;
+        } else moving = true;
+        state.swing.style.setProperty("--sway", `${state.angle.toFixed(3)}deg`);
+      }
+      frameId = moving ? requestAnimationFrame(animate) : 0;
+    }
+    function wake() {
+      if (!frameId) {
+        previousFrame = performance.now();
+        frameId = requestAnimationFrame(animate);
+      }
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const state = byAnchor.get(entry.target);
+          state.visible = entry.isIntersecting;
+          if (!state.visible) {
+            state.angle = state.velocity = 0;
+            state.swing.style.removeProperty("--sway");
+          }
+        }
+      },
+      { rootMargin: "100px 0px" },
+    );
+    states.forEach((state) => observer.observe(state.anchor));
+    function onScroll() {
+      const now = performance.now();
+      const dy = window.scrollY - lastScrollY;
+      const dt = Math.max((now - lastScrollTime) / 1000, 1 / 120);
+      lastScrollY = window.scrollY;
+      lastScrollTime = now;
+      if (Math.abs(dy) < 0.2 || modal.open) return;
+      const speed = dy / dt;
+      const impulse = clamp(speed * 0.018, 65) * Math.min(dt * 15, 1);
+      for (const state of states) {
+        if (state.visible)
+          state.velocity = clamp(
+            state.velocity + impulse * state.response * state.direction,
+            95,
+          );
+      }
+      wake();
+    }
+    function onPointerOver(event) {
+      const anchor = event.target.closest(".polaroid-anchor");
+      if (!anchor || anchor.contains(event.relatedTarget)) return;
+      const state = byAnchor.get(anchor);
+      if (state?.visible && event.pointerType === "mouse") {
+        state.velocity += 7 * state.direction;
+        wake();
+      }
+    }
+    document.addEventListener("scroll", onScroll, { passive: true });
+    $("galleryGrid").addEventListener("pointerover", onPointerOver);
+    stopPhysics = () => {
+      cancelAnimationFrame(frameId);
+      observer.disconnect();
+      document.removeEventListener("scroll", onScroll);
+      $("galleryGrid").removeEventListener("pointerover", onPointerOver);
+      states.forEach((state) => state.swing.style.removeProperty("--sway"));
+    };
   }
-  reducedMotion.addEventListener("change", initSwingFallback);
+  reducedMotion.addEventListener("change", initPolaroidPhysics);
 
   function renderGallery() {
-    swingObserver?.disconnect();
+    stopPhysics();
     const grid = $("galleryGrid");
     grid.replaceChildren();
     const active = currentFilter !== "all" || Boolean(searchQuery);
@@ -240,7 +322,7 @@ document.addEventListener("DOMContentLoaded", () => {
       frame.append(string, swing);
       grid.append(frame);
     });
-    initSwingFallback();
+    initPolaroidPhysics();
   }
 
   function applyFilterAndSearch(filter = currentFilter, query = search.value) {

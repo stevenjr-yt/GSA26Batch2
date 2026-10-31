@@ -465,6 +465,10 @@ button:disabled {
   gap: 64px;
   align-items: start;
 }
+.story-layout > *,
+.story-panel > * {
+  min-width: 0;
+}
 .story-index > p:first-child {
   font-size: 20px;
   line-height: 1.2;
@@ -783,7 +787,7 @@ button:disabled {
 .polaroid-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  column-gap: 56px;
+  column-gap: 72px;
   row-gap: 16px;
   padding: 0 22px 60px;
 }
@@ -817,7 +821,7 @@ button:disabled {
 }
 .polaroid-swing {
   transform-origin: 50% -12px;
-  transform: rotate(var(--tilt));
+  transform: rotate(calc(var(--tilt) + var(--sway, 0deg)));
   position: relative;
 }
 .polaroid-swing::before {
@@ -948,55 +952,6 @@ button:disabled {
   border-radius: 999px;
   padding: 10px 20px;
 }
-@keyframes scroll-swing {
-  0% {
-    transform: rotate(calc(var(--tilt) - 2deg));
-  }
-  20% {
-    transform: rotate(calc(var(--tilt) + 2deg));
-  }
-  40% {
-    transform: rotate(calc(var(--tilt) - 1.7deg));
-  }
-  60% {
-    transform: rotate(calc(var(--tilt) + 1.5deg));
-  }
-  80% {
-    transform: rotate(calc(var(--tilt) - 1deg));
-  }
-  100% {
-    transform: rotate(var(--tilt));
-  }
-}
-@keyframes entry-swing {
-  0% {
-    transform: rotate(calc(var(--tilt) - 2.5deg));
-  }
-  35% {
-    transform: rotate(calc(var(--tilt) + 2deg));
-  }
-  65% {
-    transform: rotate(calc(var(--tilt) - 1deg));
-  }
-  100% {
-    transform: rotate(var(--tilt));
-  }
-}
-@media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    .polaroid-swing {
-      animation: scroll-swing linear both;
-      animation-timeline: view();
-      animation-range: entry 0% exit 100%;
-    }
-  }
-  @supports not (animation-timeline: view()) {
-    .polaroid-anchor.is-visible .polaroid-swing {
-      animation: entry-swing 0.75s ease-out both;
-    }
-  }
-}
-
 .faq-list {
   background: var(--surface);
   border: 1px solid var(--line);
