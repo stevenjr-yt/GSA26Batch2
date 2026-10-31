@@ -515,3 +515,12 @@ Validasi memakai browser dan pengecekan kecil yang relevan. Tidak menambahkan fr
 - [x] Kedua font lokal berhasil dimuat; pemeriksaan screenshot desktop/mobile dan media tidak menemukan gambar gagal pada state normal.
 - [x] Tambah `tests/browser-smoke.js` dan `tests/polaroid-physics.js`, dijalankan lewat Playwright CLI tanpa dependency runtime website.
 - Audit Lighthouse: percobaan awal gagal saat mengunduh dependency npm (`ECONNRESET`); satu percobaan ulang sedang dilakukan. Belum ada klaim skor performa.
+
+### 31 Oktober 2026: kontrol navbar dan pemeriksaan tambahan
+
+- [x] Pindahkan tombol suara dan confetti dari footer ke navbar, tetap terlihat saat desktop maupun mobile.
+- [x] Tingkatkan kontras link navbar dan badge chapter aktif.
+- [x] 68 pemeriksaan browser lulus sebelum perubahan posisi kontrol, termasuk state hasil tunggal serta simulasi thumbnail/full media gagal.
+- [x] Pemeriksaan file memastikan seluruh 28 ID unik dan semua path media asli tersedia.
+- Lighthouse belum dapat dijalankan: dua percobaan gagal saat instalasi alat dari registry npm (`ECONNRESET` dan `EIDLETIMEOUT`). Tidak ada skor atau klaim Core Web Vitals.
+- [ ] Tambahkan upload momen bersama, gambar maksimal 100 KB, judul, deskripsi opsional, tag, dan download. Penyimpanan dipilih pengguna: project Supabase yang sudah dimiliki; kredensial akan diisi melalui .env lokal.

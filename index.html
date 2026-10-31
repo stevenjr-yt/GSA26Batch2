@@ -87,6 +87,33 @@
             >Tentang GSA ↗</a
           >
         </div>
+        <div class="nav-actions">
+          <button
+            id="audioToggleBtn"
+            aria-label="Aktifkan atau matikan suara ambien"
+            title="Suara ambien"
+            class="utility-button"
+            type="button"
+            aria-pressed="false"
+          >
+            <span
+              class="sound-bars audio-paused"
+              id="audioIndicator"
+              aria-hidden="true"
+              ><i></i><i></i><i></i><i></i></span
+            ><span class="audio-text">Suara ambien: Off</span></button
+          ><button
+            id="triggerConfettiBtn"
+            aria-label="Rayakan dengan confetti"
+            title="Confetti"
+            class="utility-button"
+            type="button"
+          >
+            <svg class="icon" aria-hidden="true">
+              <use href="#icon-sparkle" /></svg
+            ><span class="confetti-label">Rayakan lagi</span>
+          </button>
+        </div>
       </nav>
     </header>
     <main id="main">
@@ -418,23 +445,7 @@
           >
         </p>
         <div class="footer-tools">
-          <button
-            id="audioToggleBtn"
-            class="utility-button"
-            type="button"
-            aria-pressed="false"
-          >
-            <span
-              class="sound-bars audio-paused"
-              id="audioIndicator"
-              aria-hidden="true"
-              ><i></i><i></i><i></i><i></i></span
-            ><span class="audio-text">Suara ambien: Off</span></button
-          ><button id="triggerConfettiBtn" class="utility-button" type="button">
-            <svg class="icon" aria-hidden="true">
-              <use href="#icon-sparkle" /></svg
-            >Rayakan lagi</button
-          ><a class="utility-button" href="#home">Kembali ke atas ↑</a>
+          <a class="utility-button" href="#home">Kembali ke atas ↑</a>
         </div>
         <p class="footer-note">
           Sebuah arsip personal. Sebuah hari yang berarti.

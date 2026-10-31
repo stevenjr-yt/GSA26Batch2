@@ -286,6 +286,23 @@ async (page) => {
   await page.evaluate(() => {
     document.querySelector("#confettiCanvas")?.remove();
   });
+  await page.emulateMedia({reducedMotion:'reduce'});
+  await filter('all').click();
+  await page.locator('#geminiSearchInput').fill('cermin');
+  await cards.first().click();
+  check(await page.locator('#lightboxPrev').isDisabled() && await page.locator('#lightboxNext').isDisabled(), 'Single-result viewer disables both navigation buttons');
+  await page.keyboard.press('Escape');
+  await page.route('**/assets/images/mrt-jakarta-commute.*', route => route.fulfill({status:404,body:''}));
+  await page.reload();
+  await cards.first().scrollIntoViewIfNeeded();
+  await page.locator('.polaroid-paper.image-failed').first().waitFor();
+  check(await cards.first().isEnabled(), 'A failed thumbnail remains openable');
+  await cards.first().click();
+  await page.locator('.media-error').waitFor();
+  check(await page.locator('.media-error').getAttribute('role') === 'status', 'Failed full-size media has an accessible error state');
+  await page.keyboard.press('Escape');
+  await page.unroute('**/assets/images/mrt-jakarta-commute.*');
+  await page.reload();
   check(errors.length === 0, `No JavaScript errors: ${errors.join(", ")}`);
   return { passed: checks.length, checks, widths };
 }

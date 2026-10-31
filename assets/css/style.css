@@ -205,7 +205,7 @@ button:disabled {
 .nav-links a {
   font-size: 12px;
   font-weight: 500;
-  color: #0674ce;
+  color: #065ba7;
   white-space: nowrap;
   transition: color 0.2s;
 }
@@ -500,7 +500,7 @@ button:disabled {
   background: #0099ff12;
 }
 .story-tab.is-active span {
-  background: #148ce9;
+  background: #0668b6;
 }
 .story-note {
   font-size: 13px;
@@ -1733,5 +1733,70 @@ button:disabled {
   }
   .polaroid-paper:hover {
     transform: none;
+  }
+}
+
+/* Utility actions stay available in the navigation on every viewport. */
+.brand {
+  order: 1;
+}
+.nav-links {
+  order: 2;
+}
+.nav-actions {
+  order: 3;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+.menu-toggle {
+  order: 4;
+}
+.nav-actions .utility-button {
+  background: transparent;
+  border-color: #0754a32b;
+  color: #0754a3;
+  font-size: 11px;
+  padding: 7px 10px;
+  white-space: nowrap;
+}
+.nav-actions .sound-bars i {
+  background: #0754a3;
+}
+@media (max-width: 1199px) {
+  .nav-actions .audio-text,
+  .nav-actions .confetti-label {
+    display: none;
+  }
+  .nav-actions .utility-button {
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+  }
+  .navbar {
+    gap: 14px;
+  }
+  .nav-actions {
+    gap: 0;
+  }
+}
+@media (max-width: 809px) {
+  .navbar {
+    gap: 4px;
+    padding-left: 10px;
+    padding-right: 6px;
+  }
+  .brand img {
+    width: clamp(104px, 33vw, 140px);
+  }
+  .nav-actions {
+    order: 2;
+  }
+  .menu-toggle {
+    order: 3;
+  }
+  .nav-links {
+    order: 4;
   }
 }
