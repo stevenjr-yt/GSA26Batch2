@@ -437,9 +437,6 @@ document.addEventListener("DOMContentLoaded", () => {
       $("rewindPlay"),
     ),
   );
-  $("candidateJourneyBtn").addEventListener("click", () =>
-    selectCategory("candidate"),
-  );
 
   // Audio stays opt-in; stop nodes immediately so rapid toggles cannot leak oscillators.
   let audioContext = null;

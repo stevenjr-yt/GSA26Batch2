@@ -1,6 +1,6 @@
 # GSA 2026 Batch 2 · Inauguration Memories
 
-Arsip personal inaugurasi Google Student Ambassador 2026 Batch 2, dari Steven Erlinto. Berisi 28 kenangan: 19 foto dan 9 video, dengan lima chapter perjalanan dan bonus candidate journey.
+Arsip personal inaugurasi Google Student Ambassador 2026 Batch 2, dari Steven Erlinto dan Galih Kusuma Wijaya. Berisi 28 kenangan: 19 foto dan 9 video, dengan lima chapter perjalanan dan bonus candidate journey.
 
 Desain mengikuti [website GSA Indonesia](https://googlestudentambassador.id/): hero biru ke hitam, Google Sans Flex, navbar pil, dan panel gelap. Galeri menggunakan polaroid gantung di atas grid yang memudar, dengan ayunan terkait scroll. Klik polaroid untuk membuka media dan deskripsi yang tersedia.
 
@@ -47,4 +47,4 @@ node --check assets/js/data.js
 
 Uji browser dilakukan pada search, filter, viewer, menu, motion, serta beberapa ukuran viewport; catatan hasil aktual ada di `PLAN.md`. Website tetap statis dan dapat dilayani dari GitHub Pages atau konfigurasi Vercel yang sudah ada.
 
-Kredit: made by memories, from Steven · GSAID26B20013.
+Kredit: made by memories, from Steven and Galih · GSAID26B20013 & GSAID26B20004.

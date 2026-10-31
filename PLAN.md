@@ -494,3 +494,12 @@ Validasi memakai browser dan pengecekan kecil yang relevan. Tidak menambahkan fr
 - [x] Pemeriksaan awal: syntax JavaScript valid, halaman termuat tanpa console error, kedua font termuat, 28 polaroid dirender, desktop tidak overflow.
 - [x] Preview tersedia di http://localhost:8000 untuk dipantau pengguna.
 - Berikutnya: uji seluruh interaksi, viewport, reduced motion, fallback, dan perbaiki temuan sebelum commit verifikasi akhir.
+
+### 31 Oktober 2026: perubahan dari review pengguna
+
+- [x] Hapus section Candidate Journey/spotlight Steven yang ditunjuk pada screenshot, termasuk tautan navbar Cerita Steven dan event handler/styling yang tidak lagi dipakai. Instruksi terbaru ini menggantikan rencana spotlight pada bagian 6 dan 8.
+- [x] Footer menjadi “Made by memories. From Steven and Galih, for us.”
+- [x] Cantumkan kedua ID di footer: GSAID26B20013 dan GSAID26B20004.
+- [x] Perbarui kredit metadata dan README. Media bonus kandidat tetap dapat ditemukan di galeri.
+- [x] Rapikan jarak headline desktop, posisi ornamen, dan skala judul mobile setelah inspeksi screenshot pertama.
+- Verifikasi fungsional penuh masih berlangsung; seluruh perubahan tetap lokal tanpa push.
