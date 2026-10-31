@@ -51,21 +51,21 @@ const MEMORIES_DATA = [
     tags: ["MRT Station", "Gathering", "Transit"]
   },
 
-  // ================= CHAPTER 2: THE INAUGURATION AT GP SPACE =================
+  // ================= CHAPTER 2: THE INAUGURATION AT MGP SPACE =================
   {
     id: "gp-space-queue",
-    title: "Antrean Kedatangan di GP Space",
+    title: "Antrean Kedatangan di MGP Space",
     chapter: 2,
     chapterName: "The Inauguration Ceremony",
     category: "inauguration",
     type: "video",
     src: "assets/videos/gp-space-arrival-queue.mp4",
     poster: "assets/images/video-thumbs/gp-space-arrival-queue.webp",
-    location: "GP Space, Jakarta",
+    location: "MGP Space, Jakarta",
     date: "Oktober 2026",
     badge: "Arrival",
-    description: "Antrean rapi seluruh mahasiswa bertalenta dari berbagai kampus di Indonesia saat memasuki venue inagurasi GP Space. Lambaian tangan ramah ke arah kamera menyambut hari bersejarah.",
-    tags: ["GP Space", "Arrival", "Queue", "Ambassadors"]
+    description: "Antrean rapi seluruh mahasiswa bertalenta dari berbagai kampus di Indonesia saat memasuki venue inagurasi MGP Space. Lambaian tangan ramah ke arah kamera menyambut hari bersejarah.",
+    tags: ["MGP Space", "Arrival", "Queue", "Ambassadors"]
   },
   {
     id: "gp-space-almamater",
@@ -76,11 +76,11 @@ const MEMORIES_DATA = [
     type: "image",
     src: "assets/images/gp-space-almamater-welcome.webp",
     fallbackSrc: "assets/images/gp-space-almamater-welcome.jpg",
-    location: "Photobooth Entrance GP Space, Jakarta",
+    location: "Photobooth Entrance MGP Space, Jakarta",
     date: "Oktober 2026",
     badge: "Almamater Pride",
     description: "Foto bersama seluruh delegasi Google Student Ambassador 2026 Batch 2 mengenakan jas almamater universitas masing-masing di depan gate bertuliskan 'Google Student Ambassador Inauguration Event 2026'. Keberagaman talenta pemuda Indonesia!",
-    tags: ["Jas Almamater", "GP Space", "Bhinneka", "Batch 2"]
+    tags: ["Jas Almamater", "MGP Space", "Bhinneka", "Batch 2"]
   },
   {
     id: "steven-stage",
@@ -91,7 +91,7 @@ const MEMORIES_DATA = [
     type: "image",
     src: "assets/images/steven-stage-inauguration.webp",
     fallbackSrc: "assets/images/steven-stage-inauguration.jpg",
-    location: "Main Stage Auditorium GP Space",
+    location: "Main Stage Auditorium MGP Space",
     date: "Oktober 2026",
     badge: "Official Induction",
     description: "Steven Erlinto berpose bangga di atas panggung utama dengan latar belakang megah LED 'Selamat Datang Google Student Ambassador 2026 Inauguration Batch 2' bertabur lambang bintang Gemini dan logo Google.",
@@ -106,7 +106,7 @@ const MEMORIES_DATA = [
     type: "video",
     src: "assets/videos/grand-confetti-drop-celebration.mp4",
     poster: "assets/images/video-thumbs/grand-confetti-drop-celebration.webp",
-    location: "Auditorium GP Space",
+    location: "Auditorium MGP Space",
     date: "Oktober 2026",
     badge: "Epic Highlight",
     description: "Klimaks pelantikan! Dentuman confetti berhamburan penuh warna menghujani seluruh auditorium. Sorak sorai ratusan GSA Batch 2 mengenakan varsity jacket merayakan awal perjalanan sebagai pemimpin AI masa depan.",
@@ -121,7 +121,7 @@ const MEMORIES_DATA = [
     type: "image",
     src: "assets/images/auditorium-varsity-group-1.webp",
     fallbackSrc: "assets/images/auditorium-varsity-group-1.jpg",
-    location: "Auditorium Hall GP Space",
+    location: "Auditorium Hall MGP Space",
     date: "Oktober 2026",
     badge: "Varsity Squad",
     description: "Foto selfie bersama teman-teman seperjuangan dengan jaket varsity navy-putih kebanggaan berlogo Google 'G' warna-warni. Di belakang terlihat dekorasi panggung dan meja banquet prasmanan.",
@@ -136,7 +136,7 @@ const MEMORIES_DATA = [
     type: "image",
     src: "assets/images/auditorium-varsity-badges.webp",
     fallbackSrc: "assets/images/auditorium-varsity-badges.jpg",
-    location: "Auditorium Hall GP Space",
+    location: "Auditorium Hall MGP Space",
     date: "Oktober 2026",
     badge: "GSA ID Badge",
     description: "Semua memamerkan ID Card lanyard resmi Google Student Ambassador 2026 Batch 2 ke arah kamera dengan senyum bangga dan pose victory!",
@@ -151,7 +151,7 @@ const MEMORIES_DATA = [
     type: "image",
     src: "assets/images/auditorium-varsity-group-2.webp",
     fallbackSrc: "assets/images/auditorium-varsity-group-2.jpg",
-    location: "Auditorium Hall GP Space",
+    location: "Auditorium Hall MGP Space",
     date: "Oktober 2026",
     badge: "Candid Vibes",
     description: "Tawa lepas dan chemistry antar anggota yang makin erat. Menjadi bagian dari ekosistem Google AI bukan hanya soal teknologi, tapi persahabatan seumur hidup.",
@@ -166,7 +166,7 @@ const MEMORIES_DATA = [
     type: "video",
     src: "assets/videos/stage-countdown-moment.mp4",
     poster: "assets/images/video-thumbs/stage-countdown-moment.webp",
-    location: "Auditorium GP Space",
+    location: "Auditorium MGP Space",
     date: "Oktober 2026",
     badge: "Crowd Energy",
     description: "Antusiasme penonton di bangku auditorium mengangkat ponsel mereka merekam panggung utama saat seremoni peresmian berlangsung.",
@@ -181,7 +181,7 @@ const MEMORIES_DATA = [
     type: "video",
     src: "assets/videos/auditorium-hall-cheers.mp4",
     poster: "assets/images/video-thumbs/auditorium-hall-cheers.webp",
-    location: "Auditorium GP Space",
+    location: "Auditorium MGP Space",
     date: "Oktober 2026",
     badge: "Hall Atmosphere",
     description: "Riuh gemuruh tepuk tangan dan tawa bahagia dari para duta mahasiswa se-Indonesia yang saling menyemangati.",
@@ -616,7 +616,7 @@ const GEMINI_QUICK_PROMPTS = [
   {
     text: "Momen Hujan Confetti 🎉",
     query: "confetti",
-    response: "Momen puncak seremoni inagurasi terjadi di panggung Auditorium GP Space saat ratusan lembar confetti warna-warni ditembakkan! Sorak sorai membahana saat GSA Batch 2 resmi dilantik."
+    response: "Momen puncak seremoni inagurasi terjadi di panggung Auditorium MGP Space saat ratusan lembar confetti warna-warni ditembakkan! Sorak sorai membahana saat GSA Batch 2 resmi dilantik."
   },
   {
     text: "Di mana foto cermin cembung? 🪞",

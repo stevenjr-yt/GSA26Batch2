@@ -16,7 +16,7 @@ Website kenangan interaktif bernuansa **Google Gemini 2026** (Light Blue, Glassm
   - Menampilkan jawaban cerdas simulasi AI Gemini.
 - 🗺️ **Interpretasi Lengkap Lokasi Kegiatan (5 Chapters)**:
   1. **Chapter 1: Transit & Commute (MRT Jakarta)** — Suasana pagi berdesakan di gerbong dan peron stasiun MRT Jakarta.
-  2. **Chapter 2: The Inauguration Ceremony (GP Space, Jakarta)** — Antrean masuk jas almamater, pelantikan di panggung LED megah, pembagian Google Varsity Jacket & ID Card, serta momen klimaks **Hujan Confetti Drop**!
+  2. **Chapter 2: The Inauguration Ceremony (MGP Space, Jakarta)** — Antrean masuk jas almamater, pelantikan di panggung LED megah, pembagian Google Varsity Jacket & ID Card, serta momen klimaks **Hujan Confetti Drop**!
   3. **Chapter 3: Google Indonesia HQ Tour (Pacific Century Place, SCBD)** — Dinding logo 3D batik bunga Google, instalasi Bangkit, Google G-Bike, lorong payung tradisional, dan tour microkitchen pantry.
   4. **Chapter 4: Culinary & Little Tokyo (Blok M & IPPUDO)** — Street mirror selfie di Melawai Blok M, semangkuk hangat IPPUDO ramen, dan makan bersama sepanci emas ramyeon Korea.
   5. **Chapter 5: Night Thrills & Hotel UNO (Rumah Hantu Jeruk Purut & Kamar Hotel)** — Uji nyali Rumah Hantu Jeruk Purut dan duel sengit UNO kamar hotel pukul 23:24 dengan taruhan transfer QRIS Rp 30.000!
