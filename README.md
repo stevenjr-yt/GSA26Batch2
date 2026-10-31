@@ -1,110 +1,50 @@
-# 🌟 Google Student Ambassador (GSA) Inauguration 2026 Batch 2 - Memories Archive
+# GSA 2026 Batch 2 · Inauguration Memories
 
-Website kenangan interaktif bernuansa **Google Gemini 2026** (Light Blue, Glassmorphism, Cosmic Aurora, & Sparkle Star) untuk mendokumentasikan momen bersejarah pelantikan **Google Student Ambassador 2026 Batch 2**.
+Arsip personal inaugurasi Google Student Ambassador 2026 Batch 2, dari Steven Erlinto. Berisi 28 kenangan: 19 foto dan 9 video, dengan lima chapter perjalanan dan bonus candidate journey.
 
----
+Desain mengikuti [website GSA Indonesia](https://googlestudentambassador.id/): hero biru ke hitam, Google Sans Flex, navbar pil, dan panel gelap. Galeri menggunakan polaroid gantung di atas grid yang memudar, dengan ayunan terkait scroll. Klik polaroid untuk membuka media dan deskripsi yang tersedia.
 
-## 🚀 Fitur Utama
+## Preview lokal
 
-- 🎨 **Google Gemini Light Blue Aesthetic**: Desain modern khas Gemini AI dengan gradien biru langit muda, efek glassmorphism, dan ornamen SVG Gemini Sparkle.
-- ⚡ **Ultra Ringan & Terkompresi**:
-  - Seluruh foto dikompresi ke format generasi terbaru **WebP** & optimized JPEG.
-  - Seluruh video MP4 dikompresi dengan codec **H.264 Web-Stream Ready** (`+faststart`).
-  - Menggunakan **SVG vector murni** untuk seluruh ikon UI agar tajam di semua layar tanpa beban download berat.
-- 🧠 **Interactive Gemini AI Search & Prompt Chips**:
-  - Cari kenangan secara instan atau klik prompt cepat seperti *"Momen Hujan Confetti"*, *"Di mana foto cermin cembung?"*, *"Taruhan UNO Rp 30.000"*, dll.
-  - Menampilkan jawaban cerdas simulasi AI Gemini.
-- 🗺️ **Interpretasi Lengkap Lokasi Kegiatan (5 Chapters)**:
-  1. **Chapter 1: Transit & Commute (MRT Jakarta)** — Suasana pagi berdesakan di gerbong dan peron stasiun MRT Jakarta.
-  2. **Chapter 2: The Inauguration Ceremony (MGP Space, Jakarta)** — Antrean masuk jas almamater, pelantikan di panggung LED megah, pembagian Google Varsity Jacket & ID Card, serta momen klimaks **Hujan Confetti Drop**!
-  3. **Chapter 3: Google Indonesia HQ Tour (Pacific Century Place, SCBD)** — Dinding logo 3D batik bunga Google, instalasi Bangkit, Google G-Bike, lorong payung tradisional, dan tour microkitchen pantry.
-  4. **Chapter 4: Culinary & Little Tokyo (Blok M & IPPUDO)** — Street mirror selfie di Melawai Blok M, semangkuk hangat IPPUDO ramen, dan makan bersama sepanci emas ramyeon Korea.
-  5. **Chapter 5: Night Thrills & Hotel UNO (Rumah Hantu Jeruk Purut & Kamar Hotel)** — Uji nyali Rumah Hantu Jeruk Purut dan duel sengit UNO kamar hotel pukul 23:24 dengan taruhan transfer QRIS Rp 30.000!
-  6. **Bonus Chapter: Steven Erlinto Genesis Poster** — Dokumentasi poster kandidat awal *"Ready to Become Your Next AI Leader"*.
-- 🎵 **Generative Ambient Synth Soundscape**:
-  - Suara ambient futuristik Gemini yang digenerate langsung oleh browser via **Web Audio API** (tanpa perlu file MP3 besar eksternal!).
-- 🎉 **Canvas Confetti Cannon**: Letupan confetti warna Google murni yang bisa dipicu kapan saja.
-- 🔍 **Interactive Lightbox Modal**: Penampil foto & video resolusi tinggi dengan navigasi panah keyboard dan detail cerita lengkap.
+Jalankan dari root repository:
 
----
+```sh
+python -m http.server 8000 --bind 127.0.0.1
+```
 
-## 📁 Struktur Folder Project (Siap Langsung Up ke GitHub)
+Buka [localhost:8000](http://localhost:8000). Tidak perlu install dependency atau menjalankan build.
+
+## Fitur
+
+- Search berdasarkan judul, lokasi, deskripsi, chapter, dan tag; prompt cepat menggunakan data lokal, tanpa API AI.
+- Filter kategori, termasuk video dan perjalanan kandidat; jumlah media dihitung dari data.
+- Galeri polaroid dengan CSS scroll-driven animation, fallback IntersectionObserver, dan dukungan reduced motion.
+- Viewer native dialog: foto utuh, video dengan kontrol, deskripsi opsional, panah keyboard, Escape, dan pengembalian fokus.
+- Navigasi mobile, chapter cerita, rewind, dan FAQ.
+- Suara ambien opt-in melalui Web Audio dan confetti manual.
+- Font lokal WOFF2 dan foto WebP dengan fallback JPEG.
+
+## Struktur
 
 ```text
-gsa-2026-batch2-memories/
-├── index.html                  # Halaman utama website
-├── README.md                   # Dokumentasi project & panduan deploy
-├── .gitignore                  # File ignore git
-└── assets/
-    ├── css/
-    │   └── style.css           # Styling Google Gemini theme & animasi
-    ├── js/
-    │   ├── data.js             # Data koleksi foto/video & interpretasi cerita
-    │   └── app.js              # Interaktivitas galeri, lightbox, synth, & filter
-    ├── images/
-    │   ├── *.webp / *.jpg      # Seluruh foto terkompresi
-    │   └── video-thumbs/       # Thumbnail cepat untuk preview video
-    └── videos/
-        └── *.mp4               # Video vlog & highlight terkompresi
+index.html            Struktur halaman dan dialog
+assets/css/style.css  Token, layout, polaroid, motion, responsive
+assets/js/app.js      Renderer, filter/search, viewer, utilitas
+assets/js/data.js     Seluruh data kenangan dan prompt lokal
+assets/brand/         Logo/ornamen dan catatan sumber
+assets/fonts/         Google Sans Flex, Inter, serta lisensi OFL
+assets/images/        Foto, poster, dan thumbnail asli
+assets/videos/        Video MP4 asli
+PLAN.md               Audit referensi, rencana, dan progres implementasi
 ```
 
----
+## Pemeriksaan
 
-## 💻 Cara Menjalankan Secara Lokal (Preview)
-
-Di terminal Anda, buka folder project ini dan jalankan local web server:
-
-```bash
-cd ~/.gemini/antigravity/scratch/gsa-2026-batch2-memories
-python3 -m http.server 8000
+```sh
+node --check assets/js/app.js
+node --check assets/js/data.js
 ```
 
-Buka browser di alamat: `http://localhost:8000`
+Uji browser dilakukan pada search, filter, viewer, menu, motion, serta beberapa ukuran viewport; catatan hasil aktual ada di `PLAN.md`. Website tetap statis dan dapat dilayani dari GitHub Pages atau konfigurasi Vercel yang sudah ada.
 
----
-
-## 🐙 Cara Langsung Push ke GitHub & Aktifkan GitHub Pages
-
-Ikuti 3 langkah mudah ini di terminal Anda:
-
-### 1. Inisialisasi Git & Commit
-```bash
-cd ~/.gemini/antigravity/scratch/gsa-2026-batch2-memories
-git init
-git add .
-git commit -m "feat: initial commit Google Student Ambassador 2026 Batch 2 memories website"
-```
-
-### 2. Buat Repositori Baru di GitHub
-1. Buka [github.com/new](https://github.com/new).
-2. Beri nama repositori, misalnya: `gsa-2026-batch2-memories`.
-3. Biarkan opsi *Add README* tidak dicentang (karena sudah ada).
-4. Klik **Create repository**.
-
-### 3. Push ke GitHub
-Salin URL repositori Anda dan jalankan perintah berikut:
-
-```bash
-git branch -M main
-git remote add origin https://github.com/USERNAME_GITHUB_KAMU/gsa-2026-batch2-memories.git
-git push -u origin main
-```
-
-*(Ganti `USERNAME_GITHUB_KAMU` dengan username GitHub Anda)*
-
----
-
-## 🌐 Cara Mengaktifkan GitHub Pages (Website Langsung Online Gratis!)
-
-1. Di halaman repositori GitHub Anda, klik tab **Settings**.
-2. Di menu sebelah kiri, klik **Pages**.
-3. Pada bagian **Build and deployment > Branch**:
-   - Pilih branch: `main`
-   - Pilih folder: `/ (root)`
-4. Klik **Save**.
-5. Tunggu sekitar 1-2 menit, website kenangan Anda akan langsung online di:
-   `https://USERNAME_GITHUB_KAMU.github.io/gsa-2026-batch2-memories/`
-
----
-Dibuat dengan bangga untuk seluruh keluarga besar **Google Student Ambassador 2026 Batch 2** 🚀
-Tagline: *"Ready to Become Your Next AI Leader"*
+Kredit: made by memories, from Steven · GSAID26B20013.

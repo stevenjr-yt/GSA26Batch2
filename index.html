@@ -1,427 +1,544 @@
-<!DOCTYPE html>
-<html lang="id" class="light scroll-smooth">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Google Student Ambassador Inauguration 2026 Batch 2 | Memories Archive</title>
-  <meta name="description" content="made by memories, from Steven... GSAID26B20013 - Arsip kenangan resmi dan dokumentasi inagurasi Google Student Ambassador 2026 Batch 2 di MGP Space Jakarta.">
-  
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            gemini: {
-              cyan: '#1ba1e3',
-              sky: '#38bdf8',
-              blue: '#5479f7',
-              purple: '#9156f8',
-              pink: '#d96570',
-              deep: '#0369a1'
-            }
-          }
-        }
-      }
-    }
-  </script>
-
-  <!-- Google Gemini Fonts & Custom Stylesheet -->
-  <link rel="stylesheet" href="assets/css/style.css">
-  
-  <!-- Official Google Logo Favicon -->
-  <link rel="icon" type="image/png" href="assets/images/google-g-logo.png">
-</head>
-<body class="min-h-screen bg-white text-slate-900 antialiased selection:bg-sky-200 selection:text-sky-900 overflow-x-hidden">
-
-  <!-- SVG Definition Library for Official Google Gemini Logo -->
-  <svg class="hidden" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="geminiOfficialGrad" x1="0" y1="0" x2="28" y2="28" gradientUnits="userSpaceOnUse">
-        <stop offset="0%" stop-color="#1BA1E3"/>
-        <stop offset="35%" stop-color="#5479F7"/>
-        <stop offset="70%" stop-color="#9156F8"/>
-        <stop offset="100%" stop-color="#D96570"/>
-      </linearGradient>
-    </defs>
-  </svg>
-
-  <!-- Top Announcement Bar: made by memories, from Steven... GSAID26B20013 -->
-  <div class="w-full bg-gradient-to-r from-sky-100 via-sky-50 to-blue-100 py-2 px-2.5 sm:px-4 border-b border-sky-200/90 text-center text-xs sm:text-sm font-bold text-sky-950 tracking-wide flex items-center justify-center gap-1.5 sm:gap-2 shadow-sm">
-    <img src="assets/images/google-g-logo.png" alt="Google" class="w-3.5 h-3.5 sm:w-4 sm:h-4 object-contain flex-shrink-0">
-    <span class="text-[11px] sm:text-xs md:text-sm truncate">made by memories, from Steven... <span class="font-mono bg-white px-1.5 sm:px-2 py-0.5 rounded-md border border-sky-300 text-sky-700 shadow-sm ml-0.5 sm:ml-1 font-bold text-[10px] sm:text-xs">GSAID26B20013</span></span>
-    <span class="hidden md:inline text-sky-600 font-medium">• Inauguration 2026 Batch 2</span>
-  </div>
-
-  <!-- Soft Airy Light Blue Auroras in Background -->
-  <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
-    <div class="absolute -top-32 left-1/4 w-[350px] sm:w-[600px] h-[350px] sm:h-[600px] bg-sky-200/50 rounded-full blur-[100px] sm:blur-[130px] animate-gemini-pulse"></div>
-    <div class="absolute top-1/3 -right-32 w-[350px] sm:w-[650px] h-[350px] sm:h-[650px] bg-cyan-100/60 rounded-full blur-[100px] sm:blur-[140px] animate-gemini-pulse" style="animation-delay: 2s;"></div>
-    <div class="absolute -bottom-32 left-1/3 w-[350px] sm:w-[600px] h-[350px] sm:h-[600px] bg-blue-100/50 rounded-full blur-[100px] sm:blur-[130px] animate-gemini-pulse" style="animation-delay: 4s;"></div>
-  </div>
-
-  <!-- Navigation Bar (White & Light Blue with Official Google Logo & Mobile Responsive) -->
-  <header class="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-sky-200/80 shadow-sm shadow-sky-500/5">
-    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between gap-2">
-      <!-- Brand Logo -->
-      <a href="#" class="flex items-center gap-2 sm:gap-3 group min-w-0">
-        <!-- Official Google "G" Logo Container -->
-        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-white border border-sky-200 p-1 sm:p-1.5 shadow-sm group-hover:scale-105 transition-transform flex items-center justify-center flex-shrink-0">
-          <img src="assets/images/google-g-logo.png" alt="Google Logo" class="w-full h-full object-contain">
-        </div>
-        <div class="min-w-0 flex-1">
-          <div class="flex items-center gap-1.5">
-            <span class="text-xs sm:text-base font-extrabold tracking-tight text-slate-900 font-heading truncate">
-              Google Student Ambassador
-            </span>
-            <span class="hidden sm:inline-flex px-2 py-0.5 text-[10px] font-extrabold uppercase rounded-full bg-sky-100 text-sky-800 border border-sky-300 flex-shrink-0">BATCH 2</span>
-          </div>
-          <div class="flex items-center gap-1.5 text-[10px] sm:text-[11px] text-sky-600 font-semibold truncate">
-            <span class="sm:hidden font-bold text-sky-700 bg-sky-50 px-1 rounded border border-sky-200">BATCH 2</span>
-            <span class="truncate">Memories Archive • MGP Space Jakarta</span>
-          </div>
-        </div>
-      </a>
-
-      <!-- Right Controls -->
-      <div class="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
-        <!-- Ambient Sound Toggle (Web Audio API) -->
-        <button id="audioToggleBtn" type="button" title="Aktifkan Suara Latar Ambien" class="p-2 sm:px-3.5 sm:py-1.5 rounded-full text-xs font-semibold glass-pill text-sky-800 hover:text-sky-950 hover:border-sky-400 transition-all flex items-center gap-1.5 sm:gap-2 cursor-pointer shadow-sm">
-          <div id="audioIndicator" class="flex items-center gap-0.5 audio-paused">
-            <span class="sound-wave-bar"></span>
-            <span class="sound-wave-bar"></span>
-            <span class="sound-wave-bar"></span>
-            <span class="sound-wave-bar"></span>
-          </div>
-          <span class="audio-text hidden md:inline">Gemini Sound: Off</span>
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#3186ff" />
+    <title>GSA 2026 Batch 2 · Inauguration Memories</title>
+    <meta
+      name="description"
+      content="Dari perjalanan pagi hingga malam penuh cerita. Arsip foto dan video inaugurasi Google Student Ambassador 2026 Batch 2, dari Steven Erlinto."
+    />
+    <meta
+      property="og:title"
+      content="GSA 2026 Batch 2 · Inauguration Memories"
+    />
+    <meta
+      property="og:description"
+      content="Satu angkatan. Banyak cerita. Buka kembali kenangan inaugurasi GSA 2026 Batch 2."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/png" href="assets/images/google-g-logo.png" />
+    <link
+      rel="preload"
+      href="assets/fonts/google-sans-flex-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <script src="assets/js/data.js" defer></script>
+    <script src="assets/js/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Lewati navigasi</a>
+    <svg
+      class="icon-library"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <symbol id="icon-arrow" viewBox="0 0 24 24">
+        <path d="M5 12h14M12 5l7 7-7 7" />
+      </symbol>
+      <symbol id="icon-close" viewBox="0 0 24 24">
+        <path d="M18 6L6 18M6 6l12 12" />
+      </symbol>
+      <symbol id="icon-search" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8" />
+        <path d="m21 21-4.35-4.35" />
+      </symbol>
+      <symbol id="icon-play" viewBox="0 0 24 24">
+        <path d="m8 5 11 7-11 7Z" />
+      </symbol>
+      <symbol id="icon-sparkle" viewBox="0 0 24 24">
+        <path d="m12 2 2.4 7.4L22 12l-7.6 2.6L12 22l-2.4-7.4L2 12l7.6-2.6Z" />
+      </symbol>
+    </svg>
+    <header class="site-header">
+      <nav class="navbar" aria-label="Navigasi utama">
+        <a
+          class="brand"
+          href="#home"
+          aria-label="Google Student Ambassador, kembali ke atas"
+          ><img
+            src="assets/brand/gsa-wordmark.png"
+            alt="Google Student Ambassador"
+            width="194"
+            height="31"
+        /></a>
+        <button
+          class="menu-toggle"
+          id="menuToggle"
+          type="button"
+          aria-label="Buka menu"
+          aria-expanded="false"
+          aria-controls="navLinks"
+        >
+          <span></span><span></span>
         </button>
-
-        <!-- Confetti Cannon Button -->
-        <button id="triggerConfettiBtn" type="button" title="Rayakan Momen dengan Confetti!" class="px-2.5 sm:px-4 py-1.5 rounded-full text-xs font-bold bg-sky-500 hover:bg-sky-400 text-white transition-all flex items-center gap-1 sm:gap-1.5 shadow-md shadow-sky-500/30 cursor-pointer hover:scale-105 active:scale-95">
-          <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 2l2.4 7.4L22 12l-7.6 2.6L12 22l-2.4-7.4L2 12l7.6-2.6z"/>
-          </svg>
-          <span class="text-[11px] sm:text-xs font-bold">Confetti!</span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Hero Section -->
-  <main class="relative z-10">
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10 pb-8 sm:pb-12 text-center">
-      <!-- Official Google Pill Badge -->
-      <div class="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full bg-sky-50 border border-sky-300 text-sky-900 text-xs sm:text-sm font-semibold mb-5 shadow-sm max-w-full">
-        <img src="assets/images/google-g-logo.png" alt="Google" class="w-4 h-4 object-contain flex-shrink-0">
-        <span class="truncate">Google Student Ambassador Inauguration 2026 • Batch 2</span>
-        <span class="w-2 h-2 rounded-full bg-sky-500 animate-ping flex-shrink-0"></span>
-      </div>
-
-      <!-- Main Heading: Clean White & Light Blue Theme -->
-      <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4 leading-tight text-slate-900 font-heading">
-        <span class="block text-slate-900">Kenangan Abadi Para</span>
-        <span class="gemini-text-gradient">Pemimpin AI Masa Depan</span>
-      </h1>
-
-      <p class="max-w-3xl mx-auto text-sm sm:text-base text-slate-600 font-normal leading-relaxed mb-6 px-2">
-        Dokumentasi resmi perjalanan delegasi <strong class="text-sky-700 font-semibold">GSA 2026 Batch 2</strong> — dari hiruk-pikuk transit pagi di <strong class="text-sky-800">MRT Jakarta</strong>, gegap gempita inagurasi & hujan confetti di <strong class="text-sky-800">MGP Space</strong>, tur kantor <strong class="text-sky-800">Google Indonesia HQ</strong>, kehangatan kuliner <strong class="text-sky-800">Blok M Little Tokyo</strong>, hingga malam seru di <strong class="text-sky-800">Rumah Hantu</strong> & duel UNO hotel.
-      </p>
-
-      <!-- Gemini AI Interactive Search Bar with Official Gemini Icon -->
-      <div class="max-w-3xl mx-auto mb-5 px-1 sm:px-0">
-        <div class="relative bg-white rounded-2xl p-2 sm:p-2.5 flex items-center gap-2 border-2 border-sky-300 shadow-xl shadow-sky-500/10 focus-within:border-sky-500 transition-colors">
-          <div class="pl-2 sm:pl-3 flex items-center">
-            <svg class="w-6 h-6 animate-gemini-float" viewBox="0 0 28 28" fill="none">
-              <path d="M14 0C14 7.73199 7.73199 14 0 14C7.73199 14 14 20.268 14 28C14 20.268 20.268 14 28 14C20.268 14 14 7.73199 14 0Z" fill="url(#geminiOfficialGrad)"/>
-            </svg>
+        <div class="nav-links" id="navLinks">
+          <a href="#perjalanan">Perjalanan</a><a href="#rewind">Rewind</a
+          ><a href="#gallerySection">Galeri</a
+          ><a href="#cerita">Cerita Steven</a><a href="#faq">FAQ</a
+          ><a
+            class="nav-external"
+            href="https://googlestudentambassador.id/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Tentang GSA ↗</a
+          >
+        </div>
+      </nav>
+    </header>
+    <main id="main">
+      <section class="hero" id="home" aria-labelledby="heroTitle">
+        <div class="hero-content">
+          <div class="hero-heading">
+            <img
+              class="hero-object hero-code"
+              src="assets/brand/hero-code.png"
+              alt=""
+              width="169"
+              height="150"
+              aria-hidden="true"
+            /><img
+              class="hero-object hero-bulb"
+              src="assets/brand/hero-bulb.png"
+              alt=""
+              width="175"
+              height="175"
+              aria-hidden="true"
+            />
+            <h1 id="heroTitle">
+              <span>Google</span><span>Student</span><span>Ambassador</span
+              ><span class="hero-year"
+                >2026 Batch 2<span class="eyes" aria-hidden="true"
+                  ><i></i><i></i></span
+              ></span>
+            </h1>
           </div>
-          <input 
-            id="geminiSearchInput" 
-            type="text" 
-            placeholder="Tanyakan ke Gemini: 'open top tour yuk', 'GI yokkk', 'PI Yokk', 'KFC atau Hokben?'..." 
-            class="w-full bg-transparent border-0 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-0 text-xs sm:text-base py-1.5 font-medium">
-          <div class="pr-2 hidden sm:flex items-center text-xs text-sky-700 font-bold px-3 py-1.5 rounded-xl bg-sky-100 border border-sky-200">
-            Gemini AI
-          </div>
+          <p class="hero-tagline">Satu angkatan. Banyak cerita.</p>
+          <p class="hero-description">
+            Dari langkah pertama sampai momen tak terlupa.<br />Kenangan
+            inaugurasi, disimpan untuk kita.
+          </p>
+          <a class="detail-link" href="#perjalanan"
+            >Buka kenangannya
+            <svg class="icon" aria-hidden="true"><use href="#icon-arrow" /></svg
+          ></a>
         </div>
-
-        <!-- Quick Prompt Chips (Fully Responsive Touch Horizontal Scroll) -->
-        <div class="mt-3.5 flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-2 scrollbar-none px-1" id="promptChips">
-          <!-- Dynamically populated from data.js -->
-        </div>
-
-        <!-- AI Response Drawer -->
-        <div id="aiResponseBox" class="hidden mt-3 text-left bg-white/95 rounded-2xl p-4 sm:p-5 border border-sky-300 transition-all shadow-lg shadow-sky-500/10">
-          <div class="flex items-center gap-2 mb-2 text-xs font-bold text-sky-700">
-            <svg class="w-4 h-4" viewBox="0 0 28 28" fill="none">
-              <path d="M14 0C14 7.73199 7.73199 14 0 14C7.73199 14 14 20.268 14 28C14 20.268 20.268 14 28 14C20.268 14 14 7.73199 14 0Z" fill="url(#geminiOfficialGrad)"/>
-            </svg>
-            <span>Gemini Intelligence Answer</span>
-          </div>
-          <p id="aiResponseText" class="text-xs sm:text-sm text-slate-700 leading-relaxed font-normal"></p>
-        </div>
-      </div>
-
-      <!-- Quick Metrics Counter (Responsive Grid) -->
-      <div class="max-w-4xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4 mt-6">
-        <div class="bg-white/90 p-3.5 sm:p-4 rounded-2xl border border-sky-200 shadow-sm text-center">
-          <div class="text-2xl sm:text-3xl font-extrabold text-sky-700 font-heading">28</div>
-          <div class="text-xs text-slate-500 mt-1 font-medium">Dokumentasi Inagurasi</div>
-        </div>
-        <div class="bg-white/90 p-3.5 sm:p-4 rounded-2xl border border-sky-200 shadow-sm text-center">
-          <div class="text-2xl sm:text-3xl font-extrabold text-indigo-600 font-heading">10</div>
-          <div class="text-xs text-slate-500 mt-1 font-medium">Video Vlog & Highlight</div>
-        </div>
-        <div class="bg-white/90 p-3.5 sm:p-4 rounded-2xl border border-sky-200 shadow-sm text-center">
-          <div class="text-2xl sm:text-3xl font-extrabold text-cyan-600 font-heading">5</div>
-          <div class="text-xs text-slate-500 mt-1 font-medium">Lokasi Bersejarah</div>
-        </div>
-        <div class="bg-white/90 p-3.5 sm:p-4 rounded-2xl border border-sky-200 shadow-sm text-center">
-          <div class="text-2xl sm:text-3xl font-extrabold text-sky-600 font-heading">#1</div>
-          <div class="text-xs text-slate-500 mt-1 font-medium">Keluarga GSA Batch 2</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Interactive Chapter Roadmap Section (Responsive Grid) -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-      <div class="text-center mb-6">
-        <h2 class="text-xl sm:text-3xl font-bold text-slate-900 mb-1 sm:mb-2 font-heading">Alur Perjalanan & Lokasi Dokumentasi</h2>
-        <p class="text-xs sm:text-sm text-slate-600 max-w-xl mx-auto">Klik chapter untuk melihat foto dan cerita lengkap di masing-masing tempat.</p>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
-        <!-- Chapter 1 -->
-        <div class="chapter-timeline-card bg-white p-4 sm:p-5 rounded-2xl border border-sky-200 hover:border-sky-400 cursor-pointer transition-all hover:-translate-y-1 group shadow-sm hover:shadow-md hover:shadow-sky-500/10" data-chapter="1" data-category="commute">
-          <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center font-bold text-sm mb-2.5 sm:mb-3 group-hover:bg-sky-600 group-hover:text-white transition-colors">
-            01
-          </div>
-          <h3 class="text-sm sm:text-base font-bold text-slate-900 mb-0.5 group-hover:text-sky-600 transition-colors font-heading">Transit & Commute</h3>
-          <p class="text-xs text-sky-700 font-bold mb-1.5">MRT Jakarta</p>
-          <p class="text-xs text-slate-500 line-clamp-2 sm:line-clamp-3 leading-relaxed">Perjalanan pagi delegasi di gerbong & peron stasiun MRT Jakarta menuju venue inagurasi.</p>
-        </div>
-
-        <!-- Chapter 2 -->
-        <div class="chapter-timeline-card bg-white p-4 sm:p-5 rounded-2xl border border-sky-200 hover:border-sky-400 cursor-pointer transition-all hover:-translate-y-1 group shadow-sm hover:shadow-md hover:shadow-sky-500/10" data-chapter="2" data-category="inauguration">
-          <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center font-bold text-sm mb-2.5 sm:mb-3 group-hover:bg-sky-600 group-hover:text-white transition-colors">
-            02
-          </div>
-          <h3 class="text-sm sm:text-base font-bold text-slate-900 mb-0.5 group-hover:text-sky-600 transition-colors font-heading">Inauguration Event</h3>
-          <p class="text-xs text-sky-700 font-bold mb-1.5">MGP Space, Jakarta</p>
-          <p class="text-xs text-slate-500 line-clamp-2 sm:line-clamp-3 leading-relaxed">Pemberian jaket varsity resmi, ID badge GSA, panggung utama, dan letupan confetti megah.</p>
-        </div>
-
-        <!-- Chapter 3 -->
-        <div class="chapter-timeline-card bg-white p-4 sm:p-5 rounded-2xl border border-sky-200 hover:border-sky-400 cursor-pointer transition-all hover:-translate-y-1 group shadow-sm hover:shadow-md hover:shadow-sky-500/10" data-chapter="3" data-category="google-hq">
-          <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center font-bold text-sm mb-2.5 sm:mb-3 group-hover:bg-sky-600 group-hover:text-white transition-colors">
-            03
-          </div>
-          <h3 class="text-sm sm:text-base font-bold text-slate-900 mb-0.5 group-hover:text-sky-600 transition-colors font-heading">Google Indonesia HQ</h3>
-          <p class="text-xs text-sky-700 font-bold mb-1.5">SCBD Pacific Century</p>
-          <p class="text-xs text-slate-500 line-clamp-2 sm:line-clamp-3 leading-relaxed">Dinding logo 3D batik nusantara, pajangan Bangkit, Google G-Bike, dan lorong payung tradisional.</p>
-        </div>
-
-        <!-- Chapter 4 -->
-        <div class="chapter-timeline-card bg-white p-4 sm:p-5 rounded-2xl border border-sky-200 hover:border-sky-400 cursor-pointer transition-all hover:-translate-y-1 group shadow-sm hover:shadow-md hover:shadow-sky-500/10" data-chapter="4" data-category="hangout">
-          <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center font-bold text-sm mb-2.5 sm:mb-3 group-hover:bg-sky-600 group-hover:text-white transition-colors">
-            04
-          </div>
-          <h3 class="text-sm sm:text-base font-bold text-slate-900 mb-0.5 group-hover:text-sky-600 transition-colors font-heading">Kuliner & Blok M</h3>
-          <p class="text-xs text-sky-700 font-bold mb-1.5">Little Tokyo & IPPUDO</p>
-          <p class="text-xs text-slate-500 line-clamp-2 sm:line-clamp-3 leading-relaxed">Cermin cembung jalan ikonik Melawai, mangkuk hangat IPPUDO ramen, dan panci kuning ramyeon Korea.</p>
-        </div>
-
-        <!-- Chapter 5 -->
-        <div class="chapter-timeline-card bg-white p-4 sm:p-5 rounded-2xl border border-sky-200 hover:border-sky-400 cursor-pointer transition-all hover:-translate-y-1 group shadow-sm hover:shadow-md hover:shadow-sky-500/10" data-chapter="5" data-category="nightlife">
-          <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center font-bold text-sm mb-2.5 sm:mb-3 group-hover:bg-sky-600 group-hover:text-white transition-colors">
-            05
-          </div>
-          <h3 class="text-sm sm:text-base font-bold text-slate-900 mb-0.5 group-hover:text-sky-600 transition-colors font-heading">Rumah Hantu & UNO</h3>
-          <p class="text-xs text-sky-700 font-bold mb-1.5">Jeruk Purut & Hotel</p>
-          <p class="text-xs text-slate-500 line-clamp-2 sm:line-clamp-3 leading-relaxed">Uji adrenalin Rumah Hantu Jeruk Purut dan malam sengit turnamen UNO hotel berhadiah transfer QRIS Rp30.000!</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Main Gallery Section -->
-    <section id="gallerySection" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-      <!-- Section Header & Filter Tabs (Responsive) -->
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-6 sm:mb-8 border-b border-sky-200 pb-5">
-        <div>
-          <span class="text-xs uppercase tracking-widest text-sky-700 font-bold block mb-1">Inauguration Gallery</span>
-          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 font-heading">Galeri Dokumentasi Inagurasi</h2>
-          <p class="text-xs sm:text-sm text-slate-500 mt-1">Foto resolusi tinggi & video H.264 stream-ready.</p>
-        </div>
-
-        <!-- Filter Buttons (Responsive Wrap) -->
-        <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
-          <button type="button" data-filter="all" class="filter-btn px-3.5 sm:px-4 py-1.5 rounded-full text-xs font-semibold transition cursor-pointer">
-            Semua (28)
-          </button>
-          <button type="button" data-filter="inauguration" class="filter-btn px-3.5 sm:px-4 py-1.5 rounded-full text-xs font-semibold transition cursor-pointer">
-            Inagurasi MGP Space
-          </button>
-          <button type="button" data-filter="google-hq" class="filter-btn px-3.5 sm:px-4 py-1.5 rounded-full text-xs font-semibold transition cursor-pointer">
-            Google HQ
-          </button>
-          <button type="button" data-filter="hangout" class="filter-btn px-3.5 sm:px-4 py-1.5 rounded-full text-xs font-semibold transition cursor-pointer">
-            Blok M & Kuliner
-          </button>
-          <button type="button" data-filter="nightlife" class="filter-btn px-3.5 sm:px-4 py-1.5 rounded-full text-xs font-semibold transition cursor-pointer">
-            Rumah Hantu & Hotel
-          </button>
-          <button type="button" data-filter="commute" class="filter-btn px-3.5 sm:px-4 py-1.5 rounded-full text-xs font-semibold transition cursor-pointer">
-            MRT Jakarta
-          </button>
-          <button type="button" data-filter="videos" class="filter-btn px-3.5 sm:px-4 py-1.5 rounded-full text-xs font-semibold transition cursor-pointer flex items-center gap-1">
-            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            Video Saja (10)
-          </button>
-        </div>
-      </div>
-
-      <!-- Dynamic Gallery Grid Container (Responsive 1/2/3 cols) -->
-      <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-        <!-- Rendered by app.js -->
-      </div>
-    </section>
-
-    <!-- Special Highlight: Steven Erlinto GSA Journey & Achievement -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
-      <div class="bg-gradient-to-br from-sky-50 via-white to-sky-100/70 rounded-3xl p-5 sm:p-10 border-2 border-sky-300 relative overflow-hidden shadow-lg shadow-sky-500/10">
-        <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-sky-200/40 rounded-full blur-[90px] pointer-events-none"></div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center relative z-10">
-          <div class="lg:col-span-5 flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <div class="relative w-48 sm:w-56 rounded-2xl overflow-hidden shadow-xl border-2 border-sky-300 group bg-white">
-              <picture>
-                <source srcset="assets/images/gsa-candidate-poster.webp" type="image/webp">
-                <img src="assets/images/gsa-candidate-poster.jpg" alt="Steven Erlinto Candidate Poster" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500">
-              </picture>
-              <div class="p-2 sm:p-2.5 bg-white text-center">
-                <span class="text-xs font-bold text-slate-900 block">Candidate Journey</span>
-                <span class="text-[10px] text-sky-700 font-mono font-semibold">GSAID26B20013</span>
-              </div>
-            </div>
-
-            <div class="relative w-48 sm:w-56 rounded-2xl overflow-hidden shadow-xl border-2 border-sky-300 group bg-white">
-              <picture>
-                <source srcset="assets/images/steven-cyber-champion.webp" type="image/webp">
-                <img src="assets/images/steven-cyber-champion.jpg" alt="Steven Erlinto Champion Poster" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500">
-              </picture>
-              <div class="p-2 sm:p-2.5 bg-white text-center">
-                <span class="text-xs font-bold text-slate-900 block">Juara 2 Cyber Security</span>
-                <span class="text-[10px] text-sky-700">Kompetisi Nasional 2026</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="lg:col-span-7">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-sky-100 text-sky-800 border border-sky-300 mb-3 sm:mb-4">
-              <svg class="w-3.5 h-3.5" viewBox="0 0 28 28" fill="none">
-                <path d="M14 0C14 7.73199 7.73199 14 0 14C7.73199 14 14 20.268 14 28C14 20.268 20.268 14 28 14C20.268 14 14 7.73199 14 0Z" fill="url(#geminiOfficialGrad)"/>
-              </svg>
-              <span>From Candidate to Inaugurated Leader</span>
-            </div>
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-2 sm:mb-3 font-heading">
-              "Ready to Become Your Next AI Leader"
-            </h2>
-            <div class="mb-3 sm:mb-4 inline-block font-mono text-xs font-bold px-3 py-1 bg-sky-200/60 text-sky-900 rounded-lg border border-sky-300">
-              made by memories, from Steven... GSAID26B20013
-            </div>
-            <p class="text-xs sm:text-base text-slate-600 leading-relaxed mb-4">
-              Perjalanan inagurasi ini adalah bukti dedikasi dan kerja keras. Dimulai dari tekad membawa dampak nyata pembelajaran kecerdasan buatan (AI) bersama Google dan prestasi nasional di bidang Cyber Security, hingga akhirnya resmi dilantik di MGP Space bersama para pemuda terbaik dari seluruh penjuru Indonesia.
+      </section>
+      <section
+        class="journey-section section"
+        id="perjalanan"
+        aria-labelledby="journeyTitle"
+      >
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow">Inauguration memories · Oktober 2026</p>
+            <h2 id="journeyTitle">Sebuah hari.<br />Segudang kenangan.</h2>
+            <p>
+              Jakarta mempertemukan kita.<br />Sisanya, jadi cerita yang ingin
+              diulang.
             </p>
-            <div class="flex flex-wrap gap-2 pt-1">
-              <div class="px-3 py-1.5 rounded-xl bg-white text-xs text-sky-800 border border-sky-200 font-semibold shadow-sm">
-                ✨ <strong>Google AI Ambassador</strong>
-              </div>
-              <div class="px-3 py-1.5 rounded-xl bg-white text-xs text-sky-800 border border-sky-200 font-semibold shadow-sm">
-                🚀 <strong>Batch 2 Class of 2026</strong>
-              </div>
-              <div class="px-3 py-1.5 rounded-xl bg-white text-xs text-sky-800 border border-sky-200 font-semibold shadow-sm">
-                🏆 <strong>Juara 2 Cyber Security</strong>
-              </div>
+          </div>
+          <dl class="archive-stats">
+            <div>
+              <dt>Kenangan tersimpan</dt>
+              <dd id="memoryCount">28</dd>
+            </div>
+            <div>
+              <dt>Video untuk diputar lagi</dt>
+              <dd id="videoCount">9</dd>
+            </div>
+            <div>
+              <dt>Chapter perjalanan</dt>
+              <dd>5</dd>
+            </div>
+          </dl>
+          <div class="chapter-grid" id="chapterGrid"></div>
+        </div>
+      </section>
+      <section class="section story-section" aria-labelledby="storyTitle">
+        <div class="container">
+          <div class="section-heading">
+            <h2 id="storyTitle">
+              Dari berangkat bareng,<br />sampai enggan pulang.
+            </h2>
+            <p>Lima chapter dari satu perjalanan yang sama.</p>
+          </div>
+          <div class="story-layout">
+            <div class="story-index">
+              <p>Perjalanan kita</p>
+              <div
+                id="storyNav"
+                class="story-nav"
+                role="group"
+                aria-label="Pilih chapter cerita"
+              ></div>
+              <p class="story-note">
+                Bukan cuma tentang tempat yang dikunjungi. Tapi juga orang-orang
+                yang ada di samping kita.
+              </p>
+            </div>
+            <article
+              class="story-panel"
+              id="storyPanel"
+              aria-live="polite"
+            ></article>
+          </div>
+        </div>
+      </section>
+      <section
+        class="section rewind-section"
+        id="rewind"
+        aria-labelledby="rewindTitle"
+      >
+        <div class="container">
+          <div class="section-heading">
+            <h2 id="rewindTitle">
+              GSA 2026 Rewind:<br />The moment we became us.
+            </h2>
+            <p>Satu tombol play. Kembali ke hari itu.</p>
+          </div>
+          <button
+            type="button"
+            class="rewind-player"
+            id="rewindPlay"
+            aria-label="Putar video hujan confetti inaugurasi"
+          >
+            <img
+              src="assets/images/video-thumbs/grand-confetti-drop-celebration.webp"
+              alt="Perayaan hujan confetti di auditorium inaugurasi"
+              width="960"
+              height="540"
+              loading="lazy"
+            /><span class="rewind-scrim"></span
+            ><span class="play-circle"
+              ><svg class="icon" aria-hidden="true">
+                <use href="#icon-play" /></svg></span
+            ><span class="rewind-caption"
+              >The confetti moment <span aria-hidden="true">↗</span></span
+            >
+          </button>
+        </div>
+      </section>
+      <section
+        class="section gallery-section"
+        id="gallerySection"
+        aria-labelledby="galleryTitle"
+      >
+        <div class="gallery-grid-background" aria-hidden="true"></div>
+        <div class="container gallery-content">
+          <div class="section-heading">
+            <p class="eyebrow">Our little wall of memories</p>
+            <h2 id="galleryTitle">Ada cerita di<br />setiap fotonya.</h2>
+            <p>
+              Kenangan yang kita gantung di sini.<br />Ketuk satu, buka lagi
+              ceritanya.
+            </p>
+          </div>
+          <div class="gallery-tools">
+            <label class="search-field" for="geminiSearchInput"
+              ><svg class="icon" aria-hidden="true">
+                <use href="#icon-search" /></svg
+              ><input
+                id="geminiSearchInput"
+                type="search"
+                placeholder="Cari kenangan, tempat, atau nama…"
+                autocomplete="off"
+                aria-describedby="searchHint"
+              /><kbd aria-hidden="true">/</kbd></label
+            >
+            <p class="visually-hidden" id="searchHint">
+              Cari berdasarkan judul, lokasi, deskripsi, atau tag. Hasil
+              langsung berubah di bawah.
+            </p>
+            <div
+              class="prompt-chips"
+              id="promptChips"
+              aria-label="Ide pencarian"
+            ></div>
+            <div class="search-answer" id="aiResponseBox" hidden>
+              <span>Pencarian kenangan</span>
+              <p id="aiResponseText"></p>
+            </div>
+            <div class="filter-list" role="group" aria-label="Filter galeri">
+              <button
+                class="filter-btn is-active"
+                data-filter="all"
+                aria-pressed="true"
+                type="button"
+              >
+                Semua <span data-total>28</span></button
+              ><button
+                class="filter-btn"
+                data-filter="inauguration"
+                aria-pressed="false"
+                type="button"
+              >
+                Inaugurasi</button
+              ><button
+                class="filter-btn"
+                data-filter="google-hq"
+                aria-pressed="false"
+                type="button"
+              >
+                Google HQ</button
+              ><button
+                class="filter-btn"
+                data-filter="hangout"
+                aria-pressed="false"
+                type="button"
+              >
+                Blok M</button
+              ><button
+                class="filter-btn"
+                data-filter="nightlife"
+                aria-pressed="false"
+                type="button"
+              >
+                After hours</button
+              ><button
+                class="filter-btn"
+                data-filter="commute"
+                aria-pressed="false"
+                type="button"
+              >
+                MRT Jakarta</button
+              ><button
+                class="filter-btn"
+                data-filter="candidate"
+                aria-pressed="false"
+                type="button"
+              >
+                Candidate journey</button
+              ><button
+                class="filter-btn"
+                data-filter="videos"
+                aria-pressed="false"
+                type="button"
+              >
+                Video <span data-videos>9</span>
+              </button>
+            </div>
+            <div class="gallery-status">
+              <p id="galleryStatus" role="status" aria-live="polite">
+                28 kenangan untuk dibuka kembali
+              </p>
+              <button
+                type="button"
+                class="text-button"
+                id="clearSearchFilterBtn"
+                hidden
+              >
+                Hapus filter <span aria-hidden="true">×</span>
+              </button>
+            </div>
+          </div>
+          <div class="polaroid-grid" id="galleryGrid"></div>
+          <noscript
+            ><p class="empty-state">
+              Aktifkan JavaScript untuk membuka seluruh foto dan video kenangan.
+            </p></noscript
+          >
+        </div>
+      </section>
+      <section
+        class="section candidate-section"
+        id="cerita"
+        aria-labelledby="candidateTitle"
+      >
+        <div class="container">
+          <div class="section-heading">
+            <h2 id="candidateTitle">Semua berawal<br />dari satu langkah.</h2>
+          </div>
+          <div class="candidate-panel">
+            <div class="candidate-posters">
+              <img
+                src="assets/images/gsa-candidate-poster.webp"
+                alt="Poster kandidat GSA Steven Erlinto"
+                width="450"
+                height="600"
+                loading="lazy"
+              /><img
+                src="assets/images/steven-cyber-champion.webp"
+                alt="Steven Erlinto meraih juara dua Cyber Security"
+                width="450"
+                height="600"
+                loading="lazy"
+              />
+            </div>
+            <div class="candidate-copy">
+              <p class="eyebrow">The candidate journey</p>
+              <h3>“Ready to Become<br />Your Next AI Leader”</h3>
+              <p>
+                Dari tekad membawa dampak lewat teknologi dan prestasi nasional
+                Cyber Security, hingga dilantik bersama keluarga baru di MGP
+                Space.
+              </p>
+              <p>
+                Perjalanan Steven Erlinto. Satu dari banyak cerita yang tumbuh
+                di GSA 2026 Batch 2.
+              </p>
+              <button
+                type="button"
+                class="detail-link"
+                id="candidateJourneyBtn"
+              >
+                Buka ceritanya
+                <svg class="icon" aria-hidden="true">
+                  <use href="#icon-arrow" />
+                </svg></button
+              ><span class="candidate-id">Steven Erlinto · GSAID26B20013</span>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Lightbox Modal (Full-Screen Image / Video Viewer - Responsive) -->
-  <div id="lightboxModal" class="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-6 bg-slate-950/75 backdrop-blur-md">
-    <div class="lightbox-backdrop absolute inset-0"></div>
-
-    <div class="relative z-10 w-full max-w-4xl bg-white rounded-2xl sm:rounded-3xl border-2 border-sky-200 overflow-hidden shadow-2xl flex flex-col max-h-[94vh]">
-      <!-- Modal Header -->
-      <div class="px-4 sm:px-5 py-3 border-b border-sky-100 flex items-center justify-between bg-sky-50/70">
-        <div class="flex items-center gap-2 truncate pr-3">
-          <span id="lightboxBadge" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-sky-100 text-sky-800 border border-sky-200 flex-shrink-0">
-            Badge
-          </span>
-          <span id="lightboxCounter" class="text-xs text-slate-500 font-code flex-shrink-0 font-medium">1 / 28</span>
-          <span id="lightboxDate" class="text-xs text-slate-500 hidden sm:inline">• Oktober 2026</span>
+      </section>
+      <section class="section faq-section" id="faq" aria-labelledby="faqTitle">
+        <div class="container narrow">
+          <div class="section-heading">
+            <h2 id="faqTitle">Sedikit panduan.<br />Selebihnya, nikmati.</h2>
+          </div>
+          <div class="faq-list">
+            <details>
+              <summary>Bagaimana cara membuka foto dan video?</summary>
+              <p>
+                Klik atau ketuk polaroid di galeri. Foto akan terbuka utuh,
+                bersama cerita, lokasi, dan tanggal yang tersedia. Polaroid
+                dengan ikon play berisi video.
+              </p>
+            </details>
+            <details>
+              <summary>Bisa mencari momen atau tempat tertentu?</summary>
+              <p>
+                Bisa. Ketik nama, tempat, atau kata yang kamu ingat di kolom
+                pencarian. Gunakan filter chapter untuk membuka bagian
+                perjalanan tertentu.
+              </p>
+            </details>
+            <details>
+              <summary>Bagaimana berpindah ke kenangan berikutnya?</summary>
+              <p>
+                Gunakan tombol panah di penampil foto, atau tombol panah kiri
+                dan kanan pada keyboard. Tekan Escape untuk menutup dan kembali
+                ke galeri.
+              </p>
+            </details>
+            <details>
+              <summary>Apa yang ada di dalam arsip ini?</summary>
+              <p>
+                Foto dan video perjalanan GSA 2026 Batch 2: MRT Jakarta,
+                inaugurasi MGP Space, Google Indonesia HQ, kuliner Blok M,
+                hingga cerita malam dan perjalanan kandidat Steven.
+              </p>
+            </details>
+            <details>
+              <summary>Di mana saya bisa mengenal program GSA?</summary>
+              <p>
+                Kunjungi
+                <a
+                  href="https://googlestudentambassador.id/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >website Google Student Ambassador Indonesia ↗</a
+                >
+                untuk informasi program.
+              </p>
+            </details>
+          </div>
         </div>
-
-        <button id="lightboxClose" type="button" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition cursor-pointer flex-shrink-0">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-      </div>
-
-      <!-- Modal Body (Media Viewer) -->
-      <div class="relative flex-1 bg-slate-950 flex items-center justify-center p-2 sm:p-4 min-h-[260px] overflow-hidden">
-        <!-- Prev Button -->
-        <button id="lightboxPrev" type="button" class="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/90 hover:bg-sky-500 hover:text-white text-slate-800 flex items-center justify-center transition cursor-pointer border border-sky-200 shadow-lg">
-          <svg class="w-5 h-5 -ml-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
-        </button>
-
-        <!-- Media Host -->
-        <div id="lightboxMediaContainer" class="w-full flex items-center justify-center">
-          <!-- Image or Video injected by app.js -->
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="container">
+        <img
+          class="footer-sparkle"
+          src="assets/brand/gemini-sparkle.png"
+          alt=""
+          width="70"
+          height="70"
+          loading="lazy"
+          aria-hidden="true"
+        />
+        <p class="footer-title">Made by memories.<br />From Steven, for us.</p>
+        <p>
+          Google Student Ambassador 2026 Batch 2<br /><span
+            >GSAID26B20013 · Arsip kenangan inaugurasi</span
+          >
+        </p>
+        <div class="footer-tools">
+          <button
+            id="audioToggleBtn"
+            class="utility-button"
+            type="button"
+            aria-pressed="false"
+          >
+            <span
+              class="sound-bars audio-paused"
+              id="audioIndicator"
+              aria-hidden="true"
+              ><i></i><i></i><i></i><i></i></span
+            ><span class="audio-text">Suara ambien: Off</span></button
+          ><button id="triggerConfettiBtn" class="utility-button" type="button">
+            <svg class="icon" aria-hidden="true">
+              <use href="#icon-sparkle" /></svg
+            >Rayakan lagi</button
+          ><a class="utility-button" href="#home">Kembali ke atas ↑</a>
         </div>
-
-        <!-- Next Button -->
-        <button id="lightboxNext" type="button" class="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/90 hover:bg-sky-500 hover:text-white text-slate-800 flex items-center justify-center transition cursor-pointer border border-sky-200 shadow-lg">
-          <svg class="w-5 h-5 ml-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
-        </button>
+        <p class="footer-note">
+          Sebuah arsip personal. Sebuah hari yang berarti.
+        </p>
       </div>
-
-      <!-- Modal Footer (Description & Location) -->
-      <div class="p-3.5 sm:p-5 border-t border-sky-100 bg-white">
-        <div class="flex items-center gap-1.5 text-xs text-sky-700 font-bold mb-1">
-          <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/>
-          </svg>
-          <span id="lightboxLocation">Lokasi Kegiatan</span>
+    </footer>
+    <dialog id="lightboxModal" class="lightbox" aria-labelledby="lightboxTitle">
+      <div class="viewer-shell">
+        <header class="viewer-header">
+          <div>
+            <span id="lightboxBadge" class="viewer-badge"></span
+            ><span id="lightboxCounter"></span><span id="lightboxDate"></span>
+          </div>
+          <button
+            id="lightboxClose"
+            class="icon-button"
+            type="button"
+            aria-label="Tutup penampil"
+          >
+            <svg class="icon" aria-hidden="true">
+              <use href="#icon-close" />
+            </svg>
+          </button>
+        </header>
+        <div class="viewer-media">
+          <button
+            id="lightboxPrev"
+            class="icon-button viewer-prev"
+            type="button"
+            aria-label="Kenangan sebelumnya"
+          >
+            <svg class="icon" aria-hidden="true">
+              <use href="#icon-arrow" />
+            </svg>
+          </button>
+          <div id="lightboxMediaContainer"></div>
+          <button
+            id="lightboxNext"
+            class="icon-button viewer-next"
+            type="button"
+            aria-label="Kenangan berikutnya"
+          >
+            <svg class="icon" aria-hidden="true">
+              <use href="#icon-arrow" />
+            </svg>
+          </button>
         </div>
-        <h3 id="lightboxTitle" class="text-sm sm:text-lg font-bold text-slate-900 mb-1.5 font-heading">Judul Momen</h3>
-        <p id="lightboxDescription" class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-2.5">Deskripsi detail mengenai foto dan konteks kejadian.</p>
-        <div id="lightboxTags" class="flex flex-wrap gap-1.5"></div>
+        <div class="viewer-info">
+          <p id="lightboxLocation" class="viewer-location"></p>
+          <h2 id="lightboxTitle"></h2>
+          <p id="lightboxDescription"></p>
+          <div id="lightboxTags" class="viewer-tags"></div>
+        </div>
       </div>
-    </div>
-  </div>
-
-  <!-- Footer (White & Light Blue with Google Branding) -->
-  <footer class="border-t border-sky-200 bg-sky-50/60 relative z-10 py-8 sm:py-10 mt-8">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:flex sm:items-center sm:justify-between">
-      <div class="flex items-center justify-center sm:justify-start gap-2 text-sm text-slate-700 font-medium">
-        <img src="assets/images/google-g-logo.png" alt="Google" class="w-4 h-4 object-contain">
-        <span>Google Student Ambassador Inauguration 2026 Batch 2</span>
-      </div>
-      <div class="mt-3 sm:mt-0 text-xs text-slate-600 font-medium">
-        made by memories, from Steven... <span class="font-mono font-bold text-sky-700">GSAID26B20013</span>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Scripts -->
-  <script src="assets/js/data.js"></script>
-  <script src="assets/js/app.js"></script>
-</body>
+    </dialog>
+  </body>
 </html>

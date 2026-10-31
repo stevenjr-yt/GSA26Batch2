@@ -1,10 +1,10 @@
 # PLAN: Redesign UI Web Inaugurasi GSA 2026 Batch 2
 
-Tanggal audit: **31 Oktober 2026, WIB**  
-Repo: `D:\Job\GSA\web-inau`  
-Baseline: branch `main`, commit `b4ca30c`  
-Referensi utama: [googlestudentambassador.id](https://googlestudentambassador.id/)  
-Status: **implementasi berjalan; aset dan font lokal sudah disiapkan.**
+Tanggal audit: **31 Oktober 2026, WIB**
+Repo: `D:\Job\GSA\web-inau`
+Baseline: branch `main`, commit `b4ca30c`
+Referensi utama: [googlestudentambassador.id](https://googlestudentambassador.id/)
+Status: **implementasi utama selesai; verifikasi visual dan fungsional berjalan.**
 
 ## 1. Hasil yang dituju dan batas pekerjaan
 
@@ -389,30 +389,30 @@ Prioritaskan foto, poster, dan video yang sudah ada. Gantungan, grid, bingkai ke
 
 ### Tahap 1: Fondasi visual dan kerangka halaman (P0)
 
-- [ ] Terapkan token warna/font/spacing/radius baru.
-- [ ] Hapus background aurora dan styling terang yang bertabrakan.
-- [ ] Susun ulang section tanpa menghapus media/narasi.
-- [ ] Bangun navbar desktop/mobile dan hero baru.
+- [x] Terapkan token warna/font/spacing/radius baru.
+- [x] Hapus background aurora dan styling terang yang bertabrakan.
+- [x] Susun ulang section tanpa menghapus media/narasi.
+- [x] Bangun navbar desktop/mobile dan hero baru.
 
 Hasil: silhouette halaman, warna, tipografi, dan hero sudah selaras dengan referensi pada desktop serta mobile.
 
 ### Tahap 2: Galeri polaroid gantung (P0)
 
-- [ ] Ganti renderer kartu menjadi polaroid dengan titik gantung, tali, dan penjepit.
-- [ ] Tambahkan background kotak fading di belakangnya.
-- [ ] Tata 3/2/1 kolom dan variasi kemiringan yang stabil.
-- [ ] Pindahkan search/filter ke area galeri dan hitung angka media secara dinamis.
-- [ ] Implementasikan ayunan terkait scroll, fallback, dan reduced motion.
-- [ ] Sembunyikan deskripsi pada sisi depan; tampilkan secara kondisional di viewer.
+- [x] Ganti renderer kartu menjadi polaroid dengan titik gantung, tali, dan penjepit.
+- [x] Tambahkan background kotak fading di belakangnya.
+- [x] Tata 3/2/1 kolom dan variasi kemiringan yang stabil.
+- [x] Pindahkan search/filter ke area galeri dan hitung angka media secara dinamis.
+- [x] Implementasikan ayunan terkait scroll, fallback, dan reduced motion.
+- [x] Sembunyikan deskripsi pada sisi depan; tampilkan secara kondisional di viewer.
 
 Hasil: konsep visual yang diminta pengguna sudah dapat dipakai dengan seluruh data galeri.
 
 ### Tahap 3: Viewer dan komponen cerita (P0/P1)
 
-- [ ] Restyle viewer ke tema gelap dan lengkapi fokus/keyboard.
-- [ ] Bangun chapter cards, panel cerita, dan rewind memakai foto/video asli.
-- [ ] Restyle highlight Steven, utilitas audio/confetti, serta footer.
-- [ ] Tambahkan informasi penggunaan dalam accordion jika dibutuhkan, tanpa menduplikasi narasi.
+- [x] Restyle viewer ke tema gelap dan lengkapi fokus/keyboard.
+- [x] Bangun chapter cards, panel cerita, dan rewind memakai foto/video asli.
+- [x] Restyle highlight Steven, utilitas audio/confetti, serta footer.
+- [x] Tambahkan informasi penggunaan dalam accordion jika dibutuhkan, tanpa menduplikasi narasi.
 
 Hasil: seluruh section dan state interaktif memakai bahasa visual yang konsisten.
 
@@ -483,3 +483,14 @@ Validasi memakai browser dan pengecekan kecil yang relevan. Tidak menambahkan fr
 - [x] Verifikasi file font memakai signature WOFF2 dan seluruh unduhan aset berhasil.
 - Berikutnya: bangun halaman gelap dan galeri polaroid, lalu validasi melalui browser.
 
+
+### 31 Oktober 2026: halaman dan galeri terhubung
+
+- [x] Terapkan tema biru-hitam, navbar pil, hero, chapter, panel cerita, rewind, highlight Steven, FAQ, dan footer.
+- [x] Ganti kartu menjadi polaroid gantung dengan tali, penjepit, grid fading, dan ayunan scroll.
+- [x] Hubungkan seluruh 28 media, enam kategori, pencarian/prompt, serta statistik dinamis (19 foto, 9 video).
+- [x] Gunakan native dialog untuk viewer gelap dan deskripsi kondisional; pertahankan panah, Escape, audio opt-in, dan confetti.
+- [x] Hilangkan dependency Tailwind CDN; font dan aset tampilan dilayani lokal.
+- [x] Pemeriksaan awal: syntax JavaScript valid, halaman termuat tanpa console error, kedua font termuat, 28 polaroid dirender, desktop tidak overflow.
+- [x] Preview tersedia di http://localhost:8000 untuk dipantau pengguna.
+- Berikutnya: uji seluruh interaksi, viewport, reduced motion, fallback, dan perbaiki temuan sebelum commit verifikasi akhir.
