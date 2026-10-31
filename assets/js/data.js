@@ -406,6 +406,22 @@ const MEMORIES_DATA = [
 
   // ================= SPECIAL: THE CANDIDATE JOURNEY =================
   {
+    id: "steven-champion",
+    title: "Prestasi Nasional: Juara 2 Cyber Security",
+    chapter: 0,
+    chapterName: "The Candidate Journey",
+    category: "candidate",
+    type: "image",
+    src: "assets/images/steven-cyber-champion.webp",
+    fallbackSrc: "assets/images/steven-cyber-champion.jpg",
+    location: "Kompetisi Nasional Cyber Security",
+    date: "2026",
+    badge: "Champion",
+    description: "Steven Erlinto dengan medali perak dan piala Juara 2 Nasional Cyber Security (hadiah Rp 3.000.000). Membawa kebanggaan almamater dan representasi duta teknologi Google.",
+    tags: ["Juara 2", "Cyber Security", "Steven Erlinto", "Prestasi"]
+  },
+
+  {
     id: "candidate-poster",
     title: "The Genesis: Steven Erlinto GSA Candidate Poster",
     chapter: 0,
