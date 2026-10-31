@@ -9,10 +9,11 @@ Desain mengikuti [website GSA Indonesia](https://googlestudentambassador.id/): h
 Jalankan dari root repository:
 
 ```sh
-python -m http.server 8000 --bind 127.0.0.1
+npm install
+npm run dev
 ```
 
-Buka [localhost:8000](http://localhost:8000). Tidak perlu install dependency atau menjalankan build.
+Buka [localhost:8000](http://localhost:8000). Gunakan Node.js 22 atau lebih baru. Halaman tetap buildless; Node menyediakan API upload untuk preview lokal.
 
 ## Fitur
 
@@ -45,7 +46,7 @@ node --check assets/js/app.js
 node --check assets/js/data.js
 ```
 
-Uji browser dilakukan pada search, filter, viewer, menu, motion, serta beberapa ukuran viewport; catatan hasil aktual ada di `PLAN.md`. Website tetap statis dan dapat dilayani dari GitHub Pages atau konfigurasi Vercel yang sudah ada.
+Uji browser dilakukan pada search, filter, viewer, menu, motion, serta beberapa ukuran viewport; catatan hasil aktual ada di `PLAN.md`. Deploy ke Vercel agar endpoint `/api/moments` ikut berjalan. Hosting statis saja tetap menampilkan arsip, tetapi tidak menyediakan API upload.
 
 Kredit: made by memories, from Steven and Galih · GSAID26B20013 & GSAID26B20004.
 
@@ -56,3 +57,19 @@ playwright-cli -s=gsa-check open http://localhost:8000
 playwright-cli -s=gsa-check run-code --filename=tests/browser-smoke.js
 playwright-cli -s=gsa-check run-code --filename=tests/polaroid-physics.js
 ```
+
+## Supabase dan upload bersama
+
+1. Salin `.env.example` ke `.env` jika belum ada; isi `SUPABASE_URL` dan `SUPABASE_SECRET_KEY` (`sb_secret_...`). Key legacy `service_role` boleh memakai `SUPABASE_SERVICE_ROLE_KEY` sebagai pengganti.
+2. Jalankan `supabase/setup.sql` di SQL Editor project Supabase. Bucket default `gsa-moments` bersifat publik untuk melihat/download, tetapi hanya server yang menulis data.
+3. Jalankan `npm run dev`. Restart setelah mengubah `.env`.
+4. Pada Vercel, isi variabel yang sama melalui Project Settings → Environment Variables. File `.env` tidak di-commit atau dikirim ke browser.
+
+Foto dikompresi browser lalu divalidasi dan dikompresi ulang oleh server menjadi WebP maksimal **100.000 byte**. Supabase menyimpan foto serta metadata; upload tidak membuat commit atau redeploy. API membatasi 20 upload per IP dalam 24 jam. Pengguna tidak dapat mengubah/menghapus momen orang lain melalui API publik. Admin bisa mengelola record di dashboard Supabase.
+
+```sh
+npm test
+playwright-cli -s=gsa-check run-code --filename=tests/upload-browser.js
+```
+
+`npm test` memakai mock Supabase. Tes browser upload juga memalsukan respons publikasi, sehingga tidak menambah data pada project asli. Uji Supabase nyata sudah dilakukan sekali dan seluruh data uji dibersihkan.

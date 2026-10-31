@@ -25,6 +25,182 @@
   --line: rgba(255, 255, 255, 0.16);
   --font: "Google Sans Flex", Arial, sans-serif;
 }
+
+/* Community uploads reuse the same dark surfaces and pill actions. */
+.upload-callout {
+  text-align: center;
+  margin: 0 0 28px;
+}
+.upload-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  border: 1px solid #ffffff24;
+  border-radius: 999px;
+  background: #196ac9;
+  color: #fff;
+  padding: 11px 22px;
+  font-weight: 500;
+  font-size: 14px;
+}
+.upload-button:hover {
+  background: #2478da;
+}
+.upload-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.upload-callout > p {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 10px;
+}
+.community-more {
+  text-align: center;
+}
+.community-more > p {
+  color: #b9c5d6;
+  font-size: 13px;
+  margin-top: 20px;
+}
+.upload-dialog {
+  width: min(540px, calc(100% - 24px));
+  max-height: 94dvh;
+  overflow: auto;
+  border: 1px solid #ffffff30;
+  border-radius: 24px;
+  padding: 26px;
+  background: var(--surface);
+  color: #fff;
+  overscroll-behavior: contain;
+}
+.upload-dialog::backdrop {
+  background: #000c;
+  backdrop-filter: blur(12px);
+}
+.upload-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 26px;
+}
+.upload-header h2 {
+  font-size: 28px;
+}
+.upload-header .eyebrow {
+  margin-bottom: 9px;
+  font-size: 10px;
+}
+.photo-picker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  border: 1px dashed #ffffff50;
+  border-radius: 16px;
+  background: #17181a;
+  padding: 24px;
+  cursor: pointer;
+  position: relative;
+}
+.photo-picker input {
+  width: 100%;
+  font-size: 12px;
+  color: #c5c9d0;
+  cursor: pointer;
+}
+.photo-picker input::file-selector-button {
+  border: 0;
+  border-radius: 999px;
+  background: #ffffff18;
+  color: #fff;
+  padding: 9px 14px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.photo-picker > span {
+  font-size: 14px;
+}
+.photo-picker small {
+  font-size: 10px;
+  color: #b6bac3;
+}
+.photo-picker img {
+  max-height: 180px;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+.form-label {
+  display: block;
+  font-size: 13px;
+  margin: 18px 0;
+}
+.form-label > span,
+.form-label > small {
+  color: #b6bac3;
+  font-size: 11px;
+}
+.form-label input,
+.form-label textarea {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  background: #131416;
+  border: 1px solid #ffffff2b;
+  border-radius: 10px;
+  padding: 12px;
+  color: #fff;
+  font: 14px/1.5 var(--font);
+  margin-top: 8px;
+  resize: vertical;
+}
+.form-label input::placeholder,
+.form-label textarea::placeholder {
+  color: #9b9fa9;
+}
+.form-label small {
+  display: block;
+  margin-top: 6px;
+}
+.form-note {
+  font-size: 11px;
+  color: #a7ccff;
+  margin-top: 10px;
+  min-height: 18px;
+}
+.form-status {
+  font-size: 13px;
+  color: #c8d8f0;
+  margin: 16px 0;
+}
+.form-status.is-error {
+  color: #ffb8ae;
+}
+#uploadForm > .upload-button {
+  width: 100%;
+}
+.upload-consent {
+  font-size: 11px;
+  line-height: 1.6;
+  color: #b6bac3;
+  margin-top: 14px;
+  text-align: center;
+}
+.viewer-download {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 22px;
+}
+.viewer-download > span {
+  font-size: 12px;
+  color: #c2cbd8;
+}
 * {
   box-sizing: border-box;
 }

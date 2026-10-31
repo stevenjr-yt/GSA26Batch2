@@ -524,3 +524,15 @@ Validasi memakai browser dan pengecekan kecil yang relevan. Tidak menambahkan fr
 - [x] Pemeriksaan file memastikan seluruh 28 ID unik dan semua path media asli tersedia.
 - Lighthouse belum dapat dijalankan: dua percobaan gagal saat instalasi alat dari registry npm (`ECONNRESET` dan `EIDLETIMEOUT`). Tidak ada skor atau klaim Core Web Vitals.
 - [ ] Tambahkan upload momen bersama, gambar maksimal 100 KB, judul, deskripsi opsional, tag, dan download. Penyimpanan dipilih pengguna: project Supabase yang sudah dimiliki; kredensial akan diisi melalui .env lokal.
+
+### 31 Oktober 2026: upload foto bersama aktif
+
+- [x] Tambah form foto, judul, deskripsi opsional, dan maksimal delapan tag.
+- [x] Kompresi browser sebelum upload dan validasi/re-encode WebP di server; batas tegas 100.000 byte per foto, metadata gambar dihapus.
+- [x] Foto di Supabase Storage; metadata di `community_moments`; feed dipaginasi 40 item, terintegrasi dengan galeri/pencarian/filter dan download.
+- [x] `.env` dibuat lokal, diabaikan Git, tidak dilayani dev server; `.env.example` aman untuk repository.
+- [x] Tambah Node dev server untuk preview API di port 8000; satu dependency runtime `sharp` untuk validasi dan kompresi foto.
+- [x] SQL memakai RLS, write hanya server, reservasi atomik, batas 20 upload/IP/24 jam, hash IP tanpa menyimpan alamat mentah, serta cleanup upload gagal.
+- [x] Tujuh tes API dan sebelas tes browser upload lulus. Uji foto browser 73.058 byte.
+- [x] Konfigurasi dan setup Supabase pengguna diverifikasi: tabel/bucket tersedia. Satu upload nyata mengembalikan 201, terbaca di feed, dan foto publik mengembalikan 200; objek dan row uji langsung dihapus.
+- [ ] Tambahan terbaru: video melalui link publik Google Drive; foto tetap upload langsung. Implementasi dan upgrade schema menyusul.

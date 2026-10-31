@@ -1,0 +1,15 @@
+{
+  "name": "gsa-inauguration-memories",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "node --env-file-if-exists=.env server.cjs",
+    "test": "node --test tests/api.test.cjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "sharp": "0.35.5"
+  }
+}

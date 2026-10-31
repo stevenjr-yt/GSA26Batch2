@@ -68,9 +68,10 @@ document.addEventListener("DOMContentLoaded", () => {
         "Uji nyali di Rumah Hantu Jeruk Purut, obrolan malam, dan turnamen UNO di kamar hotel. Momen kecil yang justru paling membekas.",
     },
   ];
+  let allMemories = [...MEMORIES_DATA];
   let currentFilter = "all";
   let searchQuery = "";
-  let filteredItems = [...MEMORIES_DATA];
+  let filteredItems = [...allMemories];
   let viewerItems = filteredItems;
   let activeIndex = 0;
   let returnFocus = null;
@@ -79,17 +80,40 @@ document.addEventListener("DOMContentLoaded", () => {
   const search = $("geminiSearchInput");
   const filters = [...document.querySelectorAll(".filter-btn")];
 
-  const totalVideos = MEMORIES_DATA.filter(
-    (item) => item.type === "video",
-  ).length;
-  $("memoryCount").textContent = MEMORIES_DATA.length;
-  $("videoCount").textContent = totalVideos;
-  document
-    .querySelectorAll("[data-total]")
-    .forEach((e) => (e.textContent = MEMORIES_DATA.length));
-  document
-    .querySelectorAll("[data-videos]")
-    .forEach((e) => (e.textContent = totalVideos));
+  function updateCounts() {
+    const videos = allMemories.filter((item) => item.type === "video").length;
+    $("memoryCount").textContent = allMemories.length;
+    $("videoCount").textContent = videos;
+    document
+      .querySelectorAll("[data-total]")
+      .forEach((e) => (e.textContent = allMemories.length));
+    document
+      .querySelectorAll("[data-videos]")
+      .forEach((e) => (e.textContent = videos));
+    $("communityCount").textContent = allMemories.filter(
+      (item) => item.category === "community",
+    ).length;
+  }
+  updateCounts();
+  window.addEventListener("moments:loaded", (event) => {
+    const incoming = event.detail.items;
+    const existing = allMemories.filter(
+      (item) => item.category === "community",
+    );
+    const shared = [
+      ...new Map(
+        [...incoming, ...existing].map((item) => [item.id, item]),
+      ).values(),
+    ];
+    allMemories = [...MEMORIES_DATA, ...shared];
+    updateCounts();
+    if (event.detail.selectCommunity) {
+      search.value = "";
+      $("aiResponseBox").hidden = true;
+      applyFilterAndSearch("community", "");
+      scrollTo("gallerySection");
+    } else applyFilterAndSearch();
+  });
 
   function setMenu(open, restoreFocus = false) {
     document.querySelector(".navbar").classList.toggle("menu-open", open);
@@ -124,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function showChapter(index) {
     const chapter = chapters[index];
-    const item = MEMORIES_DATA.find((item) => item.id === chapter.cover);
+    const item = allMemories.find((item) => item.id === chapter.cover);
     document.querySelectorAll(".story-tab").forEach((button, i) => {
       button.classList.toggle("is-active", i === index);
       button.setAttribute("aria-pressed", String(i === index));
@@ -137,7 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
     attachImageFallback($("storyPanel").querySelector("img"), item.fallbackSrc);
   }
   chapters.forEach((chapter, index) => {
-    const item = MEMORIES_DATA.find((item) => item.id === chapter.cover);
+    const item = allMemories.find((item) => item.id === chapter.cover);
     const card = document.createElement("button");
     card.type = "button";
     card.className = "chapter-card chapter-timeline-card";
@@ -275,7 +299,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     filteredItems.forEach((item, index) => {
-      const originalIndex = MEMORIES_DATA.indexOf(item);
+      const originalIndex = allMemories.indexOf(item);
       const frame = document.createElement("div");
       frame.className = "polaroid-anchor";
       frame.style.setProperty(
@@ -299,7 +323,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "aria-label",
         `Buka ${item.type === "video" ? "video" : "foto"}: ${item.title}`,
       );
-      button.innerHTML = `<span class="polaroid-image"><img src="${escape(media)}" alt="" width="400" height="400" loading="lazy" decoding="async">${item.type === "video" ? `<span class="polaroid-play">${icon("play")}</span>` : ""}</span><span class="polaroid-caption"><span>${escape(item.badge || item.title)}</span><span class="polaroid-index">${String(originalIndex + 1).padStart(2, "0")} / ${MEMORIES_DATA.length}</span></span>`;
+      button.innerHTML = `<span class="polaroid-image"><img src="${escape(media)}" alt="" width="400" height="400" loading="lazy" decoding="async">${item.type === "video" ? `<span class="polaroid-play">${icon("play")}</span>` : ""}</span><span class="polaroid-caption"><span>${escape(item.badge || item.title)}</span><span class="polaroid-index">${String(originalIndex + 1).padStart(2, "0")} / ${allMemories.length}</span></span>`;
       button.addEventListener("click", () =>
         openLightbox(index, filteredItems, button),
       );
@@ -328,7 +352,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function applyFilterAndSearch(filter = currentFilter, query = search.value) {
     currentFilter = filter;
     searchQuery = query.toLowerCase().trim();
-    filteredItems = MEMORIES_DATA.filter((item) => {
+    filteredItems = allMemories.filter((item) => {
       const categoryMatches =
         filter === "all" ||
         (filter === "videos"
@@ -396,6 +420,37 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   function renderViewer() {
     const item = viewerItems[activeIndex];
+    const download = $("downloadMomentLink");
+    const filename =
+      (item.title.replace(/[^a-z0-9_-]+/gi, "-").slice(0, 80) || "gsa-moment") +
+      (item.type === "video" ? ".mp4" : ".webp");
+    download.href = item.src;
+    download.download = filename;
+    download.textContent = item.type === "video" ? "Unduh video" : "Unduh foto";
+    $("downloadStatus").textContent = "";
+    download.onclick = async (event) => {
+      if (new URL(item.src, location.href).origin === location.origin) return;
+      event.preventDefault();
+      if (download.getAttribute("aria-busy") === "true") return;
+      download.setAttribute("aria-busy", "true");
+      $("downloadStatus").textContent = "Menyiapkan unduhan…";
+      try {
+        const response = await fetch(item.src, { credentials: "omit" });
+        if (!response.ok) throw new Error("download");
+        const url = URL.createObjectURL(await response.blob());
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = filename;
+        link.click();
+        setTimeout(() => URL.revokeObjectURL(url), 2000);
+        $("downloadStatus").textContent = "Unduhan siap.";
+      } catch {
+        $("downloadStatus").textContent = "Unduhan belum berhasil. Coba lagi.";
+      } finally {
+        download.removeAttribute("aria-busy");
+      }
+    };
+
     $("lightboxTitle").textContent = item.title;
     $("lightboxLocation").textContent = item.location || "";
     $("lightboxLocation").hidden = !item.location;
@@ -514,8 +569,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   $("rewindPlay").addEventListener("click", () =>
     openLightbox(
-      MEMORIES_DATA.findIndex((item) => item.id === "confetti-grand"),
-      MEMORIES_DATA,
+      allMemories.findIndex((item) => item.id === "confetti-grand"),
+      allMemories,
       $("rewindPlay"),
     ),
   );

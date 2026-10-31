@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="assets/css/style.css" />
     <script src="assets/js/data.js" defer></script>
     <script src="assets/js/app.js" defer></script>
+    <script src="assets/js/uploads.js" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Lewati navigasi</a>
@@ -265,6 +266,12 @@
             </p>
           </div>
           <div class="gallery-tools">
+            <div class="upload-callout">
+              <button type="button" class="upload-button" id="uploadMomentBtn">
+                + Upload momen kamu
+              </button>
+              <p>Tambahkan fotomu ke kenangan kita.</p>
+            </div>
             <label class="search-field" for="geminiSearchInput"
               ><svg class="icon" aria-hidden="true">
                 <use href="#icon-search" /></svg
@@ -290,6 +297,14 @@
               <p id="aiResponseText"></p>
             </div>
             <div class="filter-list" role="group" aria-label="Filter galeri">
+              <button
+                class="filter-btn"
+                data-filter="community"
+                aria-pressed="false"
+                type="button"
+              >
+                Momen teman <span id="communityCount">0</span>
+              </button>
               <button
                 class="filter-btn is-active"
                 data-filter="all"
@@ -363,6 +378,17 @@
             </div>
           </div>
           <div class="polaroid-grid" id="galleryGrid"></div>
+          <div class="community-more">
+            <button
+              type="button"
+              class="detail-link"
+              id="loadMoreMoments"
+              hidden
+            >
+              Muat momen teman lainnya
+            </button>
+            <p id="communityStatus" role="status"></p>
+          </div>
           <noscript
             ><p class="empty-state">
               Aktifkan JavaScript untuk membuka seluruh foto dan video kenangan.
@@ -452,6 +478,87 @@
         </p>
       </div>
     </footer>
+    <dialog
+      id="uploadDialog"
+      class="upload-dialog"
+      aria-labelledby="uploadTitle"
+    >
+      <header class="upload-header">
+        <div>
+          <p class="eyebrow">A memory from you</p>
+          <h2 id="uploadTitle">Momenmu, cerita kita.</h2>
+        </div>
+        <button
+          type="button"
+          class="icon-button"
+          id="uploadClose"
+          aria-label="Tutup form upload"
+        >
+          <svg class="icon" aria-hidden="true"><use href="#icon-close" /></svg>
+        </button>
+      </header>
+      <form id="uploadForm">
+        <label class="photo-picker" for="momentImage"
+          ><input
+            id="momentImage"
+            name="photo"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            required
+          /><img
+            id="uploadPreview"
+            alt="Preview foto yang dipilih"
+            hidden
+          /><span id="photoPickerText">Pilih foto dari perangkatmu</span
+          ><small
+            >JPG, PNG, atau WebP · otomatis diperkecil maksimal 100 KB</small
+          ></label
+        >
+        <p id="compressionStatus" class="form-note" role="status"></p>
+        <label class="form-label" for="momentTitle"
+          >Judul<input
+            id="momentTitle"
+            name="title"
+            maxlength="100"
+            placeholder="Kasih nama untuk kenangan ini"
+            required
+        /></label>
+        <label class="form-label" for="momentDescription"
+          >Deskripsi <span>(opsional)</span
+          ><textarea
+            id="momentDescription"
+            name="description"
+            rows="3"
+            maxlength="2000"
+            placeholder="Ada cerita di balik fotonya?"
+          ></textarea>
+        </label>
+        <label class="form-label" for="momentTags"
+          >Tag<input
+            id="momentTags"
+            name="tags"
+            maxlength="270"
+            placeholder="inaugurasi, squad, Google HQ"
+          /><small>Pisahkan dengan koma, maksimal 8 tag.</small></label
+        >
+        <label class="visually-hidden" aria-hidden="true"
+          >Website<input name="website" tabindex="-1" autocomplete="off"
+        /></label>
+        <p
+          id="uploadStatus"
+          class="form-status"
+          role="status"
+          aria-live="polite"
+        ></p>
+        <button type="submit" class="upload-button" id="uploadSubmit" disabled>
+          Bagikan momen
+        </button>
+        <p class="upload-consent">
+          Foto yang kamu bagikan akan terlihat dan dapat diunduh oleh pengunjung
+          lain.
+        </p>
+      </form>
+    </dialog>
     <dialog id="lightboxModal" class="lightbox" aria-labelledby="lightboxTitle">
       <div class="viewer-shell">
         <header class="viewer-header">
@@ -498,6 +605,11 @@
           <h2 id="lightboxTitle"></h2>
           <p id="lightboxDescription"></p>
           <div id="lightboxTags" class="viewer-tags"></div>
+          <div class="viewer-download">
+            <a id="downloadMomentLink" class="utility-button" href="#" download
+              >Unduh foto</a
+            ><span id="downloadStatus" role="status"></span>
+          </div>
         </div>
       </div>
     </dialog>
