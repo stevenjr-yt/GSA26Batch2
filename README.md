@@ -72,4 +72,17 @@ npm test
 playwright-cli -s=gsa-check run-code --filename=tests/upload-browser.js
 ```
 
-`npm test` memakai mock Supabase. Tes browser upload juga memalsukan respons publikasi, sehingga tidak menambah data pada project asli. Uji Supabase nyata sudah dilakukan sekali dan seluruh data uji dibersihkan.
+`npm test` memakai mock Supabase. Tes browser upload juga memalsukan respons publikasi, sehingga tidak menambah data pada project asli. Uji Supabase nyata dilakukan dengan data sementara; seluruh row dan objek uji dibersihkan.
+
+## Video Google Drive
+
+Di form Upload momen kamu, pilih **Foto** untuk mengunggah file langsung, atau **Video Google Drive** untuk menempel link file video. Foto tetap dibatasi 100 KB. Video tetap berada di Drive; Supabase hanya menyimpan link, judul, deskripsi opsional, dan tag.
+
+- Project Supabase baru: jalankan `supabase/setup.sql` versi terbaru.
+- Project yang sudah memakai schema foto awal: jalankan `supabase/upgrade-drive-video.sql` satu kali. Foto lama dipertahankan.
+- Bagikan file Drive sebagai **Siapa saja yang memiliki link → Pelihat**, lalu salin link file (bukan folder).
+- Player menggunakan halaman `/preview` Google Drive di iframe. Tombol **Buka / unduh di Drive** mengikuti izin unduhan dari pemilik video.
+- Link `/file/d/ID/view`, `/open?id=ID`, dan `/uc?id=ID` diterima; resource key dipertahankan jika ada. Domain selain `drive.google.com` ditolak.
+- Pemutaran dapat dipengaruhi izin, status pemrosesan, dan batas playback Google Drive. Integrasi tidak menggunakan proxy video atau mengakali pembatasan pemilik. Lihat [panduan pemutaran Drive](https://support.google.com/drive/answer/2423694) dan [pengaturan berbagi](https://support.google.com/drive/answer/7166529).
+
+Tes browser untuk iframe menggunakan mock player; tidak ada file Drive publik milik pengguna yang diberikan untuk uji playback nyata. Penyimpanan metadata video pada Supabase asli sudah diverifikasi dan data uji langsung dihapus.

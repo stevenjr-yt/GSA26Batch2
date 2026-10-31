@@ -498,23 +498,48 @@
         </button>
       </header>
       <form id="uploadForm">
-        <label class="photo-picker" for="momentImage"
-          ><input
-            id="momentImage"
-            name="photo"
-            type="file"
-            accept="image/jpeg,image/png,image/webp"
-            required
-          /><img
-            id="uploadPreview"
-            alt="Preview foto yang dipilih"
-            hidden
-          /><span id="photoPickerText">Pilih foto dari perangkatmu</span
-          ><small
-            >JPG, PNG, atau WebP · otomatis diperkecil maksimal 100 KB</small
+        <fieldset class="media-choice">
+          <legend class="visually-hidden">Jenis momen</legend>
+          <label
+            ><input type="radio" name="kind" value="image" checked />
+            Foto</label
+          ><label
+            ><input type="radio" name="kind" value="drive_video" /> Video Google
+            Drive</label
+          >
+        </fieldset>
+        <div id="photoFields">
+          <label class="photo-picker" for="momentImage"
+            ><input
+              id="momentImage"
+              name="photo"
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              required
+            /><img
+              id="uploadPreview"
+              alt="Preview foto yang dipilih"
+              hidden
+            /><span id="photoPickerText">Pilih foto dari perangkatmu</span
+            ><small
+              >JPG, PNG, atau WebP · otomatis diperkecil maksimal 100 KB</small
+            ></label
+          >
+          <p id="compressionStatus" class="form-note" role="status"></p>
+        </div>
+        <label id="driveFields" class="form-label" for="momentDriveUrl" hidden
+          >Link video Google Drive<input
+            id="momentDriveUrl"
+            name="driveUrl"
+            type="url"
+            maxlength="2000"
+            placeholder="https://drive.google.com/file/d/…/view"
+            disabled
+          /><small
+            >Di Google Drive: Bagikan → Siapa saja yang memiliki link → Pelihat.
+            Pastikan video sudah selesai diproses.</small
           ></label
         >
-        <p id="compressionStatus" class="form-note" role="status"></p>
         <label class="form-label" for="momentTitle"
           >Judul<input
             id="momentTitle"
@@ -554,8 +579,8 @@
           Bagikan momen
         </button>
         <p class="upload-consent">
-          Foto yang kamu bagikan akan terlihat dan dapat diunduh oleh pengunjung
-          lain.
+          Foto dan video yang kamu bagikan akan terlihat dan dapat diunduh oleh
+          pengunjung lain.
         </p>
       </form>
     </dialog>

@@ -4,7 +4,7 @@ const MAX_IMAGE = 100000;
 const MAX_BODY = 150000;
 const PAGE_SIZE = 40;
 const FIELDS =
-  "id,title,description,tags,storage_path,image_bytes,width,height,created_at";
+  "id,title,description,tags,storage_path,image_bytes,width,height,created_at,kind,drive_url";
 
 function failure(status, message) {
   return Object.assign(new Error(message), { status });
@@ -42,19 +42,58 @@ async function supabase(config, path, options = {}) {
   }
   return response.status === 204 ? null : response.json();
 }
+function normalizeDriveLink(value) {
+  try {
+    if (typeof value !== "string" || value.length > 2000)
+      throw new Error("link");
+    const link = new URL(value);
+    if (
+      link.protocol !== "https:" ||
+      link.hostname !== "drive.google.com" ||
+      link.username ||
+      link.password ||
+      link.port
+    )
+      throw new Error("host");
+    const id =
+      link.pathname.match(
+        /^\/file\/d\/([A-Za-z0-9_-]{10,200})(?:\/(?:view|preview|edit))?\/?$/,
+      )?.[1] ||
+      (["/open", "/uc"].includes(link.pathname)
+        ? link.searchParams.get("id")
+        : null);
+    if (!/^[A-Za-z0-9_-]{10,200}$/.test(id || "")) throw new Error("id");
+    const resource = link.searchParams.get("resourcekey");
+    if (resource && !/^[A-Za-z0-9_-]{1,200}$/.test(resource))
+      throw new Error("resource");
+    return `https://drive.google.com/file/d/${id}/view${resource ? "?resourcekey=" + encodeURIComponent(resource) : ""}`;
+  } catch {
+    throw failure(422, "Tempel link file video Google Drive yang valid.");
+  }
+}
 function publicMoment(row, config) {
+  const drive = row.kind === "drive_video";
   return {
     id: `community-${row.id}`,
     title: row.title,
     description: row.description || "",
     tags: row.tags || [],
-    src: `${config.url}/storage/v1/object/public/${config.bucket}/${encodeURIComponent(row.storage_path)}`,
-    type: "image",
+    src: drive
+      ? row.drive_url.replace("/view", "/preview")
+      : `${config.url}/storage/v1/object/public/${config.bucket}/${encodeURIComponent(row.storage_path)}`,
+    ...(drive
+      ? {
+          source: "gdrive",
+          driveUrl: row.drive_url,
+          poster: "assets/brand/hero-bulb.png",
+        }
+      : {}),
+    type: drive ? "video" : "image",
     category: "community",
     chapter: 0,
     chapterName: "Momen teman",
     badge: row.title,
-    location: "Dari teman-teman GSA",
+    location: drive ? "Video dari Google Drive" : "Dari teman-teman GSA",
     date: new Intl.DateTimeFormat("id-ID", {
       dateStyle: "medium",
       timeZone: "Asia/Jakarta",
@@ -153,8 +192,12 @@ module.exports = async function handler(req, res) {
           throw failure(400, "Halaman tidak valid.");
         }
         if (
-          !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?Z$/.test(cursor?.time) ||
-          !/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/.test(cursor?.id)
+          !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?Z$/.test(
+            cursor?.time,
+          ) ||
+          !/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/.test(
+            cursor?.id,
+          )
         )
           throw failure(400, "Halaman tidak valid.");
         query.set(
@@ -172,7 +215,7 @@ module.exports = async function handler(req, res) {
       const cursor = more
         ? Buffer.from(
             JSON.stringify({
-              time: last.created_at.replace(/\+00:00$/, 'Z'),
+              time: last.created_at.replace(/\+00:00$/, "Z"),
               id: last.id,
             }),
           ).toString("base64url")
@@ -211,19 +254,27 @@ module.exports = async function handler(req, res) {
     const tags = [
       ...new Set(body.tags.map((tag) => tag.trim().replace(/^#+/, ""))),
     ].filter(Boolean);
-    if (
-      typeof body.image !== "string" ||
-      body.image.length > 133336 ||
-      body.image.length % 4 !== 0 ||
-      !/^[A-Za-z0-9+/]+={0,2}$/.test(body.image)
-    )
-      throw failure(422, "Foto hasil kompresi tidak valid.");
-    const input = Buffer.from(body.image, "base64");
-    if (input.length > MAX_IMAGE)
-      throw failure(413, "Foto harus maksimal 100 KB sebelum dikirim.");
-    const image = await compress(input);
+    const kind = body.kind || "image";
+    if (!["image", "drive_video"].includes(kind))
+      throw failure(422, "Jenis momen tidak didukung.");
+    let image = null,
+      driveUrl = null;
+    if (kind === "drive_video") driveUrl = normalizeDriveLink(body.driveUrl);
+    else {
+      if (
+        typeof body.image !== "string" ||
+        body.image.length > 133336 ||
+        body.image.length % 4 !== 0 ||
+        !/^[A-Za-z0-9+/]+={0,2}$/.test(body.image)
+      )
+        throw failure(422, "Foto hasil kompresi tidak valid.");
+      const input = Buffer.from(body.image, "base64");
+      if (input.length > MAX_IMAGE)
+        throw failure(413, "Foto harus maksimal 100 KB sebelum dikirim.");
+      image = await compress(input);
+    }
     const id = randomUUID(),
-      path = `${id}.webp`;
+      path = image ? `${id}.webp` : null;
     const ip = (
       req.headers["x-vercel-forwarded-for"] ||
       req.headers["x-forwarded-for"] ||
@@ -239,10 +290,12 @@ module.exports = async function handler(req, res) {
       p_description: description || null,
       p_tags: tags,
       p_path: path,
-      p_bytes: image.data.length,
-      p_width: image.info.width,
-      p_height: image.info.height,
+      p_bytes: image?.data.length || null,
+      p_width: image?.info.width || null,
+      p_height: image?.info.height || null,
       p_submitter_hash: submitter,
+      p_kind: kind,
+      p_drive_url: driveUrl,
     };
     await supabase(config, "/rest/v1/rpc/reserve_community_moment", {
       method: "POST",
@@ -251,15 +304,16 @@ module.exports = async function handler(req, res) {
     });
     let row;
     try {
-      await supabase(config, `/storage/v1/object/${config.bucket}/${path}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "image/webp",
-          "Cache-Control": "public, max-age=31536000",
-          "x-upsert": "false",
-        },
-        body: image.data,
-      });
+      if (image)
+        await supabase(config, `/storage/v1/object/${config.bucket}/${path}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "image/webp",
+            "Cache-Control": "public, max-age=31536000",
+            "x-upsert": "false",
+          },
+          body: image.data,
+        });
       const rows = await supabase(
         config,
         `/rest/v1/community_moments?id=eq.${id}&select=${FIELDS}`,
@@ -276,16 +330,18 @@ module.exports = async function handler(req, res) {
       row = rows[0];
     } catch (error) {
       await Promise.allSettled([
-        supabase(config, `/storage/v1/object/${config.bucket}`, {
+        ...(path
+          ? [
+              supabase(config, `/storage/v1/object/${config.bucket}`, {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ prefixes: [path] }),
+              }),
+            ]
+          : []),
+        supabase(config, `/rest/v1/community_moments?id=eq.${id}`, {
           method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ prefixes: [path] }),
         }),
-        supabase(
-          config,
-          `/rest/v1/community_moments?id=eq.${id}`,
-          { method: "DELETE" },
-        ),
       ]);
       throw error;
     }

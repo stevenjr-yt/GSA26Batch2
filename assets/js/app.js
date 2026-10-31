@@ -301,7 +301,8 @@ document.addEventListener("DOMContentLoaded", () => {
     filteredItems.forEach((item, index) => {
       const originalIndex = allMemories.indexOf(item);
       const frame = document.createElement("div");
-      frame.className = "polaroid-anchor";
+      frame.className =
+        "polaroid-anchor" + (item.source === "gdrive" ? " drive-polaroid" : "");
       frame.style.setProperty(
         "--tilt",
         `${[-2.4, 1.8, -1.3, 2.6, -1.7, 1.1][originalIndex % 6]}deg`,
@@ -424,6 +425,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const filename =
       (item.title.replace(/[^a-z0-9_-]+/gi, "-").slice(0, 80) || "gsa-moment") +
       (item.type === "video" ? ".mp4" : ".webp");
+    download.removeAttribute("target");
+    download.removeAttribute("rel");
     download.href = item.src;
     download.download = filename;
     download.textContent = item.type === "video" ? "Unduh video" : "Unduh foto";
@@ -451,6 +454,16 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     };
 
+    if (item.source === "gdrive") {
+      download.href = item.driveUrl;
+      download.removeAttribute("download");
+      download.target = "_blank";
+      download.rel = "noopener noreferrer";
+      download.textContent = "Buka / unduh di Drive";
+      download.onclick = null;
+      $("downloadStatus").textContent =
+        "Pemutaran dan unduhan mengikuti izin Google Drive pemilik video.";
+    }
     $("lightboxTitle").textContent = item.title;
     $("lightboxLocation").textContent = item.location || "";
     $("lightboxLocation").hidden = !item.location;
@@ -475,7 +488,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const container = $("lightboxMediaContainer");
     container.querySelector("video")?.pause();
     container.replaceChildren();
-    if (item.type === "video") {
+    if (item.source === "gdrive") {
+      const iframe = document.createElement("iframe");
+      iframe.src = item.src;
+      iframe.title = item.title;
+      iframe.allow = "autoplay; fullscreen";
+      iframe.allowFullscreen = true;
+      iframe.referrerPolicy = "strict-origin-when-cross-origin";
+      container.append(iframe);
+    } else if (item.type === "video") {
       const video = document.createElement("video");
       video.src = item.src;
       video.poster = item.poster || "";

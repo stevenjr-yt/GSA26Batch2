@@ -10,13 +10,29 @@ document.addEventListener("DOMContentLoaded", () => {
     generation = 0,
     nextCursor = null;
   let uploadController = null;
+  let availabilityChecked = false;
   const sizeLabel = (bytes) =>
     bytes >= 1000000
       ? `${(bytes / 1000000).toFixed(1)} MB`
       : `${Math.ceil(bytes / 1000)} KB`;
+  const isDrive = () => form.elements.kind.value === "drive_video";
   function syncSubmit() {
-    $("uploadSubmit").disabled = !available || !prepared || processing;
+    $("uploadSubmit").disabled =
+      !available || processing || (!isDrive() && !prepared);
   }
+  function syncType() {
+    const video = isDrive();
+    $("photoFields").hidden = video;
+    $("driveFields").hidden = !video;
+    $("momentImage").required = !video;
+    $("momentImage").disabled = video;
+    $("momentDriveUrl").required = video;
+    $("momentDriveUrl").disabled = !video;
+    syncSubmit();
+  }
+  form
+    .querySelectorAll('[name="kind"]')
+    .forEach((input) => input.addEventListener("change", syncType));
   function showStatus(message, error = false) {
     $("uploadStatus").textContent = message;
     $("uploadStatus").classList.toggle("is-error", error);
@@ -24,16 +40,26 @@ document.addEventListener("DOMContentLoaded", () => {
   function openUpload() {
     dialog.showModal();
     $("uploadClose").focus();
-    if (!available) showStatus("Upload momen belum tersedia. Coba lagi nanti.");
+    if (!available)
+      showStatus(
+        availabilityChecked
+          ? "Upload momen belum tersedia. Coba lagi nanti."
+          : "Menyiapkan form…",
+      );
   }
   $("uploadMomentBtn").addEventListener("click", openUpload);
-  $("uploadClose").addEventListener("click", () => dialog.close());
+  $("uploadClose").addEventListener("click", () => {
+    if (!uploadController) dialog.close();
+  });
+  dialog.addEventListener("cancel", (event) => {
+    if (uploadController) event.preventDefault();
+  });
   dialog.addEventListener("close", () => {
     uploadController?.abort();
     $("uploadMomentBtn").focus({ preventScroll: true });
   });
   dialog.addEventListener("click", (event) => {
-    if (event.target !== dialog) return;
+    if (event.target !== dialog || uploadController) return;
     const b = dialog.getBoundingClientRect();
     if (
       event.clientX < b.left ||
@@ -72,6 +98,9 @@ document.addEventListener("DOMContentLoaded", () => {
         $("communityStatus").textContent =
           "Momen lainnya belum dapat dimuat. Coba lagi.";
     } finally {
+      availabilityChecked = true;
+      if (dialog.open && !available)
+        showStatus("Upload momen belum tersedia. Coba lagi nanti.");
       button.disabled = false;
       syncSubmit();
     }
@@ -163,7 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
-    if (!prepared || !available || processing) return;
+    if ((!isDrive() && !prepared) || !available || processing) return;
     const tags = [
       ...new Set(
         $("momentTags")
@@ -182,18 +211,23 @@ document.addEventListener("DOMContentLoaded", () => {
     showStatus("Menyimpan momenmu…");
     uploadController = new AbortController();
     try {
-      const dataUrl = await new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(prepared);
-      });
+      const dataUrl = isDrive()
+        ? null
+        : await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(prepared);
+          });
       const response = await fetch("/api/moments", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         signal: uploadController.signal,
         body: JSON.stringify({
-          image: dataUrl.split(",")[1],
+          kind: form.elements.kind.value,
+          ...(isDrive()
+            ? { driveUrl: $("momentDriveUrl").value.trim() }
+            : { image: dataUrl.split(",")[1] }),
           title: $("momentTitle").value.trim(),
           description: $("momentDescription").value.trim(),
           tags,
@@ -212,6 +246,7 @@ document.addEventListener("DOMContentLoaded", () => {
       $("communityStatus").textContent =
         "Momenmu sudah ada di sini. Terima kasih sudah berbagi!";
       form.reset();
+      syncType();
       prepared = null;
       $("uploadPreview").hidden = true;
       $("photoPickerText").textContent = "Pilih foto dari perangkatmu";

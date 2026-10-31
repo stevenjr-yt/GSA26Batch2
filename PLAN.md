@@ -4,7 +4,7 @@ Tanggal audit: **31 Oktober 2026, WIB**
 Repo: `D:\Job\GSA\web-inau`
 Baseline: branch `main`, commit `b4ca30c`
 Referensi utama: [googlestudentambassador.id](https://googlestudentambassador.id/)
-Status: **implementasi utama selesai; verifikasi visual dan fungsional berjalan.**
+Status: **redesign, physics, upload foto Supabase, dan tautan video Drive selesai secara lokal; verifikasi fungsional lulus. Siap dipush sesuai instruksi terbaru pengguna.**
 
 ## 1. Hasil yang dituju dan batas pekerjaan
 
@@ -419,12 +419,12 @@ Hasil: seluruh section dan state interaktif memakai bahasa visual yang konsisten
 
 ### Tahap 4: Penyelarasan visual dan verifikasi (P0)
 
-- [ ] Cocokkan screenshot referensi dan hasil pada viewport yang sama.
-- [ ] Periksa crop foto, skala ornamen, panjang tali, fade grid, amplitudo ayunan, dan jarak antarpolaroid.
-- [ ] Periksa semua filter/search/viewer serta perilaku keyboard dan reduced motion.
-- [ ] Periksa media gagal, data tanpa deskripsi, dan query tanpa hasil.
-- [ ] Periksa seluruh halaman hingga footer agar tidak ada class tema lama yang tertinggal.
-- [ ] Update README dan ringkas hasil verifikasi yang benar-benar dijalankan.
+- [x] Cocokkan screenshot referensi dan hasil pada viewport yang sama.
+- [x] Periksa crop foto, skala ornamen, panjang tali, fade grid, amplitudo ayunan, dan jarak antarpolaroid.
+- [x] Periksa semua filter/search/viewer serta perilaku keyboard dan reduced motion.
+- [x] Periksa media gagal, data tanpa deskripsi, dan query tanpa hasil.
+- [x] Periksa seluruh halaman hingga footer agar tidak ada class tema lama yang tertinggal.
+- [x] Update README dan ringkas hasil verifikasi yang benar-benar dijalankan.
 
 Hasil: perubahan siap ditinjau dengan bukti desktop/mobile dan catatan keterbatasan yang nyata.
 
@@ -473,7 +473,7 @@ Validasi memakai browser dan pengecekan kecil yang relevan. Tidak menambahkan fr
 5. Gunakan CSS untuk kertas, tali, pin sederhana, grid fading, dan motion utama; JavaScript kecil untuk fallback dan state viewer.
 6. Deskripsi hanya berada dalam detail setelah interaksi, dan sepenuhnya opsional.
 7. Ikuti identitas visual referensi sambil memperbaiki masalah mobile yang terbukti saat audit.
-8. Implementasi dilanjutkan atas instruksi pengguna. Setiap tahap memperbarui dokumen ini dan dibuatkan commit lokal. **Jangan push atau deploy.**
+8. Implementasi dilanjutkan atas instruksi pengguna. Setiap tahap memperbarui dokumen ini dan dibuatkan commit lokal. Instruksi terbaru pengguna mengizinkan push setelah seluruh pemeriksaan selesai; tidak ada deploy manual.
 
 ## 15. Catatan implementasi
 
@@ -536,3 +536,34 @@ Validasi memakai browser dan pengecekan kecil yang relevan. Tidak menambahkan fr
 - [x] Tujuh tes API dan sebelas tes browser upload lulus. Uji foto browser 73.058 byte.
 - [x] Konfigurasi dan setup Supabase pengguna diverifikasi: tabel/bucket tersedia. Satu upload nyata mengembalikan 201, terbaca di feed, dan foto publik mengembalikan 200; objek dan row uji langsung dihapus.
 - [ ] Tambahan terbaru: video melalui link publik Google Drive; foto tetap upload langsung. Implementasi dan upgrade schema menyusul.
+
+### 31 Oktober 2026: video Google Drive dan penyelesaian
+
+- [x] Form mempunyai dua mode: foto langsung atau link video Google Drive; judul, deskripsi opsional, dan tag dipakai bersama.
+- [x] API memvalidasi domain/file ID, menormalkan link `/view`, mempertahankan resource key, dan menyimpan metadata video tanpa file Storage.
+- [x] Video tampil sebagai polaroid, masuk filter video dan momen teman, lalu membuka iframe `/preview` saat diklik. Iframe dibuang saat viewer ditutup agar playback berhenti.
+- [x] Tombol video membuka Google Drive untuk melihat/mengunduh sesuai izin pemilik; foto mempunyai download langsung.
+- [x] Upgrade schema pengguna sudah dikonfirmasi dan diverifikasi dengan read API. Foto lama dipertahankan.
+- [x] API asli menerima foto dan metadata video dengan status 201. Foto publik dapat diambil dengan status 200. Semua row/objek uji dibuat sementara dan sudah dihapus.
+- [x] Sembilan tes API lulus, 18 tes browser upload/Drive lulus, 68 tes interaksi utama lulus, dan tes physics membuktikan momentum mereda ke posisi diam.
+- [x] `.env` tidak dilacak Git dan HTTP `/.env` mengembalikan 404; kredensial tidak dimasukkan source, output, atau commit.
+- [x] Preview tetap aktif di http://localhost:8000 melalui `npm run dev` agar pengguna dapat memantau.
+- Batas verifikasi: iframe/URL Drive diperiksa dengan mock player; belum ada video publik nyata milik pengguna untuk menguji playback Google. Pemutaran tetap mengikuti izin dan pemrosesan Drive.
+- Batas verifikasi performa: Lighthouse tidak berhasil dipasang karena gangguan registry npm; tidak ada klaim skor atau hasil Core Web Vitals.
+- Kebijakan awal: commit lokal tanpa push. Instruksi terbaru di bawah menggantikan larangan push; tidak ada deploy manual.
+
+## 16. Arsitektur upload hasil implementasi
+
+- Frontend tetap HTML/CSS/JavaScript. `assets/js/uploads.js` mengompresi foto, menampilkan preview, memanggil API, dan memuat feed momen bersama.
+- `api/moments.js` berjalan sebagai Vercel Node Function; `server.cjs` menggunakan handler yang sama untuk localhost. Dependency `sharp` memverifikasi gambar dan menghasilkan WebP maksimal 100.000 byte di server.
+- Supabase: bucket publik `gsa-moments` untuk foto dan tabel `community_moments` untuk metadata foto/video. RLS aktif dan write hanya melalui key server; tidak ada key rahasia di browser.
+- Endpoint `GET /api/moments` memakai pagination cursor, hanya menampilkan row published. `POST /api/moments` menerima foto terkompresi atau link Drive.
+- Reservasi database membatasi 20 unggahan per IP per 24 jam; IP di-hash, bukan disimpan mentah. Upload gagal dibersihkan. Teks ditampilkan sebagai teks/markup yang di-escape.
+- Video berasal langsung dari Google Drive melalui iframe; tidak memakai jatah penyimpanan foto Supabase. Link file harus dibagikan untuk pengunjung umum.
+- `.env` lokal sudah disediakan dan diisi pengguna. Saat nantinya deploy ke Vercel, variabel yang sama perlu diatur melalui dashboard Vercel; bukan di-commit.
+
+### 31 Oktober 2026: izin push terbaru
+
+- Pengguna meminta seluruh perubahan dipush setelah selesai. Instruksi ini menggantikan permintaan awal untuk tidak push.
+- Verifikasi lokal dan integrasi Supabase selesai; commit terakhir lalu push ke origin/main. `.env` tetap diabaikan dan tidak dikirim.
+- Variabel Supabase pada Vercel perlu diisi melalui dashboard Environment Variables; isi `.env` lokal tidak dibundel ke GitHub.
