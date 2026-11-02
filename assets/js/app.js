@@ -597,9 +597,8 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   // Background Music: Nadhif Basalamah - Kota Ini Tak Sama Tanpamu
-  const bgAudio = new Audio("assets/audio/kota-ini-tak-sama-tanpamu.mp3");
+  const bgAudio = $("bgMusic") || new Audio("assets/audio/kota-ini-tak-sama-tanpamu.mp3");
   bgAudio.loop = true;
-  bgAudio.preload = "auto";
   bgAudio.volume = 0.55;
 
   let userExplicitlyToggled = false;
@@ -613,15 +612,17 @@ document.addEventListener("DOMContentLoaded", () => {
     if (textLabel) textLabel.textContent = isPlaying ? "Lagu: On" : "Lagu: Off";
   }
 
+  bgAudio.addEventListener("play", () => updateAudioUI(true));
+  bgAudio.addEventListener("pause", () => updateAudioUI(false));
+  bgAudio.addEventListener("ended", () => updateAudioUI(false));
+
   async function togglePlayAudio() {
     userExplicitlyToggled = true;
     if (!bgAudio.paused) {
       bgAudio.pause();
-      updateAudioUI(false);
     } else {
       try {
         await bgAudio.play();
-        updateAudioUI(true);
       } catch (err) {
         console.warn("Audio play prevented:", err);
       }
@@ -631,20 +632,21 @@ document.addEventListener("DOMContentLoaded", () => {
   $("audioToggleBtn").addEventListener("click", togglePlayAudio);
 
   // Attempt auto-playback on open; if modern browser blocks it, start on first tap/click
-  bgAudio.play()
-    .then(() => updateAudioUI(true))
-    .catch(() => {
+  const tryStartAudio = () => {
+    bgAudio.play().catch(() => {
       const startOnFirstGesture = () => {
         if (!userExplicitlyToggled && bgAudio.paused) {
-          bgAudio.play()
-            .then(() => updateAudioUI(true))
-            .catch(() => {});
+          bgAudio.play().catch(() => {});
         }
       };
+      window.addEventListener("pointerdown", startOnFirstGesture, { once: true, passive: true });
       window.addEventListener("click", startOnFirstGesture, { once: true, passive: true });
       window.addEventListener("touchstart", startOnFirstGesture, { once: true, passive: true });
       window.addEventListener("keydown", startOnFirstGesture, { once: true, passive: true });
     });
+  };
+
+  tryStartAudio();
   $("triggerConfettiBtn").addEventListener("click", () => {
     if (reducedMotion.matches || $("confettiCanvas")) return;
     const canvas = document.createElement("canvas");
