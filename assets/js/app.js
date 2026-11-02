@@ -637,6 +637,17 @@ document.addEventListener("DOMContentLoaded", () => {
     ),
   );
 
+  const rewindVideo = $("rewindPlay")?.querySelector("video");
+  if (rewindVideo) {
+    rewindVideo.play().catch(() => {
+      const playOnInteraction = () => {
+        if (rewindVideo.paused) rewindVideo.play().catch(() => {});
+      };
+      window.addEventListener("touchstart", playOnInteraction, { once: true, passive: true });
+      window.addEventListener("click", playOnInteraction, { once: true });
+    });
+  }
+
   // Background Music: Nadhif Basalamah - Kota Ini Tak Sama Tanpamu
   const bgAudio = $("bgMusic") || new Audio("assets/audio/kota-ini-tak-sama-tanpamu.mp3");
   bgAudio.loop = true;

@@ -128,36 +128,6 @@ const MEMORIES_DATA = [
     tags: ["Squad Selfie", "Varsity Jacket", "Hall", "TeamGoogle"]
   },
   {
-    id: "auditorium-badges",
-    title: "Show Your Badge of Honor!",
-    chapter: 2,
-    chapterName: "The Inauguration Ceremony",
-    category: "inauguration",
-    type: "image",
-    src: "assets/images/auditorium-varsity-badges.webp",
-    fallbackSrc: "assets/images/auditorium-varsity-badges.jpg",
-    location: "Auditorium Hall MGP Space",
-    date: "Oktober 2026",
-    badge: "GSA ID Badge",
-    description: "Semua memamerkan ID Card lanyard resmi Google Student Ambassador 2026 Batch 2 ke arah kamera dengan senyum bangga dan pose victory!",
-    tags: ["ID Card", "Lanyard", "Batch 2", "Pride"]
-  },
-  {
-    id: "auditorium-group-2",
-    title: "Pose Candid & Kebersamaan Tak Tergantikan",
-    chapter: 2,
-    chapterName: "The Inauguration Ceremony",
-    category: "inauguration",
-    type: "image",
-    src: "assets/images/auditorium-varsity-group-2.webp",
-    fallbackSrc: "assets/images/auditorium-varsity-group-2.jpg",
-    location: "Auditorium Hall MGP Space",
-    date: "Oktober 2026",
-    badge: "Candid Vibes",
-    description: "Tawa lepas dan chemistry antar anggota yang makin erat. Menjadi bagian dari ekosistem Google AI bukan hanya soal teknologi, tapi persahabatan seumur hidup.",
-    tags: ["Friendship", "Smiles", "Varsity", "Team"]
-  },
-  {
     id: "stage-countdown",
     title: "Suasana Sorak Penonton & Hitung Mundur",
     chapter: 2,

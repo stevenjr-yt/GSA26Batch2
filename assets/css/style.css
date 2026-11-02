@@ -746,13 +746,15 @@ button:disabled {
   overflow: hidden;
   padding: 0;
 }
-.rewind-player > img {
+.rewind-player > img,
+.rewind-player > video {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.5s;
 }
-.rewind-player:hover > img {
+.rewind-player:hover > img,
+.rewind-player:hover > video {
   transform: scale(1.04);
 }
 .rewind-scrim {
