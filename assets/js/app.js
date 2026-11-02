@@ -516,6 +516,7 @@ document.addEventListener("DOMContentLoaded", () => {
       image.src = item.src;
       container.append(image);
     }
+    window.dispatchEvent(new CustomEvent("viewer:open", { detail: { item } }));
   }
   function openLightbox(
     index,

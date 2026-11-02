@@ -30,6 +30,7 @@
     <script src="assets/js/data.js?v=3.0" defer></script>
     <script src="assets/js/app.js?v=3.0" defer></script>
     <script src="assets/js/uploads.js?v=3.0" defer></script>
+    <script src="assets/js/menfess-reactions.js?v=3.0" defer></script>
   </head>
   <body>
     <!-- Background Music Audio Element -->
@@ -81,7 +82,8 @@
         </button>
         <div class="nav-links" id="navLinks">
           <a href="#perjalanan">Perjalanan</a><a href="#rewind">Rewind</a
-          ><a href="#gallerySection">Galeri</a><a href="#faq">FAQ</a
+          ><a href="#gallerySection">Galeri</a><a href="#menfessSection">Menfess 💌</a
+          ><a href="#faq">FAQ</a
           ><a
             class="nav-external"
             href="https://googlestudentambassador.id/"
@@ -452,6 +454,116 @@
           </div>
         </div>
       </section>
+
+      <!-- POJOK MENFESS GSA 2026 BATCH 2 -->
+      <section class="section menfess-section" id="menfessSection" aria-labelledby="menfessTitle">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow">Pojok Pesan &amp; Curhat</p>
+            <h2 class="section-title" id="menfessTitle">Menfess GSA 2026 Batch 2 💌</h2>
+            <p class="section-lead">
+              Kirim pesan rahasia, kesan &amp; pesan, atau ungkapan kangen untuk sesama delegasi GSA 2026 Batch 2. Bebas kirim berkali-kali, bisa pakai nama atau 100% anonim!
+            </p>
+          </div>
+
+          <!-- Rules Banner: Dilarang menyindir, kata kasar, atau SARA -->
+          <div class="menfess-rules-banner" role="note">
+            <span class="rules-icon">⚠️</span>
+            <div class="rules-text">
+              <strong>Aturan Komunitas Menfess:</strong>
+              Dilarang keras menyindir/menyinggung sesama delegasi, ujaran kebencian, kata kasar, atau SARA. Sistem mendeteksi profil secara otomatis tanpa perlu login akun. Mari saling mengapresiasi dan menjaga kenangan kita tetap indah!
+            </div>
+          </div>
+
+          <!-- Form Kirim Menfess -->
+          <div class="menfess-form-card">
+            <form id="menfessForm">
+              <label class="form-label" for="menfessText">
+                Tulis Pesan Menfessmu
+                <textarea
+                  id="menfessText"
+                  rows="3"
+                  maxlength="1000"
+                  placeholder="Contoh: Makasih banyak buat squad yang nemenin keliling Google HQ dan makan ramen bareng di Blok M! Kangen kalian semua..."
+                  required
+                ></textarea>
+              </label>
+
+              <div class="menfess-form-row">
+                <fieldset class="menfess-identity-choice">
+                  <legend class="form-legend">Pilihan Pengirim:</legend>
+                  <label class="radio-label">
+                    <input type="radio" name="menfessIdentity" value="anon" checked />
+                    <span>🕶️ Anonim (Rahasia)</span>
+                  </label>
+                  <label class="radio-label">
+                    <input type="radio" name="menfessIdentity" value="named" />
+                    <span>👤 Pakai Nama</span>
+                  </label>
+                </fieldset>
+
+                <!-- Color Accent Selection -->
+                <div class="menfess-color-choice">
+                  <span class="form-legend">Warna Kartu:</span>
+                  <div class="color-options">
+                    <label class="color-radio">
+                      <input type="radio" name="menfessColor" value="blue" checked />
+                      <span class="color-swatch swatch-blue" title="Google Blue"></span>
+                    </label>
+                    <label class="color-radio">
+                      <input type="radio" name="menfessColor" value="red" />
+                      <span class="color-swatch swatch-red" title="Google Red"></span>
+                    </label>
+                    <label class="color-radio">
+                      <input type="radio" name="menfessColor" value="yellow" />
+                      <span class="color-swatch swatch-yellow" title="Google Yellow"></span>
+                    </label>
+                    <label class="color-radio">
+                      <input type="radio" name="menfessColor" value="green" />
+                      <span class="color-swatch swatch-green" title="Google Green"></span>
+                    </label>
+                    <label class="color-radio">
+                      <input type="radio" name="menfessColor" value="purple" />
+                      <span class="color-swatch swatch-purple" title="Gemini Purple"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Input Nama (Muncul saat 'Pakai Nama' dipilih) -->
+              <div id="menfessSenderContainer" class="menfess-sender-container" hidden>
+                <label class="form-label" for="menfessSender">
+                  Nama Kamu / Panggilan / Kampus
+                  <input
+                    type="text"
+                    id="menfessSender"
+                    maxlength="50"
+                    placeholder="Contoh: Steven / Galih / Delegasi UI"
+                  />
+                  <small>Nama ini akan disimpan untuk perangkatmu agar tidak perlu mengetik ulang.</small>
+                </label>
+              </div>
+
+              <div class="menfess-submit-row">
+                <button type="submit" id="sendMenfessBtn" class="upload-button menfess-send-btn">
+                  Kirim Menfess 🚀
+                </button>
+                <span id="menfessStatus" class="form-note" role="status"></span>
+              </div>
+            </form>
+          </div>
+
+          <!-- Feed Menfess List -->
+          <div class="menfess-feed-header">
+            <h3>Dinding Menfess Terkirim</h3>
+            <span id="menfessCountBadge" class="menfess-count-badge">Memuat pesan…</span>
+          </div>
+
+          <div id="menfessGrid" class="menfess-grid" aria-live="polite">
+            <!-- Menfess cards injected by menfess-reactions.js -->
+          </div>
+        </div>
+      </section>
     </main>
     <footer class="site-footer">
       <div class="container">
@@ -632,6 +744,8 @@
           <h2 id="lightboxTitle"></h2>
           <p id="lightboxDescription"></p>
           <div id="lightboxTags" class="viewer-tags"></div>
+          <div id="viewerReactionsContainer" class="viewer-reactions-container"></div>
+          <div id="viewerReviewsContainer" class="viewer-reviews-container"></div>
           <div class="viewer-download">
             <a id="downloadMomentLink" class="utility-button" href="#" download
               >Unduh foto</a
