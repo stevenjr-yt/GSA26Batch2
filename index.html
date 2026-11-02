@@ -4,18 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#3186ff" />
-    <title>GSA 2026 Batch 2 · Inauguration Memories</title>
+    <title>GSA 2026 Batch 2</title>
     <meta
       name="description"
-      content="Dari perjalanan pagi hingga malam penuh cerita. Arsip foto dan video inaugurasi Google Student Ambassador 2026 Batch 2, dari Steven Erlinto dan Galih Kusuma Wijaya."
+      content="Dari perjalanan pagi hingga malam penuh cerita. Arsip foto dan video Google Student Ambassador 2026 Batch 2, dari Steven Erlinto dan Galih Kusuma Wijaya."
     />
     <meta
       property="og:title"
-      content="GSA 2026 Batch 2 · Inauguration Memories"
+      content="GSA 2026 Batch 2"
     />
     <meta
       property="og:description"
-      content="Satu angkatan. Banyak cerita. Buka kembali kenangan inaugurasi GSA 2026 Batch 2."
+      content="Satu angkatan. Banyak cerita. Buka kembali kenangan GSA 2026 Batch 2."
     />
     <meta property="og:type" content="website" />
     <link rel="icon" type="image/png" href="assets/images/google-g-logo.png" />
@@ -63,10 +63,10 @@
         <a
           class="brand"
           href="#home"
-          aria-label="Google Student Ambassador, kembali ke atas"
+          aria-label="GSA 2026 Batch 2, kembali ke atas"
           ><img
             src="assets/brand/gsa-wordmark.png"
-            alt="Google Student Ambassador"
+            alt="GSA 2026 Batch 2"
             width="194"
             height="31"
         /></a>
@@ -166,7 +166,7 @@
       >
         <div class="container">
           <div class="section-heading">
-            <p class="eyebrow">Inauguration memories · Oktober 2026</p>
+            <p class="eyebrow">GSA 2026 Batch 2 · Oktober 2026</p>
             <h2 id="journeyTitle">Sebuah hari.<br />Segudang kenangan.</h2>
             <p>
               Jakarta mempertemukan kita.<br />Sisanya, jadi cerita yang ingin
@@ -478,6 +478,32 @@
           <!-- Form Kirim Menfess -->
           <div class="menfess-form-card">
             <form id="menfessForm">
+              <!-- Input Penerima (To) -->
+              <div class="menfess-to-row">
+                <label class="form-label" for="menfessRecipient">
+                  Untuk Siapa? (To:)
+                  <div class="menfess-to-input-wrap">
+                    <input
+                      type="text"
+                      id="menfessRecipient"
+                      maxlength="50"
+                      value="All General"
+                      placeholder="Ketik nama delegasi, squad, atau 'All General'..."
+                      required
+                    />
+                    <button
+                      type="button"
+                      id="btnPresetAllGeneral"
+                      class="preset-all-btn"
+                      title="Set ke All General"
+                    >
+                      🌐 All General
+                    </button>
+                  </div>
+                  <small>Bisa tulis nama teman/delegasi spesifik, atau klik <strong>All General</strong> untuk semua delegasi GSA 2026 Batch 2.</small>
+                </label>
+              </div>
+
               <label class="form-label" for="menfessText">
                 Tulis Pesan Menfessmu
                 <textarea

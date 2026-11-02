@@ -3,6 +3,8 @@ const http = require("node:http");
 const fs = require("node:fs");
 const path = require("node:path");
 const moments = require("./api/moments.js");
+const menfess = require("./api/menfess.js");
+const reactions = require("./api/reactions.js");
 const types = {
   ".html": "text/html",
   ".css": "text/css",
@@ -13,6 +15,7 @@ const types = {
   ".svg": "image/svg+xml",
   ".woff2": "font/woff2",
   ".mp4": "video/mp4",
+  ".mp3": "audio/mpeg",
   ".txt": "text/plain",
 };
 http
@@ -27,6 +30,9 @@ http
       return;
     }
     if (pathname === "/api/moments") return moments(req, res);
+    if (pathname === "/api/menfess") return menfess(req, res);
+    if (pathname === "/api/reactions") return reactions(req, res);
+
     if (!["GET", "HEAD"].includes(req.method)) {
       res.writeHead(405).end();
       return;
@@ -48,12 +54,43 @@ http
     try {
       const stat = await fs.promises.stat(file);
       if (!stat.isFile()) throw new Error("not-file");
-      res.writeHead(200, {
+
+      const isMedia = path.extname(file) === ".mp4" || path.extname(file) === ".mp3";
+      const range = req.headers.range;
+
+      if (range && isMedia) {
+        const parts = range.replace(/bytes=/, "").split("-");
+        const start = parseInt(parts[0], 10);
+        const end = parts[1] ? parseInt(parts[1], 10) : stat.size - 1;
+        const chunksize = end - start + 1;
+        res.writeHead(206, {
+          "Content-Range": `bytes ${start}-${end}/${stat.size}`,
+          "Accept-Ranges": "bytes",
+          "Content-Length": chunksize,
+          "Content-Type": type,
+          "Cache-Control": "public, max-age=31536000, immutable",
+        });
+        if (req.method === "HEAD") {
+          res.end();
+          return;
+        }
+        fs.createReadStream(file, { start, end })
+          .on("error", () => res.destroy())
+          .pipe(res);
+        return;
+      }
+
+      const headers = {
         "Content-Type": type,
         "Content-Length": stat.size,
-        "Cache-Control": "no-store",
+        "Cache-Control": isMedia ? "public, max-age=31536000, immutable" : "no-store",
         "X-Content-Type-Options": "nosniff",
-      });
+      };
+      if (isMedia) {
+        headers["Accept-Ranges"] = "bytes";
+      }
+
+      res.writeHead(200, headers);
       if (req.method === "HEAD") res.end();
       else
         fs.createReadStream(file)

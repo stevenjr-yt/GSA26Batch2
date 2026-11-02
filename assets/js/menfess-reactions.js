@@ -13,6 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // ==================== 1. MENFESS SYSTEM ====================
   const menfessGrid = $("menfessGrid");
   const menfessForm = $("menfessForm");
+  const menfessRecipientInput = $("menfessRecipient");
+  const btnPresetAllGeneral = $("btnPresetAllGeneral");
   const menfessSenderContainer = $("menfessSenderContainer");
   const menfessSenderInput = $("menfessSender");
   const menfessStatus = $("menfessStatus");
@@ -21,6 +23,14 @@ document.addEventListener("DOMContentLoaded", () => {
   // Pre-fill name if available
   if (menfessSenderInput && currentSavedName) {
     menfessSenderInput.value = currentSavedName;
+  }
+
+  // Preset All General button click
+  if (btnPresetAllGeneral && menfessRecipientInput) {
+    btnPresetAllGeneral.addEventListener("click", () => {
+      menfessRecipientInput.value = "All General";
+      menfessRecipientInput.focus();
+    });
   }
 
   // Toggle sender name input visibility
@@ -69,6 +79,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const isAnon = Boolean(item.isAnonymous) || !item.senderName || item.senderName.includes("Anonim");
     const senderDisplay = isAnon ? "Anonim 🕶️" : item.senderName;
     const accentColor = colorPills[item.color] || colorPills.blue;
+    const recipientDisplay = (item.recipient || "All General").trim();
+    const isAllGeneral = recipientDisplay.toLowerCase().includes("all general") || recipientDisplay.toLowerCase() === "all";
 
     card.innerHTML = `
       <div class="menfess-card-header">
@@ -82,6 +94,12 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         </div>
         <time class="menfess-time" datetime="${item.createdAt}">${formatRelativeTime(item.createdAt)}</time>
+      </div>
+      <div class="menfess-recipient-tag">
+        <span class="recipient-label">To:</span>
+        <span class="recipient-badge ${isAllGeneral ? "recipient-general" : "recipient-person"}">
+          ${isAllGeneral ? "🌐 All General" : `🎯 ${escapeHtml(recipientDisplay)}`}
+        </span>
       </div>
       <p class="menfess-message">${escapeHtml(item.message)}</p>
       <div class="menfess-card-footer">
@@ -104,6 +122,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!menfessGrid) return;
     try {
       const res = await fetch("/api/menfess", { cache: "no-store" });
+      if (!res.ok) {
+        throw new Error(`Gagal memuat menfess (Status: ${res.status})`);
+      }
       const data = await res.json();
       if (data.savedName && !currentSavedName) {
         currentSavedName = data.savedName;
@@ -130,6 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     } catch (err) {
       console.warn("Failed to load menfess:", err);
+      if (menfessCountBadge) menfessCountBadge.textContent = "Belum ada pesan";
     }
   }
 
@@ -139,6 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const message = $("menfessText").value.trim();
       if (!message) return;
 
+      const recipient = (menfessRecipientInput?.value || "All General").trim() || "All General";
       const identityChoice = document.querySelector('input[name="menfessIdentity"]:checked')?.value;
       const isAnonymous = identityChoice === "anon";
       const senderName = isAnonymous ? "" : menfessSenderInput.value.trim();
@@ -155,6 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             message,
+            recipient,
             isAnonymous,
             senderName,
             color,
@@ -181,6 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Reset form
         $("menfessText").value = "";
+        if (menfessRecipientInput) menfessRecipientInput.value = "All General";
         menfessStatus.textContent = "✅ Menfess berhasil dikirim!";
         menfessStatus.className = "form-note is-success";
 

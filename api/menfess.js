@@ -147,6 +147,15 @@ module.exports = async function handler(req, res) {
       );
     }
 
+    let recipient = typeof body.recipient === "string" ? body.recipient.trim() : "";
+    if (!recipient) {
+      recipient = "All General";
+    }
+    if (containsHarmfulContent(recipient)) {
+      throw failure(422, "Nama penerima (To:) tidak pantas atau melanggar aturan komunitas.");
+    }
+    recipient = recipient.slice(0, 50);
+
     const isAnonymous = Boolean(body.isAnonymous);
     let senderName = typeof body.senderName === "string" ? body.senderName.trim() : "";
 
@@ -173,6 +182,7 @@ module.exports = async function handler(req, res) {
     const newEntry = {
       id: randomUUID(),
       authorId,
+      recipient,
       message,
       senderName,
       isAnonymous,
