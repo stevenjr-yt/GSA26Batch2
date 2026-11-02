@@ -1,11 +1,6 @@
 {
   "version": 2,
   "cleanUrls": true,
-  "rewrites": [
-    { "source": "/api/moments", "destination": "/api/moments.js" },
-    { "source": "/api/menfess", "destination": "/api/menfess.js" },
-    { "source": "/api/reactions", "destination": "/api/reactions.js" }
-  ],
   "headers": [
     {
       "source": "/assets/js/(.*)",
