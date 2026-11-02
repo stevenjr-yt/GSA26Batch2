@@ -76,21 +76,33 @@ document.addEventListener("DOMContentLoaded", () => {
       purple: "#a855f7",
     };
 
-    const isAnon = Boolean(item.isAnonymous) || !item.senderName || item.senderName.includes("Anonim");
-    const senderDisplay = isAnon ? "Anonim 🕶️" : item.senderName;
-    const accentColor = colorPills[item.color] || colorPills.blue;
+    const isAdmin = item.role === "admin" || (item.senderName && item.senderName.toLowerCase() === "admin");
+    const isAnon = !isAdmin && (Boolean(item.isAnonymous) || !item.senderName || item.senderName.includes("Anonim"));
+    const senderDisplay = isAdmin ? "Admin" : (isAnon ? "Anonim 🕶️" : item.senderName);
+    const accentColor = isAdmin ? "#fbbc04" : (colorPills[item.color] || colorPills.blue);
     const recipientDisplay = (item.recipient || "All General").trim();
     const isAllGeneral = recipientDisplay.toLowerCase().includes("all general") || recipientDisplay.toLowerCase() === "all";
+
+    let badgeHtml = "";
+    if (isAdmin) {
+      badgeHtml = `<span class="menfess-badge badge-admin">Admin 🛡️</span>`;
+    } else if (isAnon) {
+      badgeHtml = `<span class="menfess-badge badge-anon">Secret Ambassador</span>`;
+    } else {
+      badgeHtml = `<span class="menfess-badge badge-named">Delegasi GSA</span>`;
+    }
+
+    const avatarSymbol = isAdmin ? "👑" : (isAnon ? "🕶️" : item.senderName.charAt(0).toUpperCase());
 
     card.innerHTML = `
       <div class="menfess-card-header">
         <div class="menfess-sender-info">
           <span class="menfess-avatar" style="background: ${accentColor}25; color: ${accentColor};">
-            ${isAnon ? "🕶️" : item.senderName.charAt(0).toUpperCase()}
+            ${avatarSymbol}
           </span>
           <div>
             <strong class="menfess-sender-name">${senderDisplay}</strong>
-            <span class="menfess-badge ${isAnon ? "badge-anon" : "badge-named"}">${isAnon ? "Secret Ambassador" : "Delegasi GSA"}</span>
+            ${badgeHtml}
           </div>
         </div>
         <time class="menfess-time" datetime="${item.createdAt}">${formatRelativeTime(item.createdAt)}</time>

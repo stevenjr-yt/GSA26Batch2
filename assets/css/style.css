@@ -2398,6 +2398,14 @@ button:disabled {
   color: #90c8ff;
   border: 1px solid rgba(49, 134, 255, 0.4);
 }
+.badge-admin {
+  background: linear-gradient(135deg, rgba(234, 67, 53, 0.25), rgba(251, 188, 4, 0.25));
+  color: #fbbc04;
+  border: 1px solid rgba(251, 188, 4, 0.6);
+  box-shadow: 0 0 10px rgba(251, 188, 4, 0.25);
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
 .menfess-time {
   font-size: 11px;
   color: var(--muted);

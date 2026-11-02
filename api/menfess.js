@@ -158,6 +158,8 @@ module.exports = async function handler(req, res) {
 
     const isAnonymous = Boolean(body.isAnonymous);
     let senderName = typeof body.senderName === "string" ? body.senderName.trim() : "";
+    const isAdmin = !isAnonymous && senderName.toLowerCase() === "steven erlinto";
+    const role = isAdmin ? "admin" : (isAnonymous ? "anon" : "delegasi");
 
     // Simpan nama berdasarkan IP jika pengguna mengisi nama
     if (!isAnonymous && senderName) {
@@ -168,6 +170,7 @@ module.exports = async function handler(req, res) {
       authors[ipHash] = {
         authorId,
         name: senderName,
+        role,
         updatedAt: new Date().toISOString(),
       };
       // Tulis pembaruan author profile secara asynchronous
@@ -185,6 +188,7 @@ module.exports = async function handler(req, res) {
       recipient,
       message,
       senderName,
+      role,
       isAnonymous,
       color,
       createdAt: new Date().toISOString(),
