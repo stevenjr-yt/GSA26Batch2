@@ -2606,3 +2606,42 @@ button:disabled {
   margin: 4px 0;
 }
 
+/* Gallery & Menfess Pagination Buttons */
+.gallery-more-container,
+.menfess-more-container {
+  display: flex;
+  justify-content: center;
+  margin: 36px auto 16px;
+  width: 100%;
+}
+.gallery-more-btn,
+.menfess-more-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #fff;
+  padding: 13px 30px;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+}
+.gallery-more-btn:hover,
+.menfess-more-btn:hover {
+  background: rgba(49, 134, 255, 0.22);
+  border-color: #3186ff;
+  color: #8ab4f8;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(49, 134, 255, 0.3);
+}
+.gallery-more-btn:active,
+.menfess-more-btn:active {
+  transform: translateY(0);
+}
+
+

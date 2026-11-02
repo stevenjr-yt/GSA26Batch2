@@ -130,6 +130,63 @@ document.addEventListener("DOMContentLoaded", () => {
       .replace(/'/g, "&#039;");
   }
 
+  let menfessExpanded = false;
+  const MENFESS_INITIAL_LIMIT = 6;
+  let allMenfessItems = [];
+  const menfessMoreContainer = $("menfessMoreContainer");
+  const menfessMoreBtn = $("menfessMoreBtn");
+
+  if (menfessMoreBtn) {
+    menfessMoreBtn.addEventListener("click", () => {
+      menfessExpanded = !menfessExpanded;
+      renderMenfessFeed();
+      if (!menfessExpanded) {
+        $("menfessSection")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  }
+
+  function renderMenfessFeed() {
+    if (!menfessGrid) return;
+    menfessGrid.innerHTML = "";
+    if (allMenfessItems && allMenfessItems.length > 0) {
+      const itemsToRender = (!menfessExpanded && allMenfessItems.length > MENFESS_INITIAL_LIMIT)
+        ? allMenfessItems.slice(0, MENFESS_INITIAL_LIMIT)
+        : allMenfessItems;
+
+      itemsToRender.forEach((item) => {
+        menfessGrid.appendChild(renderMenfessCard(item));
+      });
+      if (menfessCountBadge) {
+        menfessCountBadge.textContent = `${allMenfessItems.length} pesan`;
+      }
+
+      if (menfessMoreContainer && menfessMoreBtn) {
+        if (allMenfessItems.length > MENFESS_INITIAL_LIMIT) {
+          menfessMoreContainer.hidden = false;
+          if (menfessExpanded) {
+            menfessMoreBtn.innerHTML = "Tutup sebagian (Tampilkan 6 terbaru) ↑";
+          } else {
+            const remaining = allMenfessItems.length - MENFESS_INITIAL_LIMIT;
+            menfessMoreBtn.innerHTML = `Lihat lebih banyak menfess (${remaining} pesan lagi) 💌 ↓`;
+          }
+        } else {
+          menfessMoreContainer.hidden = true;
+        }
+      }
+    } else {
+      menfessGrid.innerHTML = `
+        <div class="menfess-empty">
+          <span class="menfess-empty-icon">💌</span>
+          <p>Belum ada menfess yang dikirim.</p>
+          <small>Jadilah yang pertama menulis pesan atau salam kenangan untuk sesama delegasi GSA Batch 2!</small>
+        </div>
+      `;
+      if (menfessCountBadge) menfessCountBadge.textContent = "0 pesan";
+      if (menfessMoreContainer) menfessMoreContainer.hidden = true;
+    }
+  }
+
   async function loadMenfess() {
     if (!menfessGrid) return;
     try {
@@ -145,22 +202,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       if (data.authorId) currentAuthorId = data.authorId;
 
-      menfessGrid.innerHTML = "";
-      if (data.items && data.items.length > 0) {
-        data.items.forEach((item) => {
-          menfessGrid.appendChild(renderMenfessCard(item));
-        });
-        if (menfessCountBadge) menfessCountBadge.textContent = `${data.items.length} pesan`;
-      } else {
-        menfessGrid.innerHTML = `
-          <div class="menfess-empty">
-            <span class="menfess-empty-icon">💌</span>
-            <p>Belum ada menfess yang dikirim.</p>
-            <small>Jadilah yang pertama menulis pesan atau salam kenangan untuk sesama delegasi GSA Batch 2!</small>
-          </div>
-        `;
-        if (menfessCountBadge) menfessCountBadge.textContent = "0 pesan";
-      }
+      allMenfessItems = data.items || [];
+      renderMenfessFeed();
     } catch (err) {
       console.warn("Failed to load menfess:", err);
       if (menfessCountBadge) menfessCountBadge.textContent = "Belum ada pesan";
@@ -207,13 +250,9 @@ document.addEventListener("DOMContentLoaded", () => {
           currentSavedName = senderName;
         }
 
-        // Prepend new card immediately
-        const emptyState = menfessGrid.querySelector(".menfess-empty");
-        if (emptyState) emptyState.remove();
-
-        const newCard = renderMenfessCard(data.item);
-        newCard.classList.add("animate-pop-in");
-        menfessGrid.insertBefore(newCard, menfessGrid.firstChild);
+        // Prepend new card to all items and re-render
+        allMenfessItems.unshift(data.item);
+        renderMenfessFeed();
 
         // Reset form
         $("menfessText").value = "";

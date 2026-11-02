@@ -402,38 +402,6 @@ const MEMORIES_DATA = [
     badge: "Legendary Game",
     description: "Pukul 23:24 malam di kamar hotel! Kartu UNO bertebaran di atas kasur putih lengkap dengan bukti transfer QRIS / e-wallet Rp 30.000 untuk sang juara. Rivalitas persahabatan paling sengit sepanjang malam!",
     tags: ["UNO", "Kamar Hotel", "QRIS Rp30rb", "23:24 WIB"]
-  },
-
-  // ================= SPECIAL: THE CANDIDATE JOURNEY & ACHIEVEMENTS =================
-  {
-    id: "steven-champion",
-    title: "Prestasi Nasional: Juara 2 Cyber Security",
-    chapter: 0,
-    chapterName: "The Candidate Journey",
-    category: "candidate",
-    type: "image",
-    src: "assets/images/steven-cyber-champion.webp",
-    fallbackSrc: "assets/images/steven-cyber-champion.jpg",
-    location: "Kompetisi Nasional Cyber Security",
-    date: "2026",
-    badge: "Champion",
-    description: "Steven Erlinto dengan medali perak dan piala Juara 2 Nasional Cyber Security (hadiah Rp 3.000.000). Membawa kebanggaan almamater dan representasi duta teknologi Google.",
-    tags: ["Juara 2", "Cyber Security", "Steven Erlinto", "Prestasi"]
-  },
-  {
-    id: "candidate-poster",
-    title: "The Genesis: Steven Erlinto GSA Candidate Poster",
-    chapter: 0,
-    chapterName: "The Candidate Journey",
-    category: "candidate",
-    type: "image",
-    src: "assets/images/gsa-candidate-poster.webp",
-    fallbackSrc: "assets/images/gsa-candidate-poster.jpg",
-    location: "Poster Kampanye Resmi",
-    date: "Awal Seleksi 2026",
-    badge: "Origin Story",
-    description: "'Ready to Become Your Next AI Leader' — Poster awal perjuangan Steven Erlinto saat mendaftar menjadi kandidat Google Student Ambassador Batch 2, yang kini telah resmi terwujud menjadi kenyataan!",
-    tags: ["Steven Erlinto", "AI Leader", "Origin", "Poster"]
   }
 ];
 

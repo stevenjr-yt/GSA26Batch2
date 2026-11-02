@@ -353,13 +353,6 @@
                 MRT Jakarta</button
               ><button
                 class="filter-btn"
-                data-filter="candidate"
-                aria-pressed="false"
-                type="button"
-              >
-                Candidate journey</button
-              ><button
-                class="filter-btn"
                 data-filter="videos"
                 aria-pressed="false"
                 type="button"
@@ -380,8 +373,16 @@
                 Hapus filter <span aria-hidden="true">×</span>
               </button>
             </div>
-          </div>
           <div class="polaroid-grid" id="galleryGrid"></div>
+          <div class="gallery-more-container" id="galleryMoreContainer" hidden>
+            <button
+              type="button"
+              class="gallery-more-btn"
+              id="galleryMoreBtn"
+            >
+              Lihat lebih banyak kenangan ↓
+            </button>
+          </div>
           <div class="community-more">
             <button
               type="button"
@@ -587,6 +588,15 @@
 
           <div id="menfessGrid" class="menfess-grid" aria-live="polite">
             <!-- Menfess cards injected by menfess-reactions.js -->
+          </div>
+          <div class="menfess-more-container" id="menfessMoreContainer" hidden>
+            <button
+              type="button"
+              class="menfess-more-btn"
+              id="menfessMoreBtn"
+            >
+              Lihat lebih banyak menfess 💌 ↓
+            </button>
           </div>
         </div>
       </section>

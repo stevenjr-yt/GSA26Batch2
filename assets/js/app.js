@@ -281,6 +281,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   reducedMotion.addEventListener("change", initPolaroidPhysics);
 
+  let galleryExpanded = false;
+  const GALLERY_INITIAL_LIMIT = 9;
+
   function renderGallery() {
     stopPhysics();
     const grid = $("galleryGrid");
@@ -289,6 +292,10 @@ document.addEventListener("DOMContentLoaded", () => {
     $("clearSearchFilterBtn").hidden = !active;
     $("galleryStatus").textContent =
       `${filteredItems.length} ${active ? "kenangan ditemukan" : "kenangan untuk dibuka kembali"}`;
+
+    const moreContainer = $("galleryMoreContainer");
+    const moreBtn = $("galleryMoreBtn");
+
     if (!filteredItems.length) {
       const empty = document.createElement("div");
       empty.className = "empty-state";
@@ -296,10 +303,17 @@ document.addEventListener("DOMContentLoaded", () => {
         '<h3>Belum ketemu?</h3><p>Coba kata lain, atau buka kembali semua kenangan.</p><button type="button">Tampilkan semua kenangan</button>';
       empty.querySelector("button").addEventListener("click", resetFilters);
       grid.append(empty);
+      if (moreContainer) moreContainer.hidden = true;
       return;
     }
-    filteredItems.forEach((item, index) => {
+
+    const itemsToDisplay = (!galleryExpanded && filteredItems.length > GALLERY_INITIAL_LIMIT)
+      ? filteredItems.slice(0, GALLERY_INITIAL_LIMIT)
+      : filteredItems;
+
+    itemsToDisplay.forEach((item) => {
       const originalIndex = allMemories.indexOf(item);
+      const filteredIndex = filteredItems.indexOf(item);
       const frame = document.createElement("div");
       frame.className =
         "polaroid-anchor" + (item.source === "gdrive" ? " drive-polaroid" : "");
@@ -326,7 +340,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
       button.innerHTML = `<span class="polaroid-image"><img src="${escape(media)}" alt="" width="400" height="400" loading="lazy" decoding="async">${item.type === "video" ? `<span class="polaroid-play">${icon("play")}</span>` : ""}</span><span class="polaroid-caption"><span>${escape(item.badge || item.title)}</span><span class="polaroid-index">${String(originalIndex + 1).padStart(2, "0")} / ${allMemories.length}</span></span>`;
       button.addEventListener("click", () =>
-        openLightbox(index, filteredItems, button),
+        openLightbox(filteredIndex, filteredItems, button),
       );
       attachImageFallback(
         button.querySelector("img"),
@@ -347,7 +361,33 @@ document.addEventListener("DOMContentLoaded", () => {
       frame.append(string, swing);
       grid.append(frame);
     });
+
+    if (moreContainer && moreBtn) {
+      if (filteredItems.length > GALLERY_INITIAL_LIMIT) {
+        moreContainer.hidden = false;
+        if (galleryExpanded) {
+          moreBtn.innerHTML = "Tutup sebagian (Tampilkan 9 saja) ↑";
+        } else {
+          const remaining = filteredItems.length - GALLERY_INITIAL_LIMIT;
+          moreBtn.innerHTML = `Lihat lebih banyak kenangan (${remaining} foto &amp; video lagi) ↓`;
+        }
+      } else {
+        moreContainer.hidden = true;
+      }
+    }
+
     initPolaroidPhysics();
+  }
+
+  const galleryMoreBtn = $("galleryMoreBtn");
+  if (galleryMoreBtn) {
+    galleryMoreBtn.addEventListener("click", () => {
+      galleryExpanded = !galleryExpanded;
+      renderGallery();
+      if (!galleryExpanded) {
+        $("gallerySection")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
   }
 
   function applyFilterAndSearch(filter = currentFilter, query = search.value) {
