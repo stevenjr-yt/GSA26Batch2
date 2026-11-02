@@ -596,46 +596,55 @@ document.addEventListener("DOMContentLoaded", () => {
     ),
   );
 
-  // Audio stays opt-in; stop nodes immediately so rapid toggles cannot leak oscillators.
-  let audioContext = null;
-  let audioNodes = [];
-  $("audioToggleBtn").addEventListener("click", async () => {
-    if (audioNodes.length) {
-      audioNodes.forEach((node) => {
-        node.stop();
-        node.disconnect();
-      });
-      audioNodes = [];
-      $("audioToggleBtn").setAttribute("aria-pressed", "false");
-      $("audioIndicator").classList.add("audio-paused");
-      document.querySelector(".audio-text").textContent = "Suara ambien: Off";
-      return;
+  // Background Music: Nadhif Basalamah - Kota Ini Tak Sama Tanpamu
+  const bgAudio = new Audio("assets/audio/kota-ini-tak-sama-tanpamu.mp3");
+  bgAudio.loop = true;
+  bgAudio.preload = "auto";
+  bgAudio.volume = 0.55;
+
+  let userExplicitlyToggled = false;
+
+  function updateAudioUI(isPlaying) {
+    const btn = $("audioToggleBtn");
+    const indicator = $("audioIndicator");
+    const textLabel = document.querySelector(".audio-text");
+    if (btn) btn.setAttribute("aria-pressed", String(isPlaying));
+    if (indicator) indicator.classList.toggle("audio-paused", !isPlaying);
+    if (textLabel) textLabel.textContent = isPlaying ? "Lagu: On" : "Lagu: Off";
+  }
+
+  async function togglePlayAudio() {
+    userExplicitlyToggled = true;
+    if (!bgAudio.paused) {
+      bgAudio.pause();
+      updateAudioUI(false);
+    } else {
+      try {
+        await bgAudio.play();
+        updateAudioUI(true);
+      } catch (err) {
+        console.warn("Audio play prevented:", err);
+      }
     }
-    try {
-      const Audio = window.AudioContext || window.webkitAudioContext;
-      if (!Audio) throw new Error("Web Audio unavailable");
-      audioContext ||= new Audio();
-      await audioContext.resume();
-      if (audioNodes.length) return;
-      [261.63, 392, 587.33, 659.25, 987.77].forEach((frequency) => {
-        const oscillator = audioContext.createOscillator(),
-          gain = audioContext.createGain();
-        oscillator.type = "sine";
-        oscillator.frequency.value = frequency;
-        gain.gain.value = 0.008;
-        oscillator.connect(gain);
-        gain.connect(audioContext.destination);
-        oscillator.start();
-        audioNodes.push(oscillator);
-      });
-      $("audioToggleBtn").setAttribute("aria-pressed", "true");
-      $("audioIndicator").classList.remove("audio-paused");
-      document.querySelector(".audio-text").textContent = "Suara ambien: On";
-    } catch {
-      document.querySelector(".audio-text").textContent =
-        "Audio tidak tersedia";
-    }
-  });
+  }
+
+  $("audioToggleBtn").addEventListener("click", togglePlayAudio);
+
+  // Attempt auto-playback on open; if modern browser blocks it, start on first tap/click
+  bgAudio.play()
+    .then(() => updateAudioUI(true))
+    .catch(() => {
+      const startOnFirstGesture = () => {
+        if (!userExplicitlyToggled && bgAudio.paused) {
+          bgAudio.play()
+            .then(() => updateAudioUI(true))
+            .catch(() => {});
+        }
+      };
+      window.addEventListener("click", startOnFirstGesture, { once: true, passive: true });
+      window.addEventListener("touchstart", startOnFirstGesture, { once: true, passive: true });
+      window.addEventListener("keydown", startOnFirstGesture, { once: true, passive: true });
+    });
   $("triggerConfettiBtn").addEventListener("click", () => {
     if (reducedMotion.matches || $("confettiCanvas")) return;
     const canvas = document.createElement("canvas");
