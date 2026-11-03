@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   updateCounts();
   window.addEventListener("moments:loaded", (event) => {
-    const incoming = event.detail.items;
+    const incoming = event.detail.items || [];
     const existing = allMemories.filter(
       (item) => item.category === "community",
     );
@@ -105,12 +105,17 @@ document.addEventListener("DOMContentLoaded", () => {
         [...incoming, ...existing].map((item) => [item.id, item]),
       ).values(),
     ];
-    allMemories = [...MEMORIES_DATA, ...shared];
+    shared.sort(
+      (a, b) =>
+        new Date(b.createdAt || 0).getTime() -
+        new Date(a.createdAt || 0).getTime(),
+    );
+    allMemories = [...shared, ...MEMORIES_DATA];
     updateCounts();
     if (event.detail.selectCommunity) {
       search.value = "";
       $("aiResponseBox").hidden = true;
-      applyFilterAndSearch("community", "");
+      applyFilterAndSearch("all", "");
       scrollTo("gallerySection");
     } else applyFilterAndSearch();
   });
