@@ -31,6 +31,7 @@
     <script src="assets/js/app.js?v=3.0" defer></script>
     <script src="assets/js/uploads.js?v=3.0" defer></script>
     <script src="assets/js/menfess-reactions.js?v=3.0" defer></script>
+    <script src="assets/js/photobooth.js?v=3.0" defer></script>
   </head>
   <body>
     <!-- Background Music Audio Element -->
@@ -82,7 +83,9 @@
         </button>
         <div class="nav-links" id="navLinks">
           <a href="#perjalanan">Perjalanan</a><a href="#rewind">Rewind</a
-          ><a href="#gallerySection">Galeri</a><a href="#menfessSection">Menfess 💌</a
+          ><a href="#gallerySection">Galeri</a
+          ><a href="#photoboothSection">Photobooth 📸</a
+          ><a href="#menfessSection">Menfess 💌</a
           ><a href="#faq">FAQ</a
           ><a
             class="nav-external"
@@ -406,6 +409,145 @@
           >
         </div>
       </section>
+
+      <!-- GSA 2026 BATCH 2 VIRTUAL PHOTOBOOTH & TWIBBON -->
+      <section class="section photobooth-section" id="photoboothSection" aria-labelledby="photoboothTitle">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow">Twibbon &amp; Frame Studio</p>
+            <h2 class="section-title" id="photoboothTitle">GSA Virtual Photobooth 📸</h2>
+            <p class="section-lead">
+              Abadikan momen kebanggaanmu sebagai Google Student Ambassador! Buka kamera langsung atau upload fotomu, pilih template frame bertema <strong>Lead, Innovate &amp; Inspire</strong>, lalu unduh atau bagikan kenanganmu ke galeri!
+            </p>
+          </div>
+
+          <div class="photobooth-app" id="photoboothApp">
+            <!-- Mode Selector / Source Picker -->
+            <div class="pb-source-picker" id="pbSourcePicker">
+              <div class="pb-source-cards">
+                <button type="button" class="pb-source-btn pb-btn-camera" id="pbOpenCamBtn">
+                  <span class="pb-btn-icon">📷</span>
+                  <span class="pb-btn-title">Buka Kamera</span>
+                  <span class="pb-btn-desc">Ambil foto langsung dengan countdown 3 detik &amp; live preview</span>
+                </button>
+                <label class="pb-source-btn pb-btn-upload" for="pbFileInput" id="pbUploadLabel">
+                  <span class="pb-btn-icon">📁</span>
+                  <span class="pb-btn-title">Upload Foto</span>
+                  <span class="pb-btn-desc">Pilih foto dari galeri hp atau komputermu (JPG, PNG, WebP)</span>
+                  <input type="file" id="pbFileInput" accept="image/jpeg,image/png,image/webp" hidden>
+                </label>
+              </div>
+              <p class="pb-hint">💡 Tips: Gunakan foto selfie atau portrait dengan pencahayaan yang jelas untuk hasil terbaik.</p>
+            </div>
+
+            <!-- Live Camera Viewfinder Modal -->
+            <div class="pb-camera-overlay" id="pbCameraOverlay" hidden>
+              <div class="pb-camera-modal">
+                <div class="pb-camera-header">
+                  <h3>Kamera Photobooth 📸</h3>
+                  <button type="button" class="pb-close-btn" id="pbCloseCamBtn" aria-label="Tutup kamera">✕</button>
+                </div>
+                <div class="pb-viewfinder-wrapper">
+                  <video id="pbCameraVideo" autoplay playsinline muted></video>
+                  <div class="pb-face-guide" aria-hidden="true"></div>
+                  <div class="pb-countdown-display" id="pbCountdownDisplay" hidden>3</div>
+                  <div class="pb-flash-layer" id="pbFlashLayer"></div>
+                </div>
+                <div class="pb-camera-controls">
+                  <button type="button" class="pb-ctrl-btn" id="pbSwitchCamBtn" title="Ganti Kamera Depan / Belakang">
+                    🔄 Ganti Kamera
+                  </button>
+                  <button type="button" class="pb-shutter-btn" id="pbShutterBtn" aria-label="Jepret foto">
+                    <span class="pb-shutter-inner"></span>
+                  </button>
+                  <button type="button" class="pb-ctrl-btn" id="pbCancelCamBtn">
+                    Batal
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Studio Workspace (Canvas + Controls + Templates) -->
+            <div class="pb-workspace" id="pbWorkspace" hidden>
+              <div class="pb-studio-grid">
+                <!-- Left: Canvas Viewport -->
+                <div class="pb-canvas-column">
+                  <div class="pb-canvas-container" id="pbCanvasContainer">
+                    <canvas id="pbCanvas" width="1080" height="1080"></canvas>
+                    <div class="pb-canvas-badge">1080 × 1080 HD</div>
+                    <div class="pb-drag-hint" id="pbDragHint">👆 Geser &amp; atur posisi foto</div>
+                  </div>
+
+                  <!-- Adjustment Toolbar -->
+                  <div class="pb-adjust-bar">
+                    <div class="pb-adjust-group">
+                      <label for="pbZoomRange">🔍 Zoom</label>
+                      <input type="range" id="pbZoomRange" min="0.5" max="3.0" step="0.05" value="1.0">
+                      <span id="pbZoomVal">100%</span>
+                    </div>
+                    <div class="pb-adjust-group">
+                      <label for="pbRotateRange">🔄 Rotasi</label>
+                      <input type="range" id="pbRotateRange" min="-180" max="180" step="5" value="0">
+                      <span id="pbRotateVal">0°</span>
+                    </div>
+                    <div class="pb-adjust-actions">
+                      <button type="button" class="pb-mini-btn" id="pbFlipBtn" title="Cermin / Flip Horizontal">🪞 Flip</button>
+                      <button type="button" class="pb-mini-btn" id="pbRotate90Btn" title="Putar 90 Derajat">↻ 90°</button>
+                      <button type="button" class="pb-mini-btn" id="pbResetTransformBtn" title="Reset Posisi Foto">Reset</button>
+                    </div>
+                  </div>
+
+                  <!-- Color Filters -->
+                  <div class="pb-filters-group">
+                    <span class="pb-group-label">Filter Warna:</span>
+                    <div class="pb-filter-pills" id="pbFilterPills">
+                      <button type="button" class="pb-filter-pill is-active" data-filter="normal">Normal</button>
+                      <button type="button" class="pb-filter-pill" data-filter="vibrant">Vibrant GSA 🌈</button>
+                      <button type="button" class="pb-filter-pill" data-filter="warm">Warm Film ☀️</button>
+                      <button type="button" class="pb-filter-pill" data-filter="bw">Classic B&amp;W 🖤</button>
+                      <button type="button" class="pb-filter-pill" data-filter="cyber">Cyber Cool ⚡</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Right: Template Selector & Actions -->
+                <div class="pb-sidebar-column">
+                  <div class="pb-templates-header">
+                    <h3>Pilih Template GSA</h3>
+                    <p>Pilih desain twibbon &amp; photobooth khas Google Student Ambassador:</p>
+                  </div>
+
+                  <div class="pb-template-list" id="pbTemplateList">
+                    <!-- Template cards rendered dynamically by photobooth.js -->
+                  </div>
+
+                  <!-- Export & Share Actions -->
+                  <div class="pb-export-actions">
+                    <button type="button" class="pb-action-btn pb-btn-download" id="pbDownloadBtn">
+                      <span>📥</span> Unduh Foto (HD PNG)
+                    </button>
+                    <div class="pb-action-row">
+                      <button type="button" class="pb-action-btn pb-btn-copy" id="pbCopyBtn">
+                        <span>📋</span> Salin Gambar
+                      </button>
+                      <button type="button" class="pb-action-btn pb-btn-share" id="pbShareGalleryBtn">
+                        <span>🚀</span> Bagikan ke Momen Teman
+                      </button>
+                    </div>
+                    <button type="button" class="pb-retake-btn" id="pbRetakeBtn">
+                      🔄 Ganti / Ambil Ulang Foto
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Floating Toast Notification -->
+            <div class="pb-toast" id="pbToast" role="status" aria-live="polite" hidden></div>
+          </div>
+        </div>
+      </section>
+
       <section class="section faq-section" id="faq" aria-labelledby="faqTitle">
         <div class="container narrow">
           <div class="section-heading">
