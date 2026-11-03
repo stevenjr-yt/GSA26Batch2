@@ -3197,7 +3197,7 @@ body.pb-modal-open {
 
 .pb-tpl-preview-lead-innovate {
   background: linear-gradient(135deg, #18191c, #2a2d36);
-  border-color: #4285f4;
+  border-color: #fbbc04;
 }
 
 .pb-tpl-preview-inauguration-night {
@@ -3207,7 +3207,13 @@ body.pb-modal-open {
 
 .pb-tpl-preview-gemini-future {
   background: linear-gradient(135deg, #090a0f, #221c38);
-  border-color: #8e75ff;
+  border-color: #00e5ff;
+}
+
+.pb-tpl-preview-all-assets-3d,
+.pb-tpl-preview-sticker-mania {
+  background: linear-gradient(135deg, #12141a, #1a2436);
+  border-color: #4285f4;
 }
 
 .pb-tpl-preview-retro-photobooth {
@@ -3215,14 +3221,9 @@ body.pb-modal-open {
   border-color: #ea4335;
 }
 
-.pb-tpl-preview-sticker-mania {
-  background: linear-gradient(135deg, #12141a, #261f23);
-  border-color: #34a853;
-}
-
 .pb-tpl-preview-vip-pass {
   background: linear-gradient(135deg, #11141c, #1a2233);
-  border-color: #4285f4;
+  border-color: #34a853;
 }
 
 .pb-tpl-dot {

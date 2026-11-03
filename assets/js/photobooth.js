@@ -63,49 +63,49 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   preloadAssets();
 
-  // Template Definitions
+  // Template Definitions (Enhanced with Lighting & Real Web Assets)
   const templates = [
     {
       id: "lead-innovate",
-      name: "Lead, Innovate & Inspire",
-      tagline: "Official Classic Ambassador",
-      badgeColor: "#4285F4",
-      draw: drawTemplateLeadInnovate,
+      name: "Vanity Studio Lights 💡",
+      tagline: "Lampu Bohlam Studio & GSA Official",
+      badgeColor: "#FBBC04",
+      draw: drawTemplateVanityStudio,
     },
     {
       id: "inauguration-night",
-      name: "MGP Space Inauguration",
-      tagline: "Varsity & Golden Night",
-      badgeColor: "#FBBC04",
-      draw: drawTemplateInauguration,
+      name: "Inauguration Stage Lights ✨",
+      tagline: "Lampu Sorot Panggung MGP Space",
+      badgeColor: "#FFD700",
+      draw: drawTemplateStageLights,
     },
     {
       id: "gemini-future",
-      name: "Lead The Future (Gemini)",
-      tagline: "Cyber AI & Tech Edition",
-      badgeColor: "#8E75FF",
-      draw: drawTemplateGeminiFuture,
+      name: "Neon Google & Gemini Glow ⚡",
+      tagline: "Lampu Neon 4-Warna & AI Sparkle",
+      badgeColor: "#00E5FF",
+      draw: drawTemplateNeonGemini,
+    },
+    {
+      id: "all-assets-3d",
+      name: "3D Iconic Assets Mania 🚀",
+      tagline: "Hero Bulb, Code, Sparkle & Logo",
+      badgeColor: "#4285F4",
+      draw: drawTemplate3DAssetsMania,
     },
     {
       id: "retro-photobooth",
-      name: "Retro 4-Cut Photobooth",
-      tagline: "K-Photobooth Nostalgia",
+      name: "Retro K-Photobooth Strip 📸",
+      tagline: "Bohlam Hangat & Kenangan Batch 2",
       badgeColor: "#EA4335",
-      draw: drawTemplateRetro,
-    },
-    {
-      id: "sticker-mania",
-      name: "Playful Sticker Mania",
-      tagline: "GSA Squad 2026 Vibes",
-      badgeColor: "#34A853",
-      draw: drawTemplateStickerMania,
+      draw: drawTemplateRetroStrip,
     },
     {
       id: "vip-pass",
-      name: "Official Delegate Pass",
-      tagline: "All-Access Tech Conference",
-      badgeColor: "#4285F4",
-      draw: drawTemplateVipPass,
+      name: "Hologram VIP Delegate Pass 🪪",
+      tagline: "Efek Kilau Lampu All-Access",
+      badgeColor: "#34A853",
+      draw: drawTemplateVipPassHolo,
     },
   ];
 
@@ -119,7 +119,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const card = document.createElement("button");
       card.type = "button";
       card.className =
-        "pb-template-card" + (index === currentTemplateIndex ? " is-active" : "");
+        "pb-template-card" +
+        (index === currentTemplateIndex ? " is-active" : "");
       card.dataset.index = index;
       card.innerHTML = `
         <div class="pb-tpl-preview pb-tpl-preview-${tpl.id}">
@@ -190,7 +191,6 @@ document.addEventListener("DOMContentLoaded", () => {
       ctx.clip();
     }
 
-    // Target center is either window center or canvas center
     const centerX = windowRect
       ? windowRect.x + windowRect.width / 2 + photoState.panX
       : CANVAS_SIZE / 2 + photoState.panX;
@@ -198,7 +198,6 @@ document.addEventListener("DOMContentLoaded", () => {
       ? windowRect.y + windowRect.height / 2 + photoState.panY
       : CANVAS_SIZE / 2 + photoState.panY;
 
-    // Calculate aspect fill
     const targetW = windowRect ? windowRect.width : CANVAS_SIZE;
     const targetH = windowRect ? windowRect.height : CANVAS_SIZE;
     const imgAspect = userImage.width / userImage.height;
@@ -228,7 +227,156 @@ document.addEventListener("DOMContentLoaded", () => {
     ctx.restore();
   }
 
-  // Helper: Draw helper text with shadow/glow
+  // ================= LIGHTING EFFECT HELPERS =================
+
+  // Realistic illuminated photobooth vanity bulb
+  function drawVanityBulb(x, y, radius = 10, isLit = true) {
+    ctx.save();
+    if (isLit) {
+      // 1. Warm diffuse ambient glow
+      const glow = ctx.createRadialGradient(
+        x,
+        y,
+        radius * 0.4,
+        x,
+        y,
+        radius * 3.6,
+      );
+      glow.addColorStop(0, "rgba(255, 240, 160, 0.95)");
+      glow.addColorStop(0.35, "rgba(255, 205, 75, 0.45)");
+      glow.addColorStop(0.7, "rgba(255, 175, 50, 0.15)");
+      glow.addColorStop(1, "rgba(255, 175, 50, 0)");
+      ctx.fillStyle = glow;
+      ctx.beginPath();
+      ctx.arc(x, y, radius * 3.6, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // 2. Bulb socket base
+    ctx.fillStyle = "#181a20";
+    ctx.beginPath();
+    ctx.arc(x, y, radius + 3, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.25)";
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // 3. Pearlescent bulb glass gradient
+    const bulbGrad = ctx.createRadialGradient(
+      x - radius * 0.3,
+      y - radius * 0.3,
+      radius * 0.1,
+      x,
+      y,
+      radius,
+    );
+    if (isLit) {
+      bulbGrad.addColorStop(0, "#FFFFFF");
+      bulbGrad.addColorStop(0.3, "#FFFBE6");
+      bulbGrad.addColorStop(0.7, "#FFD666");
+      bulbGrad.addColorStop(1, "#FF9C1A");
+    } else {
+      bulbGrad.addColorStop(0, "#aaaaaa");
+      bulbGrad.addColorStop(1, "#333333");
+    }
+    ctx.fillStyle = bulbGrad;
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, Math.PI * 2);
+    ctx.fill();
+
+    // 4. White hot core highlight
+    if (isLit) {
+      ctx.fillStyle = "#FFFFFF";
+      ctx.beginPath();
+      ctx.arc(
+        x - radius * 0.28,
+        y - radius * 0.28,
+        radius * 0.32,
+        0,
+        Math.PI * 2,
+      );
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  // Draw perimeter of vanity bulbs around a rectangle
+  function drawVanityPerimeter(x, y, w, h, countX = 14, countY = 14) {
+    const stepX = w / (countX - 1);
+    const stepY = h / (countY - 1);
+
+    // Top & Bottom edges
+    for (let i = 0; i < countX; i++) {
+      drawVanityBulb(x + i * stepX, y, 10, true);
+      drawVanityBulb(x + i * stepX, y + h, 10, true);
+    }
+    // Left & Right edges (excluding corners already drawn)
+    for (let j = 1; j < countY - 1; j++) {
+      drawVanityBulb(x, y + j * stepY, 10, true);
+      drawVanityBulb(x + w, y + j * stepY, 10, true);
+    }
+  }
+
+  // Draw stage spotlight light beams
+  function drawStageSpotlights(w, h) {
+    ctx.save();
+    const beams = [
+      {
+        sourceX: w * 0.18,
+        targetX: w * 0.38,
+        color: "rgba(66, 133, 244, 0.22)",
+      },
+      {
+        sourceX: w * 0.5,
+        targetX: w * 0.5,
+        color: "rgba(255, 230, 120, 0.26)",
+      },
+      {
+        sourceX: w * 0.82,
+        targetX: w * 0.62,
+        color: "rgba(234, 67, 53, 0.22)",
+      },
+    ];
+
+    beams.forEach((beam) => {
+      const grad = ctx.createLinearGradient(beam.sourceX, 0, beam.targetX, h);
+      grad.addColorStop(0, beam.color);
+      grad.addColorStop(0.7, "rgba(255, 255, 255, 0.05)");
+      grad.addColorStop(1, "rgba(0, 0, 0, 0)");
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.moveTo(beam.sourceX - 25, 0);
+      ctx.lineTo(beam.sourceX + 25, 0);
+      ctx.lineTo(beam.targetX + 280, h);
+      ctx.lineTo(beam.targetX - 280, h);
+      ctx.closePath();
+      ctx.fill();
+    });
+    ctx.restore();
+  }
+
+  // Draw glowing neon tube line
+  function drawNeonTube(x1, y1, x2, y2, color, blur = 20, thick = 6) {
+    ctx.save();
+    ctx.strokeStyle = color;
+    ctx.shadowColor = color;
+    ctx.shadowBlur = blur;
+    ctx.lineWidth = thick;
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+
+    // White electric core
+    ctx.strokeStyle = "#FFFFFF";
+    ctx.shadowBlur = 4;
+    ctx.lineWidth = thick * 0.35;
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // Helper: Draw text with shadow/glow
   function drawGlowText(
     text,
     x,
@@ -279,344 +427,386 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ================= TEMPLATE 1: LEAD, INNOVATE & INSPIRE =================
-  function drawTemplateLeadInnovate() {
-    const framePadding = 48;
-    const topBarHeight = 130;
-    const bottomBarHeight = 180;
+  // Draw 3D Asset with circular glowing halo
+  function drawAssetWithGlow(img, x, y, size, glowColor = "rgba(255,215,0,0.5)") {
+    if (!img) return;
+    ctx.save();
+    const halo = ctx.createRadialGradient(
+      x + size / 2,
+      y + size / 2,
+      size * 0.1,
+      x + size / 2,
+      y + size / 2,
+      size * 0.75,
+    );
+    halo.addColorStop(0, glowColor);
+    halo.addColorStop(1, "rgba(0, 0, 0, 0)");
+    ctx.fillStyle = halo;
+    ctx.beginPath();
+    ctx.arc(x + size / 2, y + size / 2, size * 0.75, 0, Math.PI * 2);
+    ctx.fill();
 
-    // Window for photo
+    ctx.drawImage(img, x, y, size, size);
+    ctx.restore();
+  }
+
+  // ================= TEMPLATE 1: VANITY STUDIO LIGHTS (BOHLAM MENYALA) =================
+  function drawTemplateVanityStudio() {
+    const pad = 64;
     const photoWindow = {
-      x: framePadding,
-      y: topBarHeight + 20,
-      width: CANVAS_SIZE - framePadding * 2,
-      height: CANVAS_SIZE - topBarHeight - bottomBarHeight - 10,
-      radius: 24,
+      x: pad + 16,
+      y: 125,
+      width: CANVAS_SIZE - (pad + 16) * 2,
+      height: CANVAS_SIZE - 315,
+      radius: 18,
     };
 
-    // Draw user photo in window
-    ctx.fillStyle = "#161719";
+    // Deep studio charcoal backdrop
+    ctx.fillStyle = "#101115";
     ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+
+    // Draw user photo
     drawUserPhoto(photoWindow);
 
-    // Inner shadow & subtle frame border
+    // Inner gold bevel around photo window
     ctx.save();
-    ctx.strokeStyle = "rgba(255,255,255,0.18)";
+    ctx.strokeStyle = "rgba(255, 215, 0, 0.4)";
     ctx.lineWidth = 4;
     ctx.beginPath();
     ctx.roundRect(
-      photoWindow.x,
-      photoWindow.y,
-      photoWindow.width,
-      photoWindow.height,
+      photoWindow.x - 2,
+      photoWindow.y - 2,
+      photoWindow.width + 4,
+      photoWindow.height + 4,
       photoWindow.radius,
     );
     ctx.stroke();
     ctx.restore();
 
-    // 4-color Outer Accent Border
-    const borderThick = 12;
-    drawGoogleStripe(0, 0, CANVAS_SIZE, borderThick);
-    drawGoogleStripe(0, CANVAS_SIZE - borderThick, CANVAS_SIZE, borderThick);
+    // PERIMETER VANITY BULB LIGHTS (Lampu Bohlam Studio Menyala)
+    drawVanityPerimeter(pad - 12, 36, CANVAS_SIZE - (pad - 12) * 2, CANVAS_SIZE - 72, 16, 16);
 
-    // Top Header Bar
+    // Top Header: Sleek dark glass with GSA Wordmark & Google G Logo
+    const headerW = CANVAS_SIZE - (pad + 24) * 2;
     drawPill(
-      framePadding,
-      28,
-      CANVAS_SIZE - framePadding * 2,
-      86,
-      "rgba(24, 25, 28, 0.94)",
-      "rgba(255, 255, 255, 0.15)",
+      pad + 24,
+      50,
+      headerW,
+      64,
+      "rgba(18, 19, 24, 0.94)",
+      "rgba(255, 215, 0, 0.35)",
       2,
     );
 
-    // GSA Wordmark / Title in Header
+    // Google G Logo (Left)
+    if (assets.gLogo) {
+      ctx.drawImage(assets.gLogo, pad + 38, 56, 50, 50);
+    }
+
+    // GSA Wordmark (Center)
     if (assets.gsaWordmark) {
+      const wmW = 340;
       const wmAspect = assets.gsaWordmark.width / assets.gsaWordmark.height;
-      const wmW = 320;
       const wmH = wmW / wmAspect;
       ctx.drawImage(
         assets.gsaWordmark,
         (CANVAS_SIZE - wmW) / 2,
-        28 + (86 - wmH) / 2 - 2,
+        50 + (64 - wmH) / 2,
         wmW,
         wmH,
       );
-    } else {
-      drawGlowText(
-        "Google Student Ambassador",
-        CANVAS_SIZE / 2,
-        64,
-        'bold 28px "Google Sans Flex", sans-serif',
-        "#FFFFFF",
+    }
+
+    // 3D Hero Bulb Asset (Right with bright warm rays)
+    if (assets.heroBulb) {
+      drawAssetWithGlow(
+        assets.heroBulb,
+        CANVAS_SIZE - pad - 96,
+        42,
+        74,
+        "rgba(255, 215, 0, 0.6)",
       );
     }
 
-    // Google 'G' Logo Top-Right
-    if (assets.gLogo) {
-      ctx.drawImage(assets.gLogo, CANVAS_SIZE - framePadding - 72, 38, 56, 56);
-    }
-
-    // Official Badge Pill Top-Left
+    // Bottom Banner: Lead Innovate Inspire Plaque
+    const botY = CANVAS_SIZE - 176;
     drawPill(
-      framePadding + 20,
-      44,
-      140,
-      38,
-      "rgba(66, 133, 244, 0.25)",
-      "#4285F4",
-      1.5,
-    );
-    drawGlowText(
-      "★ BATCH 2",
-      framePadding + 90,
-      63,
-      'bold 16px "Google Sans Flex", sans-serif',
-      "#8ab4f8",
-    );
-
-    // Bottom Banner Area
-    const bottomY = CANVAS_SIZE - bottomBarHeight + 10;
-    drawPill(
-      framePadding,
-      bottomY,
-      CANVAS_SIZE - framePadding * 2,
+      pad + 20,
+      botY,
+      CANVAS_SIZE - (pad + 20) * 2,
       126,
-      "rgba(20, 21, 24, 0.95)",
+      "rgba(15, 17, 23, 0.96)",
       "rgba(255, 255, 255, 0.2)",
       2,
     );
 
-    // Decorative 4-color stripe on top of bottom banner
-    drawGoogleStripe(framePadding + 40, bottomY, CANVAS_SIZE - framePadding * 2 - 80, 4);
+    // 4-Color glowing accent bar on bottom banner
+    drawGoogleStripe(pad + 40, botY, CANVAS_SIZE - (pad + 20) * 2 - 40, 5);
 
     // Main Slogan
     drawGlowText(
       "LEAD  •  INNOVATE  •  INSPIRE",
       CANVAS_SIZE / 2,
-      bottomY + 44,
-      'bold 34px "Google Sans Flex", sans-serif',
+      botY + 44,
+      'bold 36px "Google Sans Flex", sans-serif',
       "#FFFFFF",
       "center",
-      "rgba(66, 133, 244, 0.6)",
-      10,
+      "rgba(255, 215, 0, 0.7)",
+      14,
     );
 
     // Subtitle
     drawGlowText(
-      "GOOGLE STUDENT AMBASSADOR INDONESIA  •  2026 INAUGURATION",
+      "GOOGLE STUDENT AMBASSADOR  •  2026 BATCH 2 INAUGURATION",
       CANVAS_SIZE / 2,
-      bottomY + 84,
-      '600 17px "Google Sans Flex", sans-serif',
-      "#9aa0a6",
-    );
-  }
-
-  // ================= TEMPLATE 2: INAUGURATION NIGHT MGP SPACE =================
-  function drawTemplateInauguration() {
-    const pad = 56;
-    const photoWindow = {
-      x: pad,
-      y: 110,
-      width: CANVAS_SIZE - pad * 2,
-      height: CANVAS_SIZE - 310,
-      radius: 18,
-    };
-
-    // Deep Midnight Varsity Background
-    ctx.fillStyle = "#0c1017";
-    ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
-
-    drawUserPhoto(photoWindow);
-
-    // Double Varsity Frame Outline (Gold & White)
-    ctx.save();
-    ctx.strokeStyle = "#FFD700";
-    ctx.lineWidth = 5;
-    ctx.beginPath();
-    ctx.roundRect(
-      photoWindow.x - 4,
-      photoWindow.y - 4,
-      photoWindow.width + 8,
-      photoWindow.height + 8,
-      22,
-    );
-    ctx.stroke();
-
-    ctx.strokeStyle = "rgba(255,255,255,0.4)";
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.roundRect(
-      photoWindow.x - 12,
-      photoWindow.y - 12,
-      photoWindow.width + 24,
-      photoWindow.height + 24,
-      26,
-    );
-    ctx.stroke();
-    ctx.restore();
-
-    // Top Header Banner
-    drawPill(
-      (CANVAS_SIZE - 460) / 2,
-      36,
-      460,
-      54,
-      "rgba(12, 16, 23, 0.92)",
-      "#FFD700",
-      2,
-    );
-    drawGlowText(
-      "★  OFFICIALLY INAUGURATED  ★",
-      CANVAS_SIZE / 2,
-      63,
-      'bold 20px "Google Sans Flex", sans-serif',
-      "#FFD700",
-      "center",
-      "#FFD700",
-      8,
-    );
-
-    // Confetti / Sparkle accents around corners
-    ctx.fillStyle = "#FFD700";
-    [[75, 45], [CANVAS_SIZE - 75, 45], [75, photoWindow.y + photoWindow.height + 25], [CANVAS_SIZE - 75, photoWindow.y + photoWindow.height + 25]].forEach(([x, y]) => {
-      ctx.beginPath();
-      ctx.arc(x, y, 5, 0, Math.PI * 2);
-      ctx.fill();
-    });
-
-    // Bottom Plaque
-    const plaqueY = CANVAS_SIZE - 170;
-    drawPill(
-      pad,
-      plaqueY,
-      CANVAS_SIZE - pad * 2,
-      128,
-      "rgba(15, 20, 30, 0.96)",
-      "rgba(255, 215, 0, 0.4)",
-      2,
-    );
-
-    drawGlowText(
-      "GSA 2026 BATCH 2 DELEGATE",
-      CANVAS_SIZE / 2,
-      plaqueY + 38,
-      'bold 36px "Google Sans Flex", sans-serif',
-      "#FFFFFF",
-      "center",
-      "rgba(255, 215, 0, 0.5)",
-      8,
-    );
-
-    drawGlowText(
-      "MGP SPACE, JAKARTA  •  FROM CAMPUS TO COMMUNITY LEADERS",
-      CANVAS_SIZE / 2,
-      plaqueY + 84,
+      botY + 86,
       '600 18px "Google Sans Flex", sans-serif',
       "#E2E8F0",
     );
   }
 
-  // ================= TEMPLATE 3: GEMINI AI FUTURE =================
-  function drawTemplateGeminiFuture() {
-    const pad = 50;
+  // ================= TEMPLATE 2: INAUGURATION STAGE LIGHTS (PANGGUNG & LAMPU SOROT) =================
+  function drawTemplateStageLights() {
+    const pad = 54;
     const photoWindow = {
       x: pad,
       y: 110,
       width: CANVAS_SIZE - pad * 2,
-      height: CANVAS_SIZE - 300,
-      radius: 20,
+      height: CANVAS_SIZE - 295,
+      radius: 16,
     };
 
-    // Dark cyber backdrop
-    ctx.fillStyle = "#090A0F";
+    // Midnight auditorium atmosphere
+    ctx.fillStyle = "#080c14";
     ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 
+    // Draw user photo
     drawUserPhoto(photoWindow);
 
-    // Glowing Cyber Gradient Border
-    ctx.save();
-    const grad = ctx.createLinearGradient(0, 0, CANVAS_SIZE, CANVAS_SIZE);
-    grad.addColorStop(0, "#4285F4");
-    grad.addColorStop(0.5, "#8E75FF");
-    grad.addColorStop(1, "#00E5FF");
+    // REAL STAGE LIGHT BEAMS (Lampu Sorot Panggung MGP Space)
+    drawStageSpotlights(CANVAS_SIZE, CANVAS_SIZE);
 
-    ctx.strokeStyle = grad;
+    // Golden Varsity piping frame
+    ctx.save();
+    ctx.strokeStyle = "#FFD700";
     ctx.lineWidth = 6;
-    ctx.shadowColor = "#8E75FF";
-    ctx.shadowBlur = 16;
-    ctx.strokeRect(
+    ctx.shadowColor = "#FFD700";
+    ctx.shadowBlur = 14;
+    ctx.beginPath();
+    ctx.roundRect(
       photoWindow.x - 2,
       photoWindow.y - 2,
       photoWindow.width + 4,
       photoWindow.height + 4,
+      20,
     );
+    ctx.stroke();
+
+    // Secondary varsity white border
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.35)";
+    ctx.lineWidth = 2;
+    ctx.shadowBlur = 0;
+    ctx.beginPath();
+    ctx.roundRect(
+      photoWindow.x - 10,
+      photoWindow.y - 10,
+      photoWindow.width + 20,
+      photoWindow.height + 20,
+      24,
+    );
+    ctx.stroke();
     ctx.restore();
 
-    // Futuristic Corner HUD brackets
-    const bracketSize = 36;
-    ctx.strokeStyle = "#00E5FF";
-    ctx.lineWidth = 4;
-    [
-      [photoWindow.x - 14, photoWindow.y - 14, 1, 1],
-      [photoWindow.x + photoWindow.width + 14, photoWindow.y - 14, -1, 1],
-      [photoWindow.x - 14, photoWindow.y + photoWindow.height + 14, 1, -1],
-      [
-        photoWindow.x + photoWindow.width + 14,
-        photoWindow.y + photoWindow.height + 14,
-        -1,
-        -1,
-      ],
-    ].forEach(([x, y, dx, dy]) => {
-      ctx.beginPath();
-      ctx.moveTo(x, y + dy * bracketSize);
-      ctx.lineTo(x, y);
-      ctx.lineTo(x + dx * bracketSize, y);
-      ctx.stroke();
-    });
+    // Top Header: Stage Marquee
+    drawPill(
+      (CANVAS_SIZE - 560) / 2,
+      30,
+      560,
+      58,
+      "rgba(8, 12, 20, 0.95)",
+      "#FFD700",
+      2,
+    );
 
-    // Top Header Bar
+    drawGlowText(
+      "★  OFFICIALLY INAUGURATED  ★",
+      CANVAS_SIZE / 2,
+      58,
+      'bold 24px "Google Sans Flex", sans-serif',
+      "#FFD700",
+      "center",
+      "#FFD700",
+      12,
+    );
+
+    // 3D Gemini Sparkle (Top-Right)
+    if (assets.geminiSparkle) {
+      drawAssetWithGlow(
+        assets.geminiSparkle,
+        CANVAS_SIZE - pad - 72,
+        22,
+        74,
+        "rgba(255, 215, 0, 0.7)",
+      );
+    }
+
+    // Google G Logo (Top-Left)
+    if (assets.gLogo) {
+      drawAssetWithGlow(
+        assets.gLogo,
+        pad + 8,
+        28,
+        60,
+        "rgba(66, 133, 244, 0.6)",
+      );
+    }
+
+    // Bottom Stage Plaque
+    const plaqueY = CANVAS_SIZE - 170;
+    drawPill(
+      pad,
+      plaqueY,
+      CANVAS_SIZE - pad * 2,
+      132,
+      "rgba(10, 14, 24, 0.96)",
+      "rgba(255, 215, 0, 0.5)",
+      2.5,
+    );
+
+    // GSA Wordmark inside bottom plaque
+    if (assets.gsaWordmark) {
+      const wmW = 280;
+      const wmAspect = assets.gsaWordmark.width / assets.gsaWordmark.height;
+      const wmH = wmW / wmAspect;
+      ctx.drawImage(
+        assets.gsaWordmark,
+        (CANVAS_SIZE - wmW) / 2,
+        plaqueY + 12,
+        wmW,
+        wmH,
+      );
+    }
+
+    drawGlowText(
+      "GSA 2026 BATCH 2 DELEGATE",
+      CANVAS_SIZE / 2,
+      plaqueY + 68,
+      'bold 34px "Google Sans Flex", sans-serif',
+      "#FFFFFF",
+      "center",
+      "#FFD700",
+      10,
+    );
+
+    drawGlowText(
+      "MGP SPACE, JAKARTA  •  FROM CAMPUS TO COMMUNITY LEADERS",
+      CANVAS_SIZE / 2,
+      plaqueY + 104,
+      '600 17px "Google Sans Flex", sans-serif',
+      "#E2E8F0",
+    );
+  }
+
+  // ================= TEMPLATE 3: NEON GOOGLE & GEMINI GLOW (LAMPU NEON 4-WARNA) =================
+  function drawTemplateNeonGemini() {
+    const pad = 52;
+    const photoWindow = {
+      x: pad,
+      y: 115,
+      width: CANVAS_SIZE - pad * 2,
+      height: CANVAS_SIZE - 295,
+      radius: 20,
+    };
+
+    // Dark cyber aesthetic
+    ctx.fillStyle = "#07080d";
+    ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+
+    drawUserPhoto(photoWindow);
+
+    // REAL NEON TUBES (4 Google Colors Glowing around the photo)
+    const pw = photoWindow;
+    // Top border: Neon Blue
+    drawNeonTube(pw.x, pw.y, pw.x + pw.width, pw.y, "#4285F4", 22, 6);
+    // Right border: Neon Red
+    drawNeonTube(
+      pw.x + pw.width,
+      pw.y,
+      pw.x + pw.width,
+      pw.y + pw.height,
+      "#EA4335",
+      22,
+      6,
+    );
+    // Bottom border: Neon Yellow
+    drawNeonTube(
+      pw.x + pw.width,
+      pw.y + pw.height,
+      pw.x,
+      pw.y + pw.height,
+      "#FBBC04",
+      22,
+      6,
+    );
+    // Left border: Neon Green
+    drawNeonTube(pw.x, pw.y + pw.height, pw.x, pw.y, "#34A853", 22, 6);
+
+    // Top Header: Neon Pill
     drawPill(
       pad,
       32,
       CANVAS_SIZE - pad * 2,
       64,
-      "rgba(14, 16, 26, 0.9)",
-      "rgba(142, 117, 255, 0.4)",
+      "rgba(10, 12, 20, 0.92)",
+      "#8E75FF",
       2,
     );
 
-    drawGlowText(
-      "⚡ GOOGLE STUDENT AMBASSADOR  •  BATCH 2",
-      CANVAS_SIZE / 2 - 30,
-      64,
-      'bold 22px "Google Sans Flex", sans-serif',
-      "#FFFFFF",
-      "center",
-      "#8E75FF",
-      8,
-    );
-
-    // Gemini Sparkle Asset Top-Right
-    if (assets.geminiSparkle) {
+    // GSA Wordmark (Left/Center)
+    if (assets.gsaWordmark) {
+      const wmW = 300;
+      const wmAspect = assets.gsaWordmark.width / assets.gsaWordmark.height;
+      const wmH = wmW / wmAspect;
       ctx.drawImage(
-        assets.geminiSparkle,
-        CANVAS_SIZE - pad - 68,
-        34,
-        56,
-        56,
+        assets.gsaWordmark,
+        pad + 28,
+        32 + (64 - wmH) / 2,
+        wmW,
+        wmH,
       );
     }
 
-    // Bottom Futuristic Pill
+    drawGlowText(
+      "⚡ BATCH 2 • AI & TECH",
+      CANVAS_SIZE - pad - 170,
+      64,
+      'bold 20px "Google Sans Flex", sans-serif',
+      "#00E5FF",
+      "center",
+      "#00E5FF",
+      12,
+    );
+
+    // Big 3D Gemini Sparkle Asset (Top-Right Glowing)
+    if (assets.geminiSparkle) {
+      drawAssetWithGlow(
+        assets.geminiSparkle,
+        CANVAS_SIZE - pad - 72,
+        18,
+        88,
+        "rgba(142, 117, 255, 0.75)",
+      );
+    }
+
+    // Bottom Neon Panel
     const botY = CANVAS_SIZE - 165;
     drawPill(
       pad,
       botY,
       CANVAS_SIZE - pad * 2,
-      126,
-      "rgba(10, 12, 20, 0.95)",
-      "rgba(0, 229, 255, 0.35)",
+      125,
+      "rgba(8, 10, 16, 0.95)",
+      "#00E5FF",
       2,
     );
 
@@ -628,131 +818,39 @@ document.addEventListener("DOMContentLoaded", () => {
       "#00E5FF",
       "center",
       "#00E5FF",
-      12,
+      16,
     );
 
     drawGlowText(
       "EMPOWERING CAMPUS COMMUNITIES THROUGH TECHNOLOGY",
       CANVAS_SIZE / 2,
       botY + 84,
-      '600 17px "Google Sans Flex", sans-serif',
-      "#B0B8C4",
+      '600 18px "Google Sans Flex", sans-serif',
+      "#D0D8E8",
     );
   }
 
-  // ================= TEMPLATE 4: RETRO 4-CUT PHOTOBOOTH =================
-  function drawTemplateRetro() {
-    // Cream vintage photo paper
-    ctx.fillStyle = "#FAF8F5";
-    ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
-
-    const pad = 64;
+  // ================= TEMPLATE 4: 3D ICONIC ASSETS MANIA (SEMUA ASET ASLI WEB) =================
+  function drawTemplate3DAssetsMania() {
+    const pad = 58;
     const photoWindow = {
       x: pad,
-      y: 110,
+      y: 120,
       width: CANVAS_SIZE - pad * 2,
-      height: CANVAS_SIZE - 320,
-      radius: 8,
+      height: CANVAS_SIZE - 305,
+      radius: 24,
     };
 
-    // Draw user photo
-    ctx.fillStyle = "#E8E4DF";
-    ctx.fillRect(
-      photoWindow.x,
-      photoWindow.y,
-      photoWindow.width,
-      photoWindow.height,
-    );
-    drawUserPhoto(photoWindow);
-
-    // Retro border line
-    ctx.strokeStyle = "#3C4043";
-    ctx.lineWidth = 2;
-    ctx.strokeRect(
-      photoWindow.x,
-      photoWindow.y,
-      photoWindow.width,
-      photoWindow.height,
-    );
-
-    // Top Header: 4 Google Color dots
-    const dotColors = ["#4285F4", "#EA4335", "#FBBC04", "#34A853"];
-    dotColors.forEach((color, i) => {
-      ctx.fillStyle = color;
-      ctx.beginPath();
-      ctx.arc(pad + 18 + i * 26, 62, 8, 0, Math.PI * 2);
-      ctx.fill();
-    });
-
-    drawGlowText(
-      "GSA PHOTOBOOTH  •  JAKARTA 2026",
-      CANVAS_SIZE / 2 + 30,
-      63,
-      'bold 22px "Google Sans Flex", sans-serif',
-      "#202124",
-    );
-
-    // Lightbulb Sticker Top Right
-    if (assets.heroBulb) {
-      ctx.drawImage(
-        assets.heroBulb,
-        CANVAS_SIZE - pad - 65,
-        34,
-        56,
-        56,
-      );
-    }
-
-    // Bottom Handwritten style area
-    const botY = CANVAS_SIZE - 175;
-
-    drawGlowText(
-      "GSA 26 Batch 2 Memories ✨",
-      CANVAS_SIZE / 2,
-      botY + 32,
-      'bold 36px "Google Sans Flex", sans-serif',
-      "#1F1F1F",
-    );
-
-    drawGlowText(
-      "02 • 11 • 2026  |  LEAD • INNOVATE • INSPIRE",
-      CANVAS_SIZE / 2,
-      botY + 76,
-      '600 20px "Google Sans Flex", sans-serif',
-      "#5F6368",
-    );
-
-    // Tiny Barcode graphic bottom-right
-    const barcodeX = CANVAS_SIZE - pad - 120;
-    const barcodeY = botY + 98;
-    ctx.fillStyle = "#202124";
-    for (let i = 0; i < 28; i++) {
-      const barW = i % 3 === 0 ? 3 : 1.5;
-      ctx.fillRect(barcodeX + i * 4, barcodeY, barW, 20);
-    }
-  }
-
-  // ================= TEMPLATE 5: STICKER MANIA GSA SQUAD =================
-  function drawTemplateStickerMania() {
-    // Dynamic dark surface
-    ctx.fillStyle = "#12141A";
+    // Dark sleek background
+    ctx.fillStyle = "#12141c";
     ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
-
-    const pad = 54;
-    const photoWindow = {
-      x: pad,
-      y: 110,
-      width: CANVAS_SIZE - pad * 2,
-      height: CANVAS_SIZE - 280,
-      radius: 28,
-    };
 
     drawUserPhoto(photoWindow);
 
-    // Border around photo
+    // Multi-color rounded outline
     ctx.save();
     ctx.strokeStyle = "#FFFFFF";
-    ctx.lineWidth = 6;
+    ctx.lineWidth = 5;
     ctx.beginPath();
     ctx.roundRect(
       photoWindow.x,
@@ -764,106 +862,126 @@ document.addEventListener("DOMContentLoaded", () => {
     ctx.stroke();
     ctx.restore();
 
-    // STICKER 1: Google Search Bar Mockup Top-Left
-    drawPill(pad + 10, 36, 420, 52, "#FFFFFF", "rgba(0,0,0,0.12)", 2);
-    if (assets.gLogo) {
-      ctx.drawImage(assets.gLogo, pad + 24, 46, 32, 32);
-    }
-    drawGlowText(
-      "cara jadi leader hebat... | 🔍",
-      pad + 230,
-      63,
-      '600 16px "Google Sans Flex", sans-serif',
-      "#3C4043",
-    );
-
-    // STICKER 2: "PROUD AMBASSADOR" Badge Top-Right
+    // Top Header: Center GSA Wordmark
     drawPill(
-      CANVAS_SIZE - pad - 240,
-      36,
-      240,
-      52,
-      "#34A853",
-      "#FFFFFF",
-      2.5,
-    );
-    drawGlowText(
-      "★ PROUD GSA '26",
-      CANVAS_SIZE - pad - 120,
-      63,
-      'bold 18px "Google Sans Flex", sans-serif',
-      "#FFFFFF",
+      (CANVAS_SIZE - 540) / 2,
+      30,
+      540,
+      68,
+      "rgba(18, 20, 28, 0.95)",
+      "rgba(255, 255, 255, 0.2)",
+      2,
     );
 
-    // STICKER 3: Hero Code Laptop Sticker Bottom-Right
-    if (assets.heroCode) {
-      ctx.save();
-      ctx.translate(CANVAS_SIZE - pad - 60, photoWindow.y + photoWindow.height - 30);
-      ctx.rotate(0.12);
-      ctx.drawImage(assets.heroCode, -50, -50, 100, 100);
-      ctx.restore();
+    if (assets.gsaWordmark) {
+      const wmW = 340;
+      const wmAspect = assets.gsaWordmark.width / assets.gsaWordmark.height;
+      const wmH = wmW / wmAspect;
+      ctx.drawImage(
+        assets.gsaWordmark,
+        (CANVAS_SIZE - wmW) / 2,
+        30 + (68 - wmH) / 2,
+        wmW,
+        wmH,
+      );
     }
 
-    // STICKER 4: Hero Bulb Sticker Bottom-Left
+    // 1. 3D HERO BULB (Lampu Bohlam Ide) - Top Left
     if (assets.heroBulb) {
-      ctx.save();
-      ctx.translate(pad + 50, photoWindow.y + photoWindow.height - 30);
-      ctx.rotate(-0.14);
-      ctx.drawImage(assets.heroBulb, -45, -45, 90, 90);
-      ctx.restore();
+      drawAssetWithGlow(
+        assets.heroBulb,
+        pad - 25,
+        18,
+        96,
+        "rgba(255, 200, 50, 0.75)",
+      );
     }
 
-    // Bottom Banner
-    const botY = CANVAS_SIZE - 150;
+    // 2. 3D GEMINI SPARKLE (Bintang AI Sparkle) - Top Right
+    if (assets.geminiSparkle) {
+      drawAssetWithGlow(
+        assets.geminiSparkle,
+        CANVAS_SIZE - pad - 75,
+        18,
+        96,
+        "rgba(142, 117, 255, 0.75)",
+      );
+    }
+
+    // 3. 3D HERO CODE (Laptop & Code Brackets) - Bottom Right Corner
+    if (assets.heroCode) {
+      drawAssetWithGlow(
+        assets.heroCode,
+        CANVAS_SIZE - pad - 80,
+        photoWindow.y + photoWindow.height - 55,
+        105,
+        "rgba(66, 133, 244, 0.65)",
+      );
+    }
+
+    // 4. GOOGLE G LOGO - Bottom Left Corner
+    if (assets.gLogo) {
+      drawAssetWithGlow(
+        assets.gLogo,
+        pad - 15,
+        photoWindow.y + photoWindow.height - 50,
+        80,
+        "rgba(52, 168, 83, 0.55)",
+      );
+    }
+
+    // Bottom Banner: Slogan & Squad 2026
+    const botY = CANVAS_SIZE - 165;
     drawPill(
       pad,
       botY,
       CANVAS_SIZE - pad * 2,
-      116,
-      "#EA4335",
+      125,
+      "#196ac9",
       "#FFFFFF",
-      3,
+      2.5,
     );
 
     drawGlowText(
-      "#GSASQUAD2026 • WE ARE INAUGURATED!",
+      "LEAD • INNOVATE • EMPOWER",
       CANVAS_SIZE / 2,
-      botY + 38,
-      'bold 34px "Google Sans Flex", sans-serif',
+      botY + 40,
+      'bold 36px "Google Sans Flex", sans-serif',
       "#FFFFFF",
       "center",
-      "rgba(0,0,0,0.4)",
-      6,
+      "rgba(0, 0, 0, 0.5)",
+      8,
     );
 
     drawGlowText(
-      "LEAD WITH PASSION  •  INNOVATE FOR IMPACT",
+      "#GSASQUAD2026  •  FROM CAMPUS TO COMMUNITY LEADERS",
       CANVAS_SIZE / 2,
-      botY + 80,
+      botY + 84,
       '600 18px "Google Sans Flex", sans-serif',
-      "#FFF2F0",
+      "#E8F0FE",
     );
   }
 
-  // ================= TEMPLATE 6: OFFICIAL VIP DELEGATE PASS =================
-  function drawTemplateVipPass() {
-    ctx.fillStyle = "#11141C";
+  // ================= TEMPLATE 5: RETRO K-PHOTOBOOTH STRIP (BOHLAM HANGAT) =================
+  function drawTemplateRetroStrip() {
+    // Warm vintage photo paper
+    ctx.fillStyle = "#FAF8F5";
     ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 
-    const pad = 60;
+    const pad = 64;
     const photoWindow = {
       x: pad,
-      y: 120,
+      y: 110,
       width: CANVAS_SIZE - pad * 2,
-      height: CANVAS_SIZE - 330,
-      radius: 16,
+      height: CANVAS_SIZE - 315,
+      radius: 10,
     };
 
     drawUserPhoto(photoWindow);
 
-    // Photo frame border
-    ctx.strokeStyle = "rgba(66, 133, 244, 0.4)";
-    ctx.lineWidth = 4;
+    // Retro clean border
+    ctx.strokeStyle = "#202124";
+    ctx.lineWidth = 3;
     ctx.strokeRect(
       photoWindow.x,
       photoWindow.y,
@@ -871,91 +989,227 @@ document.addEventListener("DOMContentLoaded", () => {
       photoWindow.height,
     );
 
-    // Lanyard Cutout Slot Top Center
-    drawPill(CANVAS_SIZE / 2 - 50, 16, 100, 14, "#000000", "#4285F4", 2);
+    // Warm Fairy Lights across top border
+    const bulbCount = 12;
+    const bulbStep = (CANVAS_SIZE - pad * 2) / (bulbCount - 1);
+    for (let i = 0; i < bulbCount; i++) {
+      drawVanityBulb(pad + i * bulbStep, 40, 7, true);
+    }
 
-    // Top Header: Pass Credentials
+    // Top Header: GSA Wordmark & Google G
+    if (assets.gsaWordmark) {
+      const wmW = 300;
+      const wmAspect = assets.gsaWordmark.width / assets.gsaWordmark.height;
+      const wmH = wmW / wmAspect;
+      ctx.drawImage(
+        assets.gsaWordmark,
+        (CANVAS_SIZE - wmW) / 2,
+        60,
+        wmW,
+        wmH,
+      );
+    }
+
+    if (assets.gLogo) {
+      ctx.drawImage(assets.gLogo, pad + 15, 60, 36, 36);
+    }
+
+    // 3D Hero Bulb Sticker on Corner
+    if (assets.heroBulb) {
+      ctx.drawImage(
+        assets.heroBulb,
+        CANVAS_SIZE - pad - 60,
+        50,
+        56,
+        56,
+      );
+    }
+
+    // Bottom Handwritten style area
+    const botY = CANVAS_SIZE - 175;
+
     drawGlowText(
-      "OFFICIAL DELEGATE  •  ALL-ACCESS PASS",
+      "GSA 26 Batch 2 Memories ✨",
       CANVAS_SIZE / 2,
-      60,
-      'bold 22px "Google Sans Flex", sans-serif',
-      "#8AB4F8",
+      botY + 36,
+      'bold 38px "Google Sans Flex", sans-serif',
+      "#1F1F1F",
     );
 
     drawGlowText(
-      "GOOGLE STUDENT AMBASSADOR INDONESIA  •  BATCH 2",
+      "02 • 11 • 2026  |  LEAD • INNOVATE • INSPIRE",
       CANVAS_SIZE / 2,
-      90,
-      '600 16px "Google Sans Flex", sans-serif',
-      "#E8EAED",
+      botY + 80,
+      '600 20px "Google Sans Flex", sans-serif',
+      "#5F6368",
     );
 
-    // Bottom Credentials Pass
-    const botY = CANVAS_SIZE - 180;
-    drawPill(
-      pad,
-      botY,
-      CANVAS_SIZE - pad * 2,
-      140,
-      "rgba(20, 24, 34, 0.96)",
-      "#4285F4",
-      2,
-    );
+    // Barcode detail bottom right
+    const barcodeX = CANVAS_SIZE - pad - 130;
+    const barcodeY = botY + 104;
+    ctx.fillStyle = "#202124";
+    for (let i = 0; i < 30; i++) {
+      const barW = i % 3 === 0 ? 3 : 1.5;
+      ctx.fillRect(barcodeX + i * 4, barcodeY, barW, 18);
+    }
+  }
 
-    // Decorative Hologram Accent line
+  // ================= TEMPLATE 6: HOLOGRAM VIP DELEGATE PASS =================
+  function drawTemplateVipPassHolo() {
+    ctx.fillStyle = "#0c0e14";
+    ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+
+    const pad = 58;
+    const photoWindow = {
+      x: pad,
+      y: 120,
+      width: CANVAS_SIZE - pad * 2,
+      height: CANVAS_SIZE - 325,
+      radius: 16,
+    };
+
+    drawUserPhoto(photoWindow);
+
+    // Shimmering Hologram border around photo
     const holoGrad = ctx.createLinearGradient(
       pad,
-      botY,
+      120,
       CANVAS_SIZE - pad,
-      botY,
+      CANVAS_SIZE - 200,
     );
     holoGrad.addColorStop(0, "#4285F4");
     holoGrad.addColorStop(0.33, "#EA4335");
     holoGrad.addColorStop(0.66, "#FBBC04");
     holoGrad.addColorStop(1, "#34A853");
+
+    ctx.save();
+    ctx.strokeStyle = holoGrad;
+    ctx.lineWidth = 5;
+    ctx.shadowColor = "#4285F4";
+    ctx.shadowBlur = 12;
+    ctx.strokeRect(
+      photoWindow.x,
+      photoWindow.y,
+      photoWindow.width,
+      photoWindow.height,
+    );
+    ctx.restore();
+
+    // Lanyard punch hole
+    drawPill(CANVAS_SIZE / 2 - 50, 16, 100, 14, "#000000", "#4285F4", 2);
+
+    // Top Header: Pass Credentials with GSA Wordmark
+    if (assets.gsaWordmark) {
+      const wmW = 320;
+      const wmAspect = assets.gsaWordmark.width / assets.gsaWordmark.height;
+      const wmH = wmW / wmAspect;
+      ctx.drawImage(
+        assets.gsaWordmark,
+        (CANVAS_SIZE - wmW) / 2,
+        42,
+        wmW,
+        wmH,
+      );
+    }
+
+    drawGlowText(
+      "ALL-ACCESS DELEGATE PASS  •  BATCH 2",
+      CANVAS_SIZE / 2,
+      94,
+      'bold 18px "Google Sans Flex", sans-serif',
+      "#8AB4F8",
+    );
+
+    // Google G Logo (Top Left)
+    if (assets.gLogo) {
+      ctx.drawImage(assets.gLogo, pad + 10, 42, 48, 48);
+    }
+
+    // 3D Gemini Sparkle (Top Right)
+    if (assets.geminiSparkle) {
+      drawAssetWithGlow(
+        assets.geminiSparkle,
+        CANVAS_SIZE - pad - 60,
+        34,
+        64,
+        "rgba(66, 133, 244, 0.6)",
+      );
+    }
+
+    // Bottom Credentials Plaque
+    const botY = CANVAS_SIZE - 175;
+    drawPill(
+      pad,
+      botY,
+      CANVAS_SIZE - pad * 2,
+      135,
+      "rgba(14, 17, 26, 0.96)",
+      "#4285F4",
+      2,
+    );
+
+    // Shimmering Hologram strip
     ctx.fillStyle = holoGrad;
     ctx.fillRect(pad + 20, botY + 12, CANVAS_SIZE - pad * 2 - 40, 4);
 
     drawGlowText(
       "LEAD  •  COLLABORATE  •  INNOVATE",
       CANVAS_SIZE / 2,
-      botY + 52,
-      'bold 32px "Google Sans Flex", sans-serif',
+      botY + 50,
+      'bold 34px "Google Sans Flex", sans-serif',
       "#FFFFFF",
       "center",
       "#4285F4",
-      8,
+      10,
     );
 
     drawGlowText(
-      "SERIAL: GSA-2026-B2-IDN  |  VENUE: MGP SPACE JAKARTA",
+      "OFFICIAL CREDENTIAL: GSA-2026-B2-IDN  |  MGP SPACE JAKARTA",
       CANVAS_SIZE / 2,
-      botY + 95,
-      '600 16px "Google Sans Flex", sans-serif',
+      botY + 92,
+      '600 17px "Google Sans Flex", sans-serif',
       "#9AA0A6",
     );
   }
 
   // Placeholder when no photo loaded yet
   function drawPlaceholder() {
-    ctx.fillStyle = "#181A20";
+    ctx.fillStyle = "#12141a";
     ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 
-    // 4-color stripe
-    drawGoogleStripe(0, 0, CANVAS_SIZE, 12);
-    drawGoogleStripe(0, CANVAS_SIZE - 12, CANVAS_SIZE, 12);
+    // Draw vanity bulbs on placeholder
+    drawVanityPerimeter(36, 36, CANVAS_SIZE - 72, CANVAS_SIZE - 72, 14, 14);
 
     if (assets.gsaWordmark) {
       const wmAspect = assets.gsaWordmark.width / assets.gsaWordmark.height;
-      const wmW = 420;
+      const wmW = 440;
       const wmH = wmW / wmAspect;
       ctx.drawImage(
         assets.gsaWordmark,
         (CANVAS_SIZE - wmW) / 2,
-        340,
+        330,
         wmW,
         wmH,
+      );
+    }
+
+    // 3D Assets on placeholder
+    if (assets.heroBulb) {
+      drawAssetWithGlow(
+        assets.heroBulb,
+        CANVAS_SIZE / 2 - 170,
+        180,
+        110,
+        "rgba(255, 215, 0, 0.6)",
+      );
+    }
+    if (assets.geminiSparkle) {
+      drawAssetWithGlow(
+        assets.geminiSparkle,
+        CANVAS_SIZE / 2 + 60,
+        180,
+        110,
+        "rgba(142, 117, 255, 0.6)",
       );
     }
 
@@ -963,25 +1217,30 @@ document.addEventListener("DOMContentLoaded", () => {
       "Virtual Photobooth & Twibbon",
       CANVAS_SIZE / 2,
       440,
-      'bold 38px "Google Sans Flex", sans-serif',
+      'bold 40px "Google Sans Flex", sans-serif',
       "#FFFFFF",
+      "center",
+      "rgba(66, 133, 244, 0.8)",
+      16,
     );
 
     drawGlowText(
       "Buka Kamera atau Upload Foto untuk Memulai 📸",
       CANVAS_SIZE / 2,
-      500,
+      505,
       '24px "Google Sans Flex", sans-serif',
       "#9AA0A6",
     );
 
-    // Feature chips
     drawGlowText(
       "LEAD  •  INNOVATE  •  INSPIRE",
       CANVAS_SIZE / 2,
-      600,
-      'bold 28px "Google Sans Flex", sans-serif',
-      "#4285F4",
+      610,
+      'bold 30px "Google Sans Flex", sans-serif',
+      "#FFD700",
+      "center",
+      "#FFD700",
+      12,
     );
   }
 
@@ -998,27 +1257,24 @@ document.addEventListener("DOMContentLoaded", () => {
     if (tpl && typeof tpl.draw === "function") {
       tpl.draw();
     } else {
-      drawTemplateLeadInnovate();
+      drawTemplateVanityStudio();
     }
   }
 
   // Set user image from Image source
   function loadUserPhoto(img) {
     userImage = img;
-    // Reset transforms
     photoState.panX = 0;
     photoState.panY = 0;
     photoState.scale = 1.0;
     photoState.rotation = 0;
     photoState.flipH = false;
 
-    // Sync sliders
     if ($("pbZoomRange")) $("pbZoomRange").value = 1.0;
     if ($("pbZoomVal")) $("pbZoomVal").textContent = "100%";
     if ($("pbRotateRange")) $("pbRotateRange").value = 0;
     if ($("pbRotateVal")) $("pbRotateVal").textContent = "0°";
 
-    // Show workspace
     if ($("pbSourcePicker")) $("pbSourcePicker").hidden = true;
     if ($("pbWorkspace")) $("pbWorkspace").hidden = false;
 
@@ -1043,7 +1299,6 @@ document.addEventListener("DOMContentLoaded", () => {
         img.src = event.target.result;
       };
       reader.readAsDataURL(file);
-      // Reset input value so same file can be re-selected if needed
       fileInput.value = "";
     });
   }
@@ -1082,7 +1337,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (err) {
       console.error("Camera error:", err);
       alert(
-        "Gagal mengakses kamera. Pastikan izin kamera telah diberikan di pengaturan browser, atau gunakan tombol 'Upload Foto'.",
+        "Gagal mengakses kamera. Pastikan izin kamera telah diberikan di browser, atau gunakan tombol 'Upload Foto'.",
       );
     }
   }
@@ -1097,7 +1352,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.remove("pb-modal-open");
   }
 
-  // Countdown & Snapshot
   function takeSnapshotWithCountdown() {
     const shutterBtn = $("pbShutterBtn");
     if (shutterBtn) shutterBtn.disabled = true;
@@ -1114,26 +1368,29 @@ document.addEventListener("DOMContentLoaded", () => {
         clearInterval(timer);
         countdownEl.hidden = true;
 
-        // Flash visual animation
         if (flashLayer) {
           flashLayer.classList.remove("is-flashing");
-          void flashLayer.offsetWidth; // Trigger reflow
+          void flashLayer.offsetWidth;
           flashLayer.classList.add("is-flashing");
         }
 
-        // Capture from video
         setTimeout(() => {
           const capCanvas = document.createElement("canvas");
           capCanvas.width = cameraVideo.videoWidth || 1080;
           capCanvas.height = cameraVideo.videoHeight || 1080;
           const capCtx = capCanvas.getContext("2d");
 
-          // Mirror if front camera
           if (currentFacingMode === "user") {
             capCtx.translate(capCanvas.width, 0);
             capCtx.scale(-1, 1);
           }
-          capCtx.drawImage(cameraVideo, 0, 0, capCanvas.width, capCanvas.height);
+          capCtx.drawImage(
+            cameraVideo,
+            0,
+            0,
+            capCanvas.width,
+            capCanvas.height,
+          );
 
           const img = new Image();
           img.onload = () => {
@@ -1147,7 +1404,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 850);
   }
 
-  // Camera Buttons
   $("pbOpenCamBtn")?.addEventListener("click", openCamera);
   $("pbCloseCamBtn")?.addEventListener("click", closeCamera);
   $("pbCancelCamBtn")?.addEventListener("click", closeCamera);
@@ -1159,7 +1415,6 @@ document.addEventListener("DOMContentLoaded", () => {
     openCamera();
   });
 
-  // Retake / Change photo button
   $("pbRetakeBtn")?.addEventListener("click", () => {
     if ($("pbWorkspace")) $("pbWorkspace").hidden = true;
     if ($("pbSourcePicker")) $("pbSourcePicker").hidden = false;
@@ -1182,7 +1437,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const dy = e.clientY - dragStart.y;
       dragStart = { x: e.clientX, y: e.clientY };
 
-      // Sensitivity factor based on display size vs canvas 1080
       const rect = canvas.getBoundingClientRect();
       const ratio = CANVAS_SIZE / (rect.width || CANVAS_SIZE);
 
@@ -1262,7 +1516,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderCanvas();
   });
 
-  // Toast Notification Helper
+  // Toast Notification
   let toastTimer = null;
   function showToast(message) {
     const toast = $("pbToast");
@@ -1282,7 +1536,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!userImage) return;
     const link = document.createElement("a");
     const tplName = templates[currentTemplateIndex]?.id || "photobooth";
-    const timestamp = new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19);
+    const timestamp = new Date()
+      .toISOString()
+      .replace(/[:.]/g, "-")
+      .slice(0, 19);
     link.download = `GSA-2026-Batch2-${tplName}-${timestamp}.png`;
     link.href = canvas.toDataURL("image/png", 1.0);
     link.click();
@@ -1305,7 +1562,6 @@ document.addEventListener("DOMContentLoaded", () => {
         throw new Error("ClipboardItem not supported");
       }
     } catch {
-      // Fallback: download instead
       $("pbDownloadBtn")?.click();
     }
   });
@@ -1342,7 +1598,6 @@ document.addEventListener("DOMContentLoaded", () => {
           descInput.value = "Diambil dengan GSA Virtual Photobooth ✨";
         }
 
-        // Open upload modal
         const uploadBtn = $("uploadMomentBtn");
         if (uploadBtn) {
           uploadBtn.click();
